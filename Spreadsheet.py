@@ -12,7 +12,7 @@ import csv
 
 # default required values
 PATH = Path.cwd()
-DEFAULT_SPREADSHEET = PATH / Path('data') / Path("Patient Insights - Insights.csv")
+DEFAULT_SPREADSHEET = str(PATH / Path('data') / Path("Patient Insights - Insights.csv"))
 DEFAULT_TEXT_LENGTH = 30
 NORM_HEADERS = {
     'Topic': 'topics',

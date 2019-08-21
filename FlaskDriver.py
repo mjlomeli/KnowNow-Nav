@@ -11,20 +11,6 @@ from flask import Flask, render_template, url_for, redirect, request, session
 from Spreadsheet import Spreadsheet
 
 PATH = Path.cwd()
-DEFAULT_SPREADSHEET = PATH / Path('data') / Path("Patient Insights - Insights.csv")
-NORM_HEADERS = {
-    'Topic': 'topics',
-    'Date discussion (month/ year)':'dates',
-    'Patient Query/ Inquiry':'queries',
-    'Specific patient profile':'patient_profile',
-    'Patient cohort (definition)':'cohort',
-    'Category tag':'category',
-    'Secondary tags':'secondary_tags',
-    'Patient insight':'insights',
-    'Volunteers':'volunteers',
-    'Discussion URL':'url',
-    'Notes/ comments/ questions':'comments',
-    "Smruti Vidwans comments/ Topics": 'professor_comment'}
 
 # program's author information and licenses
 __authors__ = "Mauricio Lomeli, Shiyu Qiu, Jennifer Kwon, Anne Wang, Derek Eijansantos, Dhruv Seth"
@@ -38,8 +24,6 @@ __status__ = "Prototype"
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-sheet = Spreadsheet(DEFAULT_SPREADSHEET, NORM_HEADERS)
-
 
 @app.route("/")
 @app.route("/home")
@@ -50,6 +34,7 @@ def home():
     rerouted to the homepage: Homepage.html
     :return:
     """
+    sheet = Spreadsheet()
     # removes duplicates and empty responses
     query = [item for item in set(sheet['query']) if item != '']
 
@@ -58,7 +43,6 @@ def home():
 
     # returns a list(tuple) of (truncated text, full text)
     pair = list(zip(sheet.textLength(query, 50), query))
-
 
     return render_template("Homepage.html", pair=pair)
 
@@ -80,6 +64,7 @@ def form():
     if query is None:
         print("You changed the name of the select list! Change it back to query.")
 
+    sheet = Spreadsheet()
     posts = sheet.convertToDict(sheet[query])
 
     if len(posts) > 0:
