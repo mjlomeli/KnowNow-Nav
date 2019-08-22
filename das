@@ -8,16 +8,6 @@ from prettytable import PrettyTable
 from pathlib import Path
 import csv
 
-# Programs author information
-__author__ = "Mauricio Lomeli"
-__date__ = "8/22/2019"
-__credits__ = ["Rebecca Zhuo, Smruti Vidwans"]
-__license__ = "MIT"
-__version__ = "0.0.0.1"
-__maintainer__ = "Mauricio Lomeli"
-__email__ = "mjlomeli@uci.edu"
-__status__ = "Prototype"
-
 # default required values
 PATH = Path.cwd()
 DEFAULT_SPREADSHEET = "Patient Insights - Insights.csv"
@@ -35,6 +25,16 @@ NORM_HEADERS = {
     'Discussion URL':'url',
     'Notes/ comments/ questions':'comments',
     "Smruti Vidwans comments/ Topics": 'professor_comments'}
+
+
+# program's author information and licenses
+__author__ = "Mauricio Lomeli"
+__date__ = "8/15/2019"
+__license__ = "MIT"
+__version__ = "0.0.0.1"
+__maintainer__ = "Mauricio Lomeli"
+__email__ = "mjlomeli@uci.edu"
+__status__ = "Prototype"
 
 
 class Spreadsheet:
