@@ -16,7 +16,7 @@ __authors__ = "Mauricio Lomeli, Shiyu Qiu, Jennifer Kwon, Anne Wang, Derek Eijan
 __date__ = "8/15/2019"
 __license__ = "MIT"
 __version__ = "0.0.0.1"
-__maintainer__ = "Mauricio Lomeli"
+__maintainer__ = "Jennifer Kwon, Anne Wang"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 

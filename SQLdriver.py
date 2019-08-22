@@ -1,53 +1,44 @@
 # !/usr/bin/env python
 
-"""Spreadsheet
+"""SQLdriver
 
-Opens a CSV spreadsheet for reading and searching operations.
-
-Ideas: pickle handling with __call__ && __init__, print formatting,
+If the description is long, the first line should be a short summary of SQLdriver.py
+that makes sense on its own, separated from the rest by a newline.
 """
-from prettytable import PrettyTable
+
 from pathlib import Path
-import csv
+import mysql.connector
+
 
 __author__ = "Mauricio Lomeli"
-__date__ = "8/22/2019"
-__credits__ = ["Rebecca Zhuo, Smruti Vidwans"]
+__date__ = "8/21/2019"
 __license__ = "MIT"
 __version__ = "0.0.0.1"
 __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
+
 
 # default required values
 PATH = Path.cwd()
-DEFAULT_SPREADSHEET = str(PATH / Path('data') / Path("Patient Insights - Insights.csv"))
+DEFAULT_DATA = str(PATH / Path('data') / Path("PatientInsights.sql"))
 DEFAULT_TEXT_LENGTH = 30
 NORM_HEADERS = {
     'Topic': 'topics',
-    'Date discussion (month/ year)':'dates',
-    'Patient Query/ Inquiry':'queries',
-    'Specific patient profile':'patient_profile',
-    'Patient cohort (definition)':'cohort',
-    'Category tag':'category',
-    'Secondary tags':'secondary_tags',
-    'Patient insight':'insights',
-    'Volunteers':'volunteers',
-    'Discussion URL':'url',
-    'Notes/ comments/ questions':'comments',
+    'Date discussion (month/ year)': 'dates',
+    'Patient Query/ Inquiry': 'queries',
+    'Specific patient profile': 'patient_profile',
+    'Patient cohort (definition)': 'cohort',
+    'Category tag': 'category',
+    'Secondary tags': 'secondary_tags',
+    'Patient insight': 'insights',
+    'Volunteers': 'volunteers',
+    'Discussion URL': 'url',
+    'Notes/ comments/ questions': 'comments',
     "Smruti Vidwans comments/ Topics": 'professor_comment'}
 
-# program's author information and licenses
-__authors__ = "Mauricio Lomeli, Shiyu Qiu, Jennifer Kwon, Anne Wang, Derek Eijansantos, Dhruv Seth"
-__date__ = "8/15/2019"
-__license__ = "MIT"
-__version__ = "0.0.0.1"
-__maintainer__ = "Mauricio Lomeli"
-__email__ = "mjlomeli@uci.edu"
-__status__ = "Prototype"
 
-
-class Spreadsheet:
+class SQLDriver:
     """
     If DEFAULT_SPREADSHEET and NORM_HEADERS are kept, 'Patient Insights - Insights.csv' will
     be the CSV that it will be reading. Else, replace with a file in the same directory or specified path.
@@ -61,12 +52,16 @@ class Spreadsheet:
         sheet = Spreadsheet('Patient Insights - Insights.csv', NORM_HEADERS) # assume NORM_HEADERS is defined
 
     """
-    def __init__(self, spreadsheet=DEFAULT_SPREADSHEET, headers=NORM_HEADERS):
+
+    def __init__(self, file=DEFAULT_DATA, headers=NORM_HEADERS):
         """
         Initializes the Spreadsheet.
         :param spreadsheet: the path of the csv file, else the default file is ued.
         :param headers: normalized headers (conversion of the csv headers to truncated names).
         """
+        driver.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
+        driver.setencoding(encoding='utf-8')
+        self.__driver = sql.connect(r'Server=(localdb)\v11.0;Integrated Security=true;')
         self.title = spreadsheet
         self.real_headers = None
         self.__norm_headers = headers
@@ -83,7 +78,7 @@ class Spreadsheet:
 
     def __assemble(self, spreadsheet):
         """
-        
+
         :param spreadsheet:
         :return:
         """
@@ -185,7 +180,7 @@ class Spreadsheet:
                     self.spreadsheet.append(temp)
 
     def __format__(self, format_spec):
-        #TODO: "Sheet has at columns topic: {a}".format('column')"
+        # TODO: "Sheet has at columns topic: {a}".format('column')"
         pass
 
     def __str__(self):
