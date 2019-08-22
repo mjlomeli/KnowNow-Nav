@@ -93,6 +93,7 @@ class Spreadsheet:
     def convertToDict(self, item):
         if isinstance(item, list) and len(item) > 0:
             if isinstance(item[0], list) and len(item[0]) > 0:
+                print(item[0])
                 return [dict(zip(self.headers, value)) for value in item]
             elif not isinstance(item[0], list):
                 return dict(zip(self.headers, item))
