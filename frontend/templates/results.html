@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container-fluid">
+    {% for post in posts %}
+        <h2>{{ post['topic'] }}</h2>
+        <a href="{{ post['Discussion URL'] }}">{{ post['Discussion URL'] }}</a>
+        <p>{{ post['Patient Insight'] }}</p>
+    {% endfor %}
+</div>
+
+{% endblock content %}

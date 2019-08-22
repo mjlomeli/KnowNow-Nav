@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<section class="container-fluid">
+    <h1 class="center">Discover Patient Insights</h1>
+    <form action="form" method="GET" id=queryField>
+        <select name="query" class="tagDropdown">
+            <option value="treatments">Treatments</option>
+            <option value="side-effects">Side Effects</option>
+        </select>
+    </form>
+    <button class="btn btn-primary" type="submit" form="queryField" value="submit" id="submitButton">Know Now!</button>
+</section>
+
+{% endblock content %}
