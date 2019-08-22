@@ -13,7 +13,8 @@ from Spreadsheet import Spreadsheet
 PATH = Path.cwd()
 
 # program's author information and licenses
-__authors__ = "Mauricio Lomeli, Shiyu Qiu, Jennifer Kwon, Anne Wang, Derek Eijansantos, Dhruv Seth"
+__author__ = "Mauricio Lomeli"
+__credits__ = ["Derek Eijansantos", "Anne Wang", "Jennifer Kwon"]
 __date__ = "8/15/2019"
 __license__ = "MIT"
 __version__ = "0.0.0.1"
