@@ -25,16 +25,16 @@ DEFAULT_SPREADSHEET = str(PATH / Path('data') / Path("Patient Insights - Insight
 DEFAULT_TEXT_LENGTH = 30
 NORM_HEADERS = {
     'Topic': 'topics',
-    'Date discussion (month/ year)':'dates',
-    'Patient Query/ Inquiry':'queries',
-    'Specific patient profile':'patient_profile',
-    'Patient cohort (definition)':'cohort',
-    'Category tag':'category',
-    'Secondary tags':'secondary_tags',
-    'Patient insight':'insights',
-    'Volunteers':'volunteers',
-    'Discussion URL':'url',
-    'Notes/ comments/ questions':'comments',
+    'Date discussion (month/ year)': 'dates',
+    'Patient Query/ Inquiry': 'queries',
+    'Specific patient profile': 'patient_profile',
+    'Patient cohort (definition)': 'cohort',
+    'Category tag': 'category',
+    'Secondary tags': 'secondary_tags',
+    'Patient insight': 'insights',
+    'Volunteers': 'volunteers',
+    'Discussion URL': 'url',
+    'Notes/ comments/ questions': 'comments',
     "Smruti Vidwans comments/ Topics": 'professor_comment'}
 
 
