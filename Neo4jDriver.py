@@ -11,14 +11,15 @@ from neo4j import GraphDatabase, basic_auth
 
 PATH = Path.cwd()
 
-__author__ = "Mauricio Lomeli"
-__date__ = "8/17/2019"
+# program's author information and licenses
+__authors__ = "Jennifer Kwon, Anne Wang, Mauricio Lomeli"
+__credits__ = ["Smruti Vidwans"]
+__date__ = "8/15/2019"
 __license__ = "MIT"
 __version__ = "0.0.0.1"
-__maintainer__ = "Mauricio Lomeli"
+__maintainer__ = "Jennifer Kwon, Anne Wang"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
-
 
 driver = GraphDatabase.driver(
     "bolt://34.203.33.130:38790",

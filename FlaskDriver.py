@@ -11,35 +11,19 @@ from flask import Flask, render_template, url_for, redirect, request, session
 from Spreadsheet import Spreadsheet
 
 PATH = Path.cwd()
-DEFAULT_SPREADSHEET = "Patient Insights - Insights.csv"
-NORM_HEADERS = {
-    'Topic': 'topic',
-    'Date discussion (month/ year)':'date',
-    'Patient Query/ Inquiry':'query',
-    'Specific patient profile':'profile',
-    'Patient cohort (definition)':'cohort',
-    'Category tag':'category',
-    'Secondary tags':'secondary',
-    'Patient insight':'insight',
-    'Volunteers':'volunteers',
-    'Discussion URL':'url',
-    'Notes/ comments/ questions':'comments',
-    "Smruti Vidwans comments/ Topics": 'professor_comment'}
 
+# program's author information and licenses
 __author__ = "Mauricio Lomeli"
+__credits__ = ["Derek Eijansantos", "Anne Wang", "Jennifer Kwon"]
 __date__ = "8/15/2019"
-__copyright__ = "Copyright 2019, KnowNow-Nav"
 __license__ = "MIT"
 __version__ = "0.0.0.1"
 __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
-
 app = Flask(__name__)
 app.config["DEBUG"] = True
-
-sheet = Spreadsheet(DEFAULT_SPREADSHEET, NORM_HEADERS)
 
 
 @app.route("/")
@@ -51,15 +35,15 @@ def home():
     rerouted to the homepage: Homepage.html
     :return:
     """
+    sheet = Spreadsheet()
     # removes duplicates and empty responses
-    query = [item for item in set(sheet['query']) if item != '']
+    query = [item for item in set(sheet['queries']) if item != '']
 
     # remove this when final, it is only for displaying purposes.
     query += ['Encouragement'] + ['Specific Conditions'] + ['Stage II BC']
 
     # returns a list(tuple) of (truncated text, full text)
     pair = list(zip(sheet.textLength(query, 50), query))
-
 
     return render_template("Homepage.html", pair=pair)
 
@@ -81,10 +65,11 @@ def form():
     if query is None:
         print("You changed the name of the select list! Change it back to query.")
 
+    sheet = Spreadsheet()
     posts = sheet.convertToDict(sheet[query])
 
     if len(posts) > 0:
-        query = [item for item in sheet['query'] if item != '']
+        query = [item for item in sheet['queries'] if item != '']
         pair = list(zip(sheet.textLength(query, 50), query))
         return render_template("ResultsPage.html", posts=posts, pair=pair)
     else:

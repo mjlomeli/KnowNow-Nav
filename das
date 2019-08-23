@@ -8,33 +8,33 @@ from prettytable import PrettyTable
 from pathlib import Path
 import csv
 
-# Programs author information
+# default required values
+PATH = Path.cwd()
+DEFAULT_SPREADSHEET = "Patient Insights - Insights.csv"
+DEFAULT_TEXT_LENGTH = 30
+NORM_HEADERS = {
+    'Topic': 'topic',
+    'Date discussion (month/ year)':'date',
+    'Patient Query/ Inquiry':'query',
+    'Specific patient profile':'profile',
+    'Patient cohort (definition)':'cohort',
+    'Category tag':'category',
+    'Secondary tags':'secondary',
+    'Patient insight':'insights',
+    'Volunteers':'volunteers',
+    'Discussion URL':'url',
+    'Notes/ comments/ questions':'comments',
+    "Smruti Vidwans comments/ Topics": 'professor_comments'}
+
+
+# program's author information and licenses
 __author__ = "Mauricio Lomeli"
-__date__ = "8/22/2019"
-__credits__ = ["Rebecca Zhuo, Smruti Vidwans"]
+__date__ = "8/15/2019"
 __license__ = "MIT"
 __version__ = "0.0.0.1"
 __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
-
-# default required values
-PATH = Path.cwd()
-DEFAULT_SPREADSHEET = PATH / Path("data") / Path("Patient Insights - Insights.csv")
-DEFAULT_TEXT_LENGTH = 30
-NORM_HEADERS = {
-    'Topic': 'topic',
-    'Date discussion (month/ year)': 'date',
-    'Patient Query/ Inquiry': 'query',
-    'Specific patient profile': 'profile',
-    'Patient cohort (definition)': 'cohort',
-    'Category tag': 'category',
-    'Secondary tags': 'secondary',
-    'Patient insight': 'insights',
-    'Volunteers': 'volunteers',
-    'Discussion URL': 'url',
-    'Notes/ comments/ questions': 'comments',
-    "Smruti Vidwans comments/ Topics": 'professor_comments'}
 
 
 class Spreadsheet:
@@ -51,8 +51,6 @@ class Spreadsheet:
         sheet['topic'] = ['About to start Radiation ... Need advice on what to expect', 'Afinitor T...
         sheet[0] = ['About to start Radiation ... Need advice on what to expect', 'Dec 2016...
         [row for row in sheet] -> [['About to start Radiation ... Need advice on what to expect', 'Dec 2016', 'what...
-        'topic' in sheet
-        'August 2018' in sheet
         print(sheet)
     """
     def __init__(self, spreadsheet=DEFAULT_SPREADSHEET, headers=NORM_HEADERS):
