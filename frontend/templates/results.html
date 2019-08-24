@@ -2,19 +2,24 @@
 {% block content %}
 
 <section class="container-fluid my-5 p-5">
-    <div class="row">
+    <div class="row mb-3">
 
-        <h2 class="col-sm-6">Results</h2>
-        <h2 class="col-sm-6 text-muted">some other text</h2>
+        <h2 class="col-lg-2 mx-0 mx-lg-3 my-3 my-lg-0">Results</h2>
+        <!-- Search form -->
+        <form class="form-inline col-lg-8">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <input class="form-control w-100 w-lg-50" type="text" placeholder="Search"
+            aria-label="Search">
+        </form>
     
     </div>
     <div class="row">
 
-        <div class="col-md-2">
-            <p>left section</p>
+        <div class="col-lg-2 bg-light border border-primary mx-lg-3 my-3 my-lg-0">
+            <p>Refine your results</p>
         </div>
 
-        <div class="col-md-8 bg-light border border-primary">
+        <div class="col-lg-8 bg-light border border-primary">
             {% for post in posts %}
                 <div class="card m-3">
                     <div class="card-body">
@@ -27,9 +32,6 @@
             {% endfor %}
         </div>
         
-        <div class="col-md-2">
-            <p>right section</p>
-        </div>
     </div>
     
 </section>
