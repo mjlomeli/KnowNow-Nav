@@ -36,8 +36,11 @@ def home():
     :return:
     """
     sheet = Spreadsheet()
+    assert len(sheet) > 0, 'Spreadsheet size is 0 on FlaskDriver.py home function.'
+
     # removes duplicates and empty responses
-    query = [item for item in set(sheet['queries']) if item != '']
+    query = [item for item in set(sheet['query']) if item != '']
+    assert len(sheet['query']) > 0, 'Need to change header name call in FlaskDriver.py home function'
 
     # remove this when final, it is only for displaying purposes.
     query += ['Encouragement'] + ['Specific Conditions'] + ['Stage II BC']
@@ -69,7 +72,7 @@ def form():
     posts = sheet.convertToDict(sheet[query])
 
     if len(posts) > 0:
-        query = [item for item in sheet['queries'] if item != '']
+        query = [item for item in sheet['query'] if item != '']
         pair = list(zip(sheet.textLength(query, 50), query))
         return render_template("ResultsPage.html", posts=posts, pair=pair)
     else:
