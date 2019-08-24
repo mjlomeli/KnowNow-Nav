@@ -7,11 +7,17 @@
     font-size: 30px;
 }
 
+.body {
+    position: fixed;
+    overflow: hidden;
+}
+
 .container{
     text-align: center;
     margin-top: 250px;
+    position: fixed center;
+    overflow: hidden;
 }
-
 
 .motto {
     font-family:agency fb;
@@ -32,6 +38,7 @@
     width: 400px;
     margin-top: 30px;
     font-family: comic sans ms;
+    outline: none;
 }
 
 .btn {
@@ -45,10 +52,14 @@
     font-family: comic sans ms;
 }
 
-#main-footer{
+.btn:hover{
+    background-color: rgb(252, 162, 7);
+}
+
+/* #main-footer{
     background: #000;
     color: #fff;
     text-align: center;
     padding:20px;
-    margin-top: 300px;
-}
+    margin-top: 200px;
+} */

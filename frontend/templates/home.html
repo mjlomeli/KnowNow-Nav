@@ -45,15 +45,16 @@
     <h1 class="motto">Discover Patient Insights</h1>
     <form action="form" method="GET" id=queryField>
         <select name="query" class="tagDropdown">
+            <option value="" disabled selected hidden><strong>Select topic for patient insights</strong></option>
             <option value="treatments">Treatments</option>
             <option value="side-effects">Side Effects</option>
         </select>
     </form>
     <button class="btn" type="submit" form="queryField" value="submit" id="submitButton">Know Now!</button>
 </section>
-<footer id="main-footer">
+<!-- <footer id="main-footer">
     <p>Copyright &copy; 2019 KnowNow </p>
-</footer>
+</footer> -->
 
 
 {% endblock content %}
