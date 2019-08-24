@@ -25,3 +25,12 @@ __status__ = "Prototype"
 # TODO: be the only file anyone should ever see.
 
 
+
+
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    main()

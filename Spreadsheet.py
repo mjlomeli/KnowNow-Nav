@@ -21,6 +21,24 @@ __status__ = "Prototype"
 # default required values
 PATH = Path.cwd()
 DEFAULT_SPREADSHEET = PATH / Path("data") / Path("Patient Insights - Insights.csv")
+
+REQUIRE = ["Comparing Therapies", "Side Effects","Right treatment?", "Specific Therapy Inquiries",
+           "Others' experience", 'Symptoms diagnosis', 'Side effect management', 'Recurrence Queries',
+           'Specific Conditions', 'Data interpretation', 'Referral', 'Lifestyle', 'Positive Affirmations',
+           'Encouragement', 'Inter-Personal Patient Connections', 'Other/ Miscellaneous']
+STAGES = ['Stage 0', 'Stage 1', 'Stage 1A', 'Stage 1B', 'Stage 2', 'Stage 2A',
+          'Stage 2B', 'Stage 3', 'Stage 3A', 'Stage 3B', 'Stage 3C', 'Stage 4']
+
+letter_replace = [('stage iv', 'stage 4'), ('stage iii', 'stage 3'), ('stage ii', 'stage 2'), ('stage i', 'stage 1'),
+                  ('4 ab', '4ab'), ('4 bc', '4bc'), ('4 ac', '4ac'), ('4 ba', '4ab'), ('4 cb', '4bc'), ('4 ca', '4ac'),
+                  ('4 b', '4b'), ('4 a', '4a'), ('4 c', '4c'), ('3 ab', '3ab'), ('3 bc', '3bc'), ('3 ac', '3ac'),
+                  ('3 ba', '3ab'), ('3 cb', '3bc'), ('3 ca', '3ac'), ('3 b', '3b'), ('3 a', '3a'), ('3 c', '3c'),
+                  ('2 ab', '2ab'), ('2 bc', '2bc'), ('2 ac', '2ac'), ('2 ba', '2ab'), ('2 cb', '2bc'),
+                  ('2 ca', '2ac'), ('2 b', '2b'), ('2 a', '2a'), ('2 c', '2c'),('1 ab', '1ab'), ('1 bc', '1bc'),
+                  ('1 ac', '1ac'), ('1 ba', '1ab'), ('1 cb', '1bc'), ('1 ca', '1ac'), ('1 b', '1b'), ('1 a', '1a'),
+                  ('1 c', '1c')]
+
+
 DEFAULT_TEXT_LENGTH = 30
 NORM_HEADERS = {
     'Topic': 'topic',
@@ -34,7 +52,9 @@ NORM_HEADERS = {
     'Volunteers': 'volunteers',
     'Discussion URL': 'url',
     'Notes/ comments/ questions': 'comments',
-    "Smruti Vidwans comments/ Topics": 'professor_comments'}
+    "Smruti Vidwans comments/ Topics": 'professor_comments',
+    'In Reconciled Insights Database': 'reconciled'
+}
 
 
 class Spreadsheet:
@@ -58,14 +78,14 @@ class Spreadsheet:
     def __init__(self, spreadsheet=DEFAULT_SPREADSHEET, headers=NORM_HEADERS):
         self.name = spreadsheet
         self.real_headers = None
-        self.norm_headers = headers
+        self.__norm_headers = headers
         self.headers = None
         self.__book = None
         self.__spreadsheet = []
         self.__index = 0
         if spreadsheet is not None:
             self.__assemble(spreadsheet)
-        if self.norm_headers is not None:
+        if self.__norm_headers is not None:
             self.__normalize(headers)
         else:
             self.headers = self.real_headers
@@ -168,6 +188,52 @@ class Spreadsheet:
                     dict_items[length].append(element)
         return dict_items
 
+    def __like(self, string, compare):
+        if len(string) > len(compare):
+            added_len = abs(len(string) - len(compare))
+            shortest = string if len(string) < len(compare) else compare
+            compare = string if len(string) > len(compare) else compare
+            string = list(shortest) + ([None] * added_len)
+        combined = list(zip(compare, string))
+        len_combined = len(combined)
+        equality = sum([1 if elem[0] == elem[1] else 0 for elem in combined])
+        return equality / len_combined
+
+    def __contains_like(self, string, compare):
+        equality = sum([1 if letter in compare else 0 for letter in string])
+        return equality / len(string)
+
+    def __intersection(self, raw, required, exact=False):
+        result = []
+        req = [elem.lower() for elem in required]
+        raw = [elem.split(';') for elem in raw]
+        for item in raw:
+            adding = []
+            for words in item:
+                if len(words) > 0:
+                    if words.lower() in req:
+                        adding.append(words)
+                    elif not exact:
+                        words = words.lower().strip().replace('/', ' ').replace('\n', ' ')
+                        for capital in req:
+                            tag = capital.lower()
+                            if tag not in adding:
+                                if words in tag:
+                                    adding.append(tag)
+                                elif self.__like(words, tag) > 0.85:
+                                    adding.append(tag)
+                                elif self.__contains_like(words, tag) > 0.85:
+                                    div = 1.5
+                                    end = int(len(words) // div)
+                                    start = 0
+                                    while end < len(words) and start < len(words):
+                                        if words[start:end] in tag and tag not in adding:
+                                            adding.append(tag)
+                                        end += 1
+                                        start += 1
+            result.append(adding)
+        return result
+
     def __has_all(self, item):
         has_all = True
         for index in item:
@@ -183,8 +249,26 @@ class Spreadsheet:
             self.__spreadsheet = [list(element.values()) for element in content]
 
     def __normalize(self, headers):
-        self.headers = list(headers.values())
-        self.__book = {header: index for index, header in enumerate(self.headers)}
+        if headers is None:
+            if self.real_headers == list(self.__norm_headers.values()):
+                self.headers = list(self.__norm_headers.keys())
+        else:
+            if isinstance(headers, list):
+                if len(headers) == len(self.real_headers):
+                    self.headers = headers
+            elif isinstance(headers, dict):
+                if list(headers.keys()) == self.real_headers:
+                    self.headers = list(headers.values())
+
+        if self.headers is None:
+            self.headers = self.real_headers
+        self.__book = {head: index for index, head in enumerate(self.headers)}
+
+    def __replace(self, arr, list_of_values):
+        for i in range(len(arr)):
+            for item in list_of_values:
+                arr[i] = arr[i].lower().replace(*item)
+        return arr
 
     def __contains__(self, item):
         return self.has(item)
@@ -194,7 +278,7 @@ class Spreadsheet:
             if self.headers is not None and item in self.headers:
                 return self.getColumn(item)
             elif item in self.real_headers:
-                return self.getColumn(self.norm_headers[item])
+                return self.getColumn(self.__norm_headers[item])
             else:
                 return self.find(item)
         elif isinstance(item, tuple):
