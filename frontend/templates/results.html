@@ -1,12 +1,37 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="container-fluid">
-    {% for post in posts %}
-        <h2>{{ post['topic'] }}</h2>
-        <a href="{{ post['Discussion URL'] }}">{{ post['Discussion URL'] }}</a>
-        <p>{{ post['Patient Insight'] }}</p>
-    {% endfor %}
-</div>
+<section class="container-fluid my-5 p-5">
+    <div class="row">
+
+        <h2 class="col-md-6">Results</h2>
+        <h2 class="col-md-6 text-muted">some other text</h2>
+    
+    </div>
+    <div class="row">
+
+        <div class="col-md-2">
+            <p>left section</p>
+        </div>
+
+        <div class="col-md-8 bg-light border border-primary">
+            {% for post in posts %}
+                <div class="card m-3">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ post['topic'] }}</h3>
+                        <h5 class="card-subtitle text-muted">This is a sample subtitle</h5>
+                        <p class="card-text">{{ post['Patient Insight'] }}</p>
+                        <a href="{{ post['Discussion URL'] }}" class="card-link">{{ post['Discussion URL'] }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="col-md-2">
+            <p>right section</p>
+        </div>
+    </div>
+    
+</section>
 
 {% endblock content %}
