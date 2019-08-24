@@ -20,5 +20,10 @@ def home():
 def results():
     return render_template('results.html',posts=posts, title='Results')
 
+@app.route("/aboutus")
+def about_us():
+    return render_template('aboutus.html', title='About Us')
+
+
 if __name__ == "__main__":
     app.run()
