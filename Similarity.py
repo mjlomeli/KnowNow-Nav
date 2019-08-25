@@ -87,12 +87,14 @@ def __length_norm(term, row):
 def __cosine(row1, row2):
     return sum([__length_norm(word, row1) * __length_norm(word, row2) for word in list(__index.keys())])
 
+
 def __cosine_score(query: list):
     scores = 0
     length = __corp_size
     __tokenizer.open(dict(zip(query, query)))
     for term in query:
         __weighing(term, )
+
 
 def __process_index():
     for i, row in enumerate(__sheet):

@@ -108,7 +108,7 @@ class Tokenizer:
         else:
             return ['']
 
-    def open(self, sheet: dict):
+    def open(self, sheet):
         """
         Takes in a dictionary with headers and the row of the patient insights.
         """
