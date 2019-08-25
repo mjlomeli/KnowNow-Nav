@@ -10,7 +10,7 @@ from pathlib import Path
 from Spreadsheet import Spreadsheet
 from Tokenizer import Tokenizer
 import pickle
-import math
+from math import log10, sqrt
 from heapq import nlargest
 
 __author__ = "Mauricio Lomeli"
@@ -47,43 +47,59 @@ def __write(pickle_data):
 def __prob_idf(term, index=__index):
     df_t = sum([1 for x in list(index[term].values()) if x > 0])
     diff = __corp_size - df_t
-    return math.log10(diff / df_t) if diff > 0 else 0
+    return log10(diff / df_t) if diff > 0 else 0
 
 
 def __score(term, row: int, index=__index):
-    score = 0
     if isinstance(term, str) and term in index:
         tf = index[term][row] if row in index[term] else 0
-        score += (1 + math.log10(tf)) if tf > 0 else 0
+        return (1 + log10(tf)) if tf > 0 else 0
     elif isinstance(term, list):
+        score = 0
         for word in term:
             if word in index and row in index[word]:
                 tf = index[word][row]
-                score += (1 + math.log10(tf)) if tf > 0 else 0
-    return score
+                score += (1 + log10(tf)) if tf > 0 else 0
+        return score
 
 
 def __idf(term, index=__index):
-    n = __corp_size
-    df_t = sum([1 for x in list(index[term].values()) if x > 0])
-    return math.log10(n / df_t) if df_t > 0 else 0
+    if isinstance(term, str):
+        if term in index:
+            n = __corp_size
+            df_t = sum([1 for x in list(index[term].values()) if x > 0])
+            return log10(n / df_t) if df_t > 0 else 0
+        else:
+            return 0
+    else:
+        raise TypeError('term in __idf function must be a string.')
 
 
 def __weighing(term, row, index=__index):
-    if __IDF_WEIGHING:
-        return __score(term, row, index) * __idf(term, index)
+    if isinstance(term, str):
+        if __IDF_WEIGHING:
+            return __score(term, row, index) * __idf(term, index)
+        else:
+            return __score(term, row, index)
+    elif isinstance(term, list):
+        for word in term:
+            score = 0
+            if __IDF_WEIGHING:
+                score += __score(word, row, index) * __idf(word, index)
+            else:
+                score += __score(word, row, index)
+            return score
     else:
-        return __score(term, row, index)
+        raise TypeError('term in function __weighing must be a string or list of strings.')
 
 
 def __length_norm(term, row, index=__index):
     if term in index and row in index[term]:
         d_term = __weighing(term, row) if __IDF_WEIGHING else __score(term, row)
-        print(d_term)
         if __IDF_WEIGHING:
-            d_norm = math.sqrt(sum([__weighing(words, row) ** 2 for words in list(index.keys())]))
+            d_norm = sqrt(sum([__weighing(words, row) ** 2 for words in index.keys()]))
         else:
-            d_norm = math.sqrt(sum([__score(words, row)**2 for words in list(index.keys())]))
+            d_norm = sqrt(sum([__score(words, row)**2 for words in index.keys()]))
             print(d_norm)
         if d_norm > 0:
             return d_term / d_norm
@@ -117,6 +133,8 @@ def __cosine_score(query, index=__index):
 
 
 def __weight_query(term, query, index=__index):
+    if isinstance(query, str):
+        query = [query]
     q__index = {}
     __tokenizer.open(query)
     q_tf = __tokenizer.tf
@@ -164,8 +182,8 @@ def testing():
              'worser': {0: 2, 1: 0, 2: 1, 3: 1, 4: 1, 5: 0}}
 
     print('Antony:\t\t' + str(__score('antony', 0, index)))
-    print('Brutus:\t\t' + str(__weighing(['brutus'], 0, index)))
-    print('caesar:\t\t' + str(__weighing(['caesar'], 0, index)))
+    print('Brutus:\t\t' + str(__weighing('brutus', 0, index)))
+    print('caesar:\t\t' + str(__weighing('caesar', 0, index)))
     print('Brutus, Caesar:\t\t' + str(__weighing(['brutus', 'caesar'], 0, index)))
 
     index = {
