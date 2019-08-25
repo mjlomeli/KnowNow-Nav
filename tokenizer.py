@@ -111,7 +111,6 @@ class Tokenizer:
         Takes in a dictionary with headers and the row of the patient insights.
         """
         if sheet is not None:
-            self.size = len(sheet[self.__insights])
             self.raw_text = sheet[self.__insights]
             self.__elements = sheet[self.__insights].split('\n')
             self.tags = [sheet[header] for header in self.__tag_list]
