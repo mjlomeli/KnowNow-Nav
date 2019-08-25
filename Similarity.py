@@ -56,7 +56,7 @@ def __score(term, row, index=__index):
         tf = index[term][row] if row in index[term] else 0
         return (1 + log10(tf)) if tf > 0 else 0
     elif isinstance(term, list):
-        return __weighing(term, row, index)
+        return __weighting(term, row, index)
 
 
 """
@@ -84,7 +84,7 @@ def __idf(term, index=__index):
         raise TypeError('term in __idf function must be a string.')
 
 
-def __weighing(term, row, index=__index):
+def __weighting(term, row, index=__index):
     if isinstance(term, str):
         if __IDF_WEIGHTING:
             return __score(term, row, index) * __idf(term, index)
@@ -99,14 +99,14 @@ def __weighing(term, row, index=__index):
                 score += __score(word, row, index)
         return score
     else:
-        raise TypeError('term in function __weighing must be a string or list of strings.')
+        raise TypeError('term in function __weighting must be a string or list of strings.')
 
 
 def __length_norm(term, row, index=__index):
     if term in index and row in index[term]:
-        d_term = __weighing(term, row, index) if __IDF_WEIGHTING else __score(term, row, index)
+        d_term = __weighting(term, row, index) if __IDF_WEIGHTING else __score(term, row, index)
         if __IDF_WEIGHTING:
-            d_norm = sqrt(sum([__weighing(words, row, index) ** 2 for words in index.keys()]))
+            d_norm = sqrt(sum([__weighting(words, row, index) ** 2 for words in index.keys()]))
         else:
             d_norm = sqrt(sum([__score(words, row, index)**2 for words in index.keys()]))
         if d_norm > 0:
@@ -134,7 +134,7 @@ def cosine_score(query, index=__index):
     for term in query:
         w_q = __weight_query(term, query, index)
         for i in range(length):
-            scores[i] += __weighing(term, i, index) * w_q
+            scores[i] += __weighting(term, i, index) * w_q
     for i in range(length):
         scores[i] = scores[i] / doc_word_count[i]
     return nlargest(__max_postings_size, list(zip(scores, [i for i in range(length)])))
@@ -154,7 +154,7 @@ def __weight_query(term, query, index=__index):
         else:
             q__index[tok] = {0: q_tf[tok]}
 
-    return __weighing(term, 0, q__index)
+    return __weighting(term, 0, q__index)
 
 
 def process_index():
@@ -183,11 +183,16 @@ def test():
                  'mercy': {0: 2, 1: 0, 2: 3, 3: 5, 4: 5, 5: 1},
                  'worser': {0: 2, 1: 0, 2: 1, 3: 1, 4: 1, 5: 0}}
 
-        assert abs(__weighing('antony', 0, index) - 4.05) < 0.01, 'Must be about 4.05'
-        assert abs(__weighing('brutus', 0, index) - 1.75) < 0.01, 'Must be about 1.75'
-        assert abs(__weighing('caesar', 0, index) - 2.93) < 0.01, 'Must be about 2.93'
-        assert abs(__score(['brutus', 'caesar'], 0, index) - 4.67) < 0.01, 'Must be about 4.67'
-        assert abs(__weighing(['brutus', 'caesar'], 0, index) - 4.67) < 0.01, 'Must be about 4.67'
+        result = __weighting('antony', 0, index)
+        assert abs(result - 4.05) < 0.01, '__weighting(antony,0) must be about 4.05, result=' + str(result)
+        result = __weighting('brutus', 0, index)
+        assert abs(result - 1.75) < 0.01, '__weighting(brutus,0) must be about 1.75, result=' + str(result)
+        result = __weighting('caesar', 0, index)
+        assert abs(result - 2.93) < 0.01, '__weighting(caesar,0) must be about 2.93, result=' + str(result)
+        result = __score(['brutus', 'caesar'], 0, index)
+        assert abs(result - 4.67) < 0.01, '__score([brutus,caesar],0) must be about 4.67, result=' + str(result)
+        result = __weighting(['brutus', 'caesar'], 0, index)
+        assert abs(result - 4.67) < 0.01, '__weighting([brutus,caesar],0) must be about 4.67, result=' + str(result)
         print('\033[1m\033[92m' + '100% passed' + '\033[0m')
         print('\033[90m' + 'To run cosine similarity test, set __IDF_WEIGHTING = False' + '\033[0m')
         print('\033[90m' + 'Then rerun this test.' + '\033[0m')
@@ -197,11 +202,23 @@ def test():
             'jealous': {0: 10, 1: 7, 2: 11},
             'gossip': {0: 2, 1: 0, 2: 6},
             'wuthering': {0: 0, 1: 0, 2: 38}}
-
-        assert abs(__length_norm('affection', 0, index) - 0.789) < 0.01, 'Must be about 0.78'
-        assert abs(__length_norm('jealous', 0, index) - 0.515) < 0.01, 'Must be about 0.515'
-        assert abs(__length_norm('gossip', 0, index) - 0.335) < 0.01, 'Must be about 0.335'
-        assert abs(__weighing('wuthering', 0, index) - 0) < 0.01, 'Must be about 0'
+        
+        result = __length_norm('affection', 0, index)
+        assert abs(result - 0.789) < 0.01, '__length_norm(affection,0) must be about 0.78, result=' + str(result)
+        result = __length_norm('jealous', 0, index)
+        assert abs(result - 0.515) < 0.01, '__length_norm(jealous,0) must be about 0.515, result=' + str(result)
+        result = __length_norm('gossip', 0, index)
+        assert abs(result - 0.335) < 0.01, '__length_norm(gossip,0) must be about 0.335, result=' + str(result)
+        result = __weighting('wuthering', 0, index)
+        assert abs(result - 0) < 0.01, '__weighting() Must be about 0, result=' + str(result)
+        
+        result = __cosine(0, 1, index)
+        assert abs(result - 0.94) < 0.01, '__cosine(0,1) must be about 0.94, result=' + str(result)
+        result = __cosine(0, 2, index)
+        assert abs(result - 0.79) < 0.01, '__cosine(0,2) must be about 0.79, result=' + str(result)
+        result = __cosine(1, 2, index)
+        assert abs(result - 0.69) < 0.01, '__length_norm(1,2) must be about 0.69, result=' + str(result)
+        
         print('\033[1m\033[92m' + '100% passed' + '\033[0m')
         print('\033[90m' + 'To run tf-idf weighting similarity test, set __IDF_WEIGHTING = True' + '\033[0m')
         print('\033[90m' + 'Then rerun this test.' + '\033[0m')
