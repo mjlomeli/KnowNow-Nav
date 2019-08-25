@@ -112,6 +112,10 @@ class Tokenizer:
         """
         Takes in a dictionary with headers and the row of the patient insights.
         """
+        self.tf = {}
+        self.count = 0
+        self.tokens = []
+        self.tags = []
         if sheet is not None:
             if isinstance(sheet, dict):
                 self.raw_text = sheet[self.__dict_text]

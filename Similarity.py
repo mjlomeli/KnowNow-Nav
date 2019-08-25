@@ -42,58 +42,72 @@ def __write(pickle_data):
         pickle.dump(pickle_data, w)
 
 
-def __prob_idf(term):
-    df_t = sum([1 for x in list(__index[term].values()) if x > 0])
+def __prob_idf(term, index=__index):
+    df_t = sum([1 for x in list(index[term].values()) if x > 0])
     diff = __corp_size - df_t
     return math.log10(diff / df_t) if diff > 0 else 0
 
 
-def __score(query, row: int):
+def __score(query, row: int, index=__index):
     score = 0
-    if isinstance(query, str) and query in __index:
-        tf = __index[query][row] if row in __index[query] else 0
+    if isinstance(query, str) and query in index:
+        tf = index[query][row] if row in index[query] else 0
         score += (1 + math.log10(tf)) if tf > 0 else 0
     elif isinstance(query, list):
         for word in query:
-            if word in __index and row in __index[word]:
-                tf = __index[word][row]
+            if word in index and row in index[word]:
+                tf = index[word][row]
                 score += (1 + math.log10(tf)) if tf > 0 else 0
     return score
 
 
-def __idf(term):
+def __idf(term, index=__index):
     n = __corp_size
-    df_t = sum([1 for x in list(__index[term].values()) if x > 0])
+    df_t = sum([1 for x in list(index[term].values()) if x > 0])
     return math.log10(n / df_t) if df_t > 0 else 0
 
 
-def __weighing(term, row):
-    return __score(term, row) * __idf(term)
+def __weighing(term, row, index=__index):
+    return __score(term, row, index) * __idf(term, index)
 
 
-def __length_norm(term, row):
-    if term in __index and row in __index[term]:
+def __length_norm(term, row, index=__index):
+    if term in index and row in index[term]:
         d_term = __weighing(term, row) if __IDF_WEIGHING else __score(term, row)
         if __IDF_WEIGHING:
-            d_norm = math.sqrt(sum([__weighing(words, row) ** 2 for words in list(__index.keys())]))
+            d_norm = math.sqrt(sum([__weighing(words, row) ** 2 for words in list(index.keys())]))
         else:
-            d_norm = math.sqrt(sum([__score(words, row)**2 for words in list(__index.keys())]))
+            d_norm = math.sqrt(sum([__score(words, row)**2 for words in list(index.keys())]))
         if d_norm > 0:
             return d_term / d_norm
         else:
             return 0
 
 
-def __cosine(row1, row2):
-    return sum([__length_norm(word, row1) * __length_norm(word, row2) for word in list(__index.keys())])
+def __cosine(row1, row2, index=__index):
+    return sum([__length_norm(word, row1) * __length_norm(word, row2) for word in list(index.keys())])
 
 
 def __cosine_score(query: list):
     scores = 0
     length = __corp_size
-    __tokenizer.open(dict(zip(query, query)))
     for term in query:
         __weighing(term, )
+
+
+def __weight_query(term, query, index=__index):
+    q__index = {}
+    __tokenizer.open(query)
+    q_tf = __tokenizer.tf
+
+    tokens = __tokenizer.tokens
+    for tok in tokens:
+        if tok in q__index:
+            q__index[tok][0] = q_tf[tok]
+        else:
+            q__index[tok] = {0: q_tf[tok]}
+
+    return __weighing(term, 0, q__index)
 
 
 def __process_index():
