@@ -6,6 +6,7 @@ If the description is long, the first line should be a short summary of Similari
 that makes sense on its own, separated from the rest by a newline.
 """
 
+import sys
 from pathlib import Path
 from Spreadsheet import Spreadsheet
 from Tokenizer import Tokenizer
@@ -167,9 +168,6 @@ def __process_index():
     return __index
 
 
-
-
-
 def main():
     testing()
 
@@ -208,4 +206,32 @@ def testing():
 
 
 if __name__ == '__main__':
-    main()
+    if '-t' in sys.argv:
+        index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
+                 'brutus': {0: 4, 1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
+                 'caesar': {0: 232, 1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
+                 'calpurnia': {0: 0, 1: 10, 2: 0, 3: 0, 4: 0, 5: 0},
+                 'cleopatra': {0: 57, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+                 'mercy': {0: 2, 1: 0, 2: 3, 3: 5, 4: 5, 5: 1},
+                 'worser': {0: 2, 1: 0, 2: 1, 3: 1, 4: 1, 5: 0}}
+
+        assert abs(__weighing('antony', 0, index) - 4.05) < 0.01, 'Must be about 4.05'
+        assert abs(__weighing('brutus', 0, index) - 1.75) < 0.01, 'Must be about 1.75'
+        assert abs(__weighing('caesar', 0, index) - 2.93) < 0.01, 'Must be about 2.93'
+        assert abs(__score(['brutus', 'caesar'], 0, index) - 4.67) < 0.01, 'Must be about 4.67'
+        assert abs(__weighing(['brutus', 'caesar'], 0, index) - 4.67) < 0.01, 'Must be about 4.67'
+
+        index = {
+            'affection': {0: 115, 1: 58, 2: 20},
+            'jealous': {0: 10, 1: 7, 2: 11},
+            'gossip': {0: 2, 1: 0, 2: 6},
+            'wuthering': {0: 0, 1: 0, 2: 38}}
+
+        assert abs(__length_norm('affection', 0, index) - 0.789) < 0.01, 'Must be about 0.78'
+        assert abs(__length_norm('jealous', 0, index) - 0.515) < 0.01, 'Must be about 0.515'
+        assert abs(__length_norm('gossip', 0, index) - 0.335) < 0.01, 'Must be about 0.335'
+        assert abs(__weighing('wuthering', 0, index) - 0) < 0.01, 'Must be about 0'
+    else:
+        main()
+
+
