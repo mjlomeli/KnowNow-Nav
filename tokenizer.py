@@ -21,6 +21,8 @@ __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
+__dict_text = 'insights'
+
 
 class Tokenizer:
 
@@ -29,7 +31,7 @@ class Tokenizer:
         self.__query = 'query'
         self.__cohort = 'cohort'
         self.__category = 'category'
-        self.__insights = 'insights'
+        self.__dict_text = 'insights'
         self.__tag_list = ['topic', 'cohort', 'profile']
         self.__url = 'url'
         
@@ -112,8 +114,8 @@ class Tokenizer:
         """
         if sheet is not None:
             if isinstance(sheet, dict):
-                self.raw_text = sheet[self.__insights]
-                self.__elements = sheet[self.__insights].split('\n')
+                self.raw_text = sheet[self.__dict_text]
+                self.__elements = sheet[self.__dict_text].split('\n')
                 self.tags = [sheet[header] for header in self.__tag_list]
             elif isinstance(sheet, list):
                 self.__elements = sheet
