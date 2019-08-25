@@ -11,6 +11,7 @@ from Spreadsheet import Spreadsheet
 from tokenizer import Tokenizer
 import pickle
 import math
+from heapq import nlargest
 
 __author__ = "Mauricio Lomeli"
 __date__ = "8/22/2019"
@@ -25,6 +26,7 @@ __sheet = Spreadsheet()
 __corp_size = len(__sheet)
 __tokenizer = Tokenizer()
 __index = {}
+__max_postings_size = 15
 
 __IDF_WEIGHING = False
 
@@ -68,7 +70,10 @@ def __idf(term, index=__index):
 
 
 def __weighing(term, row, index=__index):
-    return __score(term, row, index) * __idf(term, index)
+    if __IDF_WEIGHING:
+        return __score(term, row, index) * __idf(term, index)
+    else:
+        return __score(term, row, index)
 
 
 def __length_norm(term, row, index=__index):
@@ -88,11 +93,25 @@ def __cosine(row1, row2, index=__index):
     return sum([__length_norm(word, row1) * __length_norm(word, row2) for word in list(index.keys())])
 
 
-def __cosine_score(query: list):
-    scores = 0
-    length = __corp_size
+def __cosine_score(query, index=__index):
+    """
+    Optimized cosines efficiently with unweighted query terms
+    :param query: a list of the query
+    :param index: a custom index if the default isn't wanted
+    :return: the Nth largest scores, where N = __max_postings_size = 15
+    """
+    if isinstance(query, list):
+        query = [query]
+    scores = [0] * __corp_size
+    length = len(index[list(index.keys())[0]])
+    doc_word_count = [sum([index[item][i] for item in index.keys() if index[item][i] > 0]) for i in range(length)]
     for term in query:
-        __weighing(term, )
+        w_q = __weight_query(term, query)
+        for i in range(length):
+            scores[i] += __weighing(term, i, index) * w_q
+    for i in range(length):
+        scores[i] = scores[i] / doc_word_count[i]
+    return nlargest(__max_postings_size, list(zip(scores, [i for i in range(length)])))
 
 
 def __weight_query(term, query, index=__index):
