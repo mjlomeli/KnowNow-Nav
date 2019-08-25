@@ -9,6 +9,8 @@ that makes sense on its own, separated from the rest by a newline.
 from pathlib import Path
 from flask import Flask, render_template, url_for, redirect, request, session
 from Spreadsheet import Spreadsheet
+from tokenizer import Tokenizer
+import nltk
 
 # program's author information and licenses
 __author__ = "Mauricio Lomeli"
@@ -36,6 +38,10 @@ __html_query = 'query'
 # Python back-end variables
 __python_query = 'query'
 __python_insights = 'insights'
+
+
+# Natural language processor
+__tokenizer = Tokenizer()
 
 
 @app.route("/")
@@ -83,6 +89,31 @@ def form():
     posts = sheet.convertToDict(sheet[query])
 
     if len(posts) > 0:
+        query = [item for item in sheet[__python_query] if item != '']
+        pair = list(zip(sheet.textLength(query, 50), query))
+        return render_template("ResultsPage.html", posts=posts, pair=pair)
+    else:
+        return render_template(__RESULT_HTML)
+
+
+@app.route("/search", methods=['GET'])
+def search():
+    query = request.args.get('query', '')
+
+    error = 'There doesn\'t exist a \'' + __html_query + '\' form in ' + __RESULT_HTML
+    assert query is not None, error
+
+    tokens = __tokenizer.keep_stop_words(query)
+
+    # TODO: NEED a TFIDF instance here
+    # posts = getStats(tokens) -> [list of the posts]
+    sheet = Spreadsheet()
+    posts = sheet.convertToDict(sheet[query])
+    # delete line of code on top of this comment when ready
+
+
+    if len(posts) > 0:
+        # remove empties
         query = [item for item in sheet[__python_query] if item != '']
         pair = list(zip(sheet.textLength(query, 50), query))
         return render_template("ResultsPage.html", posts=posts, pair=pair)
