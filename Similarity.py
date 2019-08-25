@@ -22,8 +22,11 @@ __status__ = "Prototype"
 
 __data = Path.cwd() / Path('data') / Path('scores.pickle')
 __sheet = Spreadsheet()
+__corp_size = len(__sheet)
 __tokenizer = Tokenizer()
 __index = {}
+
+__IDF_WEIGHING = False
 
 
 def __file():
@@ -37,6 +40,12 @@ def __file():
 def __write(pickle_data):
     with open(__data, 'wb') as w:
         pickle.dump(pickle_data, w)
+
+
+def __prob_idf(term):
+    df_t = sum([1 for x in list(__index[term].values()) if x > 0])
+    diff = __corp_size - df_t
+    return math.log10(diff / df_t) if diff > 0 else 0
 
 
 def __score(query, row: int):
@@ -53,7 +62,7 @@ def __score(query, row: int):
 
 
 def __idf(term):
-    n = len(__sheet)
+    n = __corp_size
     df_t = sum([1 for x in list(__index[term].values()) if x > 0])
     return math.log10(n / df_t) if df_t > 0 else 0
 
@@ -64,8 +73,11 @@ def __weighing(term, row):
 
 def __length_norm(term, row):
     if term in __index and row in __index[term]:
-        d_term = __weighing(term, row)
-        d_norm = math.sqrt(sum([__weighing(words, row)**2 for words in list(__index.keys())]))
+        d_term = __weighing(term, row) if __IDF_WEIGHING else __score(term, row)
+        if __IDF_WEIGHING:
+            d_norm = math.sqrt(sum([__weighing(words, row) ** 2 for words in list(__index.keys())]))
+        else:
+            d_norm = math.sqrt(sum([__score(words, row)**2 for words in list(__index.keys())]))
         if d_norm > 0:
             return d_term / d_norm
         else:
@@ -75,6 +87,12 @@ def __length_norm(term, row):
 def __cosine(row1, row2):
     return sum([__length_norm(word, row1) * __length_norm(word, row2) for word in list(__index.keys())])
 
+def __cosine_score(query: list):
+    scores = 0
+    length = __corp_size
+    __tokenizer.open(dict(zip(query, query)))
+    for term in query:
+        __weighing(term, )
 
 def __process_index():
     for i, row in enumerate(__sheet):
