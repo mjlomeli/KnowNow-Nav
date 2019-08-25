@@ -10,8 +10,6 @@ from pathlib import Path
 from flask import Flask, render_template, url_for, redirect, request, session
 from Spreadsheet import Spreadsheet
 
-PATH = Path.cwd()
-
 # program's author information and licenses
 __author__ = "Mauricio Lomeli"
 __credits__ = ["Derek Eijansantos", "Anne Wang", "Jennifer Kwon"]
@@ -22,8 +20,22 @@ __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
+
 app = Flask(__name__)
 app.config["DEBUG"] = True
+
+# File variables
+__HOME_HTML = 'Homepage.html'
+__RESULT_HTML = 'ResultsPage.html'
+__HOMEPAGE_PATH = Path.cwd() / Path('templates') / Path(__HOME_HTML)
+__RESULT_PATH = Path.cwd() / Path('templates') / Path(__RESULT_HTML)
+
+# HTML variables
+__html_query = 'query'
+
+# Python back-end variables
+__python_query = 'query'
+__python_insights = 'insights'
 
 
 @app.route("/")
@@ -36,19 +48,17 @@ def home():
     :return:
     """
     sheet = Spreadsheet()
-    assert len(sheet) > 0, 'Spreadsheet size is 0 on FlaskDriver.py home function.'
 
     # removes duplicates and empty responses
-    query = [item for item in set(sheet['query']) if item != '']
-    assert len(sheet['query']) > 0, 'Need to change header name call in FlaskDriver.py home function'
+    query = [item for item in set(sheet[__python_query]) if item != '']
 
-    # remove this when final, it is only for displaying purposes.
+    # TODO: remove this when final, it is only for displaying purposes.
     query += ['Encouragement'] + ['Specific Conditions'] + ['Stage II BC']
 
     # returns a list(tuple) of (truncated text, full text)
     pair = list(zip(sheet.textLength(query, 50), query))
 
-    return render_template("Homepage.html", pair=pair)
+    return render_template(__HOME_HTML, pair=pair)
 
 
 @app.route('/form', methods=['GET', 'POST'])
@@ -60,25 +70,40 @@ def form():
     to the ResultsPage.html.
     :return:
     """
+    # Gets from the HTML
     if request.method == 'POST':
-        query = request.form('query')
+        query = request.form(__html_query)
     else:
-        query = request.args.get('query')
+        query = request.args.get(__html_query)
 
-    if query is None:
-        print("You changed the name of the select list! Change it back to query.")
+    error = 'There doesn\'t exist a \'' + __html_query + '\' form in ' + __RESULT_HTML
+    assert query is not None, error
 
     sheet = Spreadsheet()
     posts = sheet.convertToDict(sheet[query])
 
     if len(posts) > 0:
-        query = [item for item in sheet['query'] if item != '']
+        query = [item for item in sheet[__python_query] if item != '']
         pair = list(zip(sheet.textLength(query, 50), query))
         return render_template("ResultsPage.html", posts=posts, pair=pair)
     else:
-        return render_template("ResultsPage.html")
+        return render_template(__RESULT_HTML)
 
+
+def __test_function():
+    """
+    Raises an error and warns you to have everything installed in the appropriate places. If you fail any,
+    it will output an error message of what could had happened.
+    """
+    sheet = Spreadsheet()
+    assert len(sheet) > 0, 'Spreadsheet size is 0 on FlaskDriver.py home function.'
+    assert len(sheet[__python_query]) > 0, 'FlaskDriver.py: \'' + __python_query + '\' is not a header in Spreadsheet'
+    assert __RESULT_PATH.exists(), 'You\'r missing or misspelled the ' + __RESULT_HTML + ' in the templates folder.'
+    error = 'You\'r missing the ' + __HOME_HTML + ' in the templates folder. Or you misspelled it.'
+    assert __HOMEPAGE_PATH.exists(), error
+
+
+__test_function()
 
 app.run()
-
 
