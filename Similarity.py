@@ -27,8 +27,7 @@ __corp_size = 37
 __tokenizer = Tokenizer()
 __index = {}
 __max_postings_size = 15
-
-__IDF_WEIGHING = False
+__IDF_WEIGHING = True
 
 
 def __file():
@@ -50,17 +49,25 @@ def __prob_idf(term, index=__index):
     return log10(diff / df_t) if diff > 0 else 0
 
 
-def __score(term, row: int, index=__index):
+def __score(term, row, index=__index):
+    if isinstance(term, str) and term in index:
+        tf = index[term][row] if row in index[term] else 0
+        return (1 + log10(tf)) if tf > 0 else 0
+    elif isinstance(term, list):
+        return __weighing(term, row, index)
+
+
+"""
+def __score(term, row, index=__index):
     if isinstance(term, str) and term in index:
         tf = index[term][row] if row in index[term] else 0
         return (1 + log10(tf)) if tf > 0 else 0
     elif isinstance(term, list):
         score = 0
         for word in term:
-            if word in index and row in index[word]:
-                tf = index[word][row]
-                score += (1 + log10(tf)) if tf > 0 else 0
+            score += __score(word, row, index)
         return score
+"""
 
 
 def __idf(term, index=__index):
@@ -82,25 +89,24 @@ def __weighing(term, row, index=__index):
         else:
             return __score(term, row, index)
     elif isinstance(term, list):
+        score = 0
         for word in term:
-            score = 0
             if __IDF_WEIGHING:
                 score += __score(word, row, index) * __idf(word, index)
             else:
                 score += __score(word, row, index)
-            return score
+        return score
     else:
         raise TypeError('term in function __weighing must be a string or list of strings.')
 
 
 def __length_norm(term, row, index=__index):
     if term in index and row in index[term]:
-        d_term = __weighing(term, row) if __IDF_WEIGHING else __score(term, row)
+        d_term = __weighing(term, row, index) if __IDF_WEIGHING else __score(term, row, index)
         if __IDF_WEIGHING:
-            d_norm = sqrt(sum([__weighing(words, row) ** 2 for words in index.keys()]))
+            d_norm = sqrt(sum([__weighing(words, row, index) ** 2 for words in index.keys()]))
         else:
-            d_norm = sqrt(sum([__score(words, row)**2 for words in index.keys()]))
-            print(d_norm)
+            d_norm = sqrt(sum([__score(words, row, index)**2 for words in index.keys()]))
         if d_norm > 0:
             return d_term / d_norm
         else:
@@ -124,7 +130,7 @@ def __cosine_score(query, index=__index):
     length = len(index[list(index.keys())[0]])
     doc_word_count = [sum([index[item][i] for item in index.keys() if index[item][i] > 0]) for i in range(length)]
     for term in query:
-        w_q = __weight_query(term, query)
+        w_q = __weight_query(term, query, index)
         for i in range(length):
             scores[i] += __weighing(term, i, index) * w_q
     for i in range(length):
@@ -181,9 +187,12 @@ def testing():
              'mercy': {0: 2, 1: 0, 2: 3, 3: 5, 4: 5, 5: 1},
              'worser': {0: 2, 1: 0, 2: 1, 3: 1, 4: 1, 5: 0}}
 
-    print('Antony:\t\t' + str(__score('antony', 0, index)))
+    print('Antony:\t\t' + str(__weighing('antony', 0, index)))
     print('Brutus:\t\t' + str(__weighing('brutus', 0, index)))
     print('caesar:\t\t' + str(__weighing('caesar', 0, index)))
+    # different functions displaying displaying the same results, in case
+    # someone doesn't know the difference between __score(queries) and __weighing(queries)
+    print('Brutus, Caesar:\t\t' + str(__score(['brutus', 'caesar'], 0, index)))
     print('Brutus, Caesar:\t\t' + str(__weighing(['brutus', 'caesar'], 0, index)))
 
     index = {
