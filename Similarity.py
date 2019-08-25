@@ -58,15 +58,22 @@ def __idf(term):
     return math.log10(n / df_t) if df_t > 0 else 0
 
 
-def __weighing(query, row):
-    score = 0
-    for term in query:
-        score += __score(term, row) * __idf(term)
-    return score
+def __weighing(term, row):
+    return __score(term, row) * __idf(term)
 
 
-def __cosine():
-    pass
+def __length_norm(term, row):
+    if term in __index and row in __index[term]:
+        d_term = __weighing(term, row)
+        d_norm = math.sqrt(sum([__weighing(words, row)**2 for words in list(__index.keys())]))
+        if d_norm > 0:
+            return d_term / d_norm
+        else:
+            return 0
+
+
+def __cosine(row1, row2):
+    return sum([__length_norm(word, row1) * __length_norm(word, row2) for word in list(__index.keys())])
 
 
 def __process_index():
@@ -91,9 +98,7 @@ def main():
     mac = [0, 0, 1, 0, 0, 1, 0]
     index = {}
     for i in range(len(a)):
-        if a[i] not in index:
-            index[a[i]] = {i: {}}
-        index[a[i]][0] = ant_and_cleo[i]
+        index[a[i]] = {0: ant_and_cleo[i]}
         index[a[i]][1] = ju_cea[i]
         index[a[i]][2] = tempest[i]
         index[a[i]][3] = ham[i]
@@ -108,6 +113,17 @@ def main():
     print('caesar:\t\t' + str(__weighing(['caesar'], 0)))
     print('Brutus, Caesar:\t\t' + str(__weighing(['brutus', 'caesar'], 0)))
 
+
+    """
+    Cosine Similarity
+    For Vector Space Similarity slide Sec 6.3
+
+    def __length_norm(term, row):
+        if term in __index and row in __index[term]:
+            d_term = __score(term, row)
+            d_norm = math.sqrt(sum([__score(words, row) ** 2 for words in list(__index.keys())]))
+            return d_term / d_norm
+    """
 
 if __name__ == '__main__':
     main()
