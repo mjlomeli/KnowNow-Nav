@@ -122,6 +122,7 @@ class Tokenizer:
                 self.__elements = sheet[self.__dict_text].split('\n')
                 self.tags = [sheet[header] for header in self.__tag_list]
             elif isinstance(sheet, list):
+                print(sheet)
                 self.__elements = sheet
                 self.tags = None
                 self.raw_text = ' '.join(sheet)

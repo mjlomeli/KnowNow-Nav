@@ -29,7 +29,7 @@ __corp_size = 37
 __tokenizer = Tokenizer()
 __index = {}
 __max_postings_size = 15
-__IDF_WEIGHTING = True
+__IDF_WEIGHTING = False
 
 
 def __file():
@@ -116,7 +116,7 @@ def __length_norm(term, row, index=__index):
 
 
 def __cosine(row1, row2, index=__index):
-    return sum([__length_norm(word, row1) * __length_norm(word, row2) for word in list(index.keys())])
+    return sum([__length_norm(word, row1, index) * __length_norm(word, row2, index) for word in index.keys()])
 
 
 def cosine_score(query, index=__index):
@@ -126,7 +126,7 @@ def cosine_score(query, index=__index):
     :param index: a custom index if the default isn't wanted
     :return: the Nth largest scores, where N = __max_postings_size = 15
     """
-    if isinstance(query, list):
+    if isinstance(query, str):
         query = [query]
     scores = [0] * __corp_size
     length = len(index[list(index.keys())[0]])
@@ -211,14 +211,14 @@ def test():
         assert abs(result - 0.335) < 0.01, '__length_norm(gossip,0) must be about 0.335, result=' + str(result)
         result = __weighting('wuthering', 0, index)
         assert abs(result - 0) < 0.01, '__weighting() Must be about 0, result=' + str(result)
-        
+
         result = __cosine(0, 1, index)
         assert abs(result - 0.94) < 0.01, '__cosine(0,1) must be about 0.94, result=' + str(result)
         result = __cosine(0, 2, index)
         assert abs(result - 0.79) < 0.01, '__cosine(0,2) must be about 0.79, result=' + str(result)
         result = __cosine(1, 2, index)
         assert abs(result - 0.69) < 0.01, '__length_norm(1,2) must be about 0.69, result=' + str(result)
-        
+
         print('\033[1m\033[92m' + '100% passed' + '\033[0m')
         print('\033[90m' + 'To run tf-idf weighting similarity test, set __IDF_WEIGHTING = True' + '\033[0m')
         print('\033[90m' + 'Then rerun this test.' + '\033[0m')
