@@ -15,6 +15,7 @@ from math import log10, sqrt
 from heapq import nlargest
 
 __author__ = "Mauricio Lomeli"
+__credits__ = ['Prof. Mustafa Ibrahim']
 __date__ = "8/22/2019"
 __license__ = "MIT"
 __version__ = "0.0.0.1"
@@ -28,7 +29,7 @@ __corp_size = 37
 __tokenizer = Tokenizer()
 __index = {}
 __max_postings_size = 15
-__IDF_WEIGHING = True
+__IDF_WEIGHTING = True
 
 
 def __file():
@@ -85,14 +86,14 @@ def __idf(term, index=__index):
 
 def __weighing(term, row, index=__index):
     if isinstance(term, str):
-        if __IDF_WEIGHING:
+        if __IDF_WEIGHTING:
             return __score(term, row, index) * __idf(term, index)
         else:
             return __score(term, row, index)
     elif isinstance(term, list):
         score = 0
         for word in term:
-            if __IDF_WEIGHING:
+            if __IDF_WEIGHTING:
                 score += __score(word, row, index) * __idf(word, index)
             else:
                 score += __score(word, row, index)
@@ -103,8 +104,8 @@ def __weighing(term, row, index=__index):
 
 def __length_norm(term, row, index=__index):
     if term in index and row in index[term]:
-        d_term = __weighing(term, row, index) if __IDF_WEIGHING else __score(term, row, index)
-        if __IDF_WEIGHING:
+        d_term = __weighing(term, row, index) if __IDF_WEIGHTING else __score(term, row, index)
+        if __IDF_WEIGHTING:
             d_norm = sqrt(sum([__weighing(words, row, index) ** 2 for words in index.keys()]))
         else:
             d_norm = sqrt(sum([__score(words, row, index)**2 for words in index.keys()]))
@@ -118,7 +119,7 @@ def __cosine(row1, row2, index=__index):
     return sum([__length_norm(word, row1) * __length_norm(word, row2) for word in list(index.keys())])
 
 
-def __cosine_score(query, index=__index):
+def cosine_score(query, index=__index):
     """
     Optimized cosines efficiently with unweighted query terms
     :param query: a list of the query
@@ -156,7 +157,7 @@ def __weight_query(term, query, index=__index):
     return __weighing(term, 0, q__index)
 
 
-def __process_index():
+def process_index():
     for i, row in enumerate(__sheet):
         __tokenizer.open(__sheet.convertToDict(row))
         tokens = __tokenizer.tokens
@@ -169,44 +170,11 @@ def __process_index():
 
 
 def main():
-    testing()
+    pass
 
 
-def testing():
-    """
-    When testing, must change N to 37 by making the variable __corp_size = 37
-    :return:
-    """
-    index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
-             'brutus': {0: 4, 1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
-             'caesar': {0: 232, 1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
-             'calpurnia': {0: 0, 1: 10, 2: 0, 3: 0, 4: 0, 5: 0},
-             'cleopatra': {0: 57, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
-             'mercy': {0: 2, 1: 0, 2: 3, 3: 5, 4: 5, 5: 1},
-             'worser': {0: 2, 1: 0, 2: 1, 3: 1, 4: 1, 5: 0}}
-
-    print('Antony:\t\t' + str(__weighing('antony', 0, index)))
-    print('Brutus:\t\t' + str(__weighing('brutus', 0, index)))
-    print('caesar:\t\t' + str(__weighing('caesar', 0, index)))
-    # different functions displaying displaying the same results, in case
-    # someone doesn't know the difference between __score(queries) and __weighing(queries)
-    print('Brutus, Caesar:\t\t' + str(__score(['brutus', 'caesar'], 0, index)))
-    print('Brutus, Caesar:\t\t' + str(__weighing(['brutus', 'caesar'], 0, index)))
-
-    index = {
-        'affection': {0: 115, 1: 58, 2: 20},
-        'jealous': {0: 10, 1: 7, 2: 11},
-        'gossip': {0: 2, 1: 0, 2: 6},
-        'wuthering': {0: 0, 1: 0, 2: 38}}
-
-    print('affection:\t\t' + str(__length_norm('affection', 0, index)))
-    print('jealous:\t\t' + str(__length_norm('jealous', 0, index)))
-    print('gossip:\t\t' + str(__length_norm('gossip', 0, index)))
-    print('wuthering\t\t' + str(__weighing('wuthering', 0, index)))
-
-
-if __name__ == '__main__':
-    if '-t' in sys.argv:
+def test():
+    if __IDF_WEIGHTING:
         index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
                  'brutus': {0: 4, 1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
                  'caesar': {0: 232, 1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
@@ -220,7 +188,10 @@ if __name__ == '__main__':
         assert abs(__weighing('caesar', 0, index) - 2.93) < 0.01, 'Must be about 2.93'
         assert abs(__score(['brutus', 'caesar'], 0, index) - 4.67) < 0.01, 'Must be about 4.67'
         assert abs(__weighing(['brutus', 'caesar'], 0, index) - 4.67) < 0.01, 'Must be about 4.67'
-
+        print('\033[1m\033[92m' + '100% passed' + '\033[0m')
+        print('\033[90m' + 'To run cosine similarity test, set __IDF_WEIGHTING = False' + '\033[0m')
+        print('\033[90m' + 'Then rerun this test.' + '\033[0m')
+    else:
         index = {
             'affection': {0: 115, 1: 58, 2: 20},
             'jealous': {0: 10, 1: 7, 2: 11},
@@ -231,6 +202,14 @@ if __name__ == '__main__':
         assert abs(__length_norm('jealous', 0, index) - 0.515) < 0.01, 'Must be about 0.515'
         assert abs(__length_norm('gossip', 0, index) - 0.335) < 0.01, 'Must be about 0.335'
         assert abs(__weighing('wuthering', 0, index) - 0) < 0.01, 'Must be about 0'
+        print('\033[1m\033[92m' + '100% passed' + '\033[0m')
+        print('\033[90m' + 'To run tf-idf weighting similarity test, set __IDF_WEIGHTING = True' + '\033[0m')
+        print('\033[90m' + 'Then rerun this test.' + '\033[0m')
+
+
+if __name__ == '__main__':
+    if '-t' in sys.argv:
+        test()
     else:
         main()
 
