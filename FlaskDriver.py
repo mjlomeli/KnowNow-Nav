@@ -9,7 +9,7 @@ that makes sense on its own, separated from the rest by a newline.
 from pathlib import Path
 from flask import Flask, render_template, url_for, redirect, request, session
 from Spreadsheet import Spreadsheet
-from tokenizer import Tokenizer
+from Tokenizer import Tokenizer
 import nltk
 
 # program's author information and licenses

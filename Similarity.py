@@ -8,7 +8,7 @@ that makes sense on its own, separated from the rest by a newline.
 
 from pathlib import Path
 from Spreadsheet import Spreadsheet
-from tokenizer import Tokenizer
+from Tokenizer import Tokenizer
 import pickle
 import math
 from heapq import nlargest
@@ -23,7 +23,7 @@ __status__ = "Prototype"
 
 __data = Path.cwd() / Path('data') / Path('scores.pickle')
 __sheet = Spreadsheet()
-__corp_size = len(__sheet)
+__corp_size = 37
 __tokenizer = Tokenizer()
 __index = {}
 __max_postings_size = 15
@@ -50,13 +50,13 @@ def __prob_idf(term, index=__index):
     return math.log10(diff / df_t) if diff > 0 else 0
 
 
-def __score(query, row: int, index=__index):
+def __score(term, row: int, index=__index):
     score = 0
-    if isinstance(query, str) and query in index:
-        tf = index[query][row] if row in index[query] else 0
+    if isinstance(term, str) and term in index:
+        tf = index[term][row] if row in index[term] else 0
         score += (1 + math.log10(tf)) if tf > 0 else 0
-    elif isinstance(query, list):
-        for word in query:
+    elif isinstance(term, list):
+        for word in term:
             if word in index and row in index[word]:
                 tf = index[word][row]
                 score += (1 + math.log10(tf)) if tf > 0 else 0
@@ -79,10 +79,12 @@ def __weighing(term, row, index=__index):
 def __length_norm(term, row, index=__index):
     if term in index and row in index[term]:
         d_term = __weighing(term, row) if __IDF_WEIGHING else __score(term, row)
+        print(d_term)
         if __IDF_WEIGHING:
             d_norm = math.sqrt(sum([__weighing(words, row) ** 2 for words in list(index.keys())]))
         else:
             d_norm = math.sqrt(sum([__score(words, row)**2 for words in list(index.keys())]))
+            print(d_norm)
         if d_norm > 0:
             return d_term / d_norm
         else:
@@ -141,42 +143,42 @@ def __process_index():
     return __index
 
 
+
+
+
 def main():
-    a = ['antony', 'brutus', 'caesar', 'calpurnia', 'cleopatra', 'mercy', 'worser']
-    ant_and_cleo = [157, 4, 232, 0, 57, 2, 2]
-    ju_cea = [73, 157, 227, 10, 0, 0, 0]
-    tempest = [0, 0, 0, 0, 0, 3, 1]
-    ham = [0, 1, 2, 0, 0, 5, 1]
-    othe = [0, 0, 1, 0, 0, 5, 1]
-    mac = [0, 0, 1, 0, 0, 1, 0]
-    index = {}
-    for i in range(len(a)):
-        index[a[i]] = {0: ant_and_cleo[i]}
-        index[a[i]][1] = ju_cea[i]
-        index[a[i]][2] = tempest[i]
-        index[a[i]][3] = ham[i]
-        index[a[i]][4] = othe[i]
-        index[a[i]][5] = mac[i]
-
-    __index = index  # must place this and all above outside of main to work.
-                     # and must change n in the idf function to 37
-
-    print('Antony:\t\t' + str(__score('antony', 0) * __idf('antony')))
-    print('Brutus:\t\t' + str(__weighing(['brutus'], 0)))
-    print('caesar:\t\t' + str(__weighing(['caesar'], 0)))
-    print('Brutus, Caesar:\t\t' + str(__weighing(['brutus', 'caesar'], 0)))
+    testing()
 
 
+def testing():
     """
-    Cosine Similarity
-    For Vector Space Similarity slide Sec 6.3
-
-    def __length_norm(term, row):
-        if term in __index and row in __index[term]:
-            d_term = __score(term, row)
-            d_norm = math.sqrt(sum([__score(words, row) ** 2 for words in list(__index.keys())]))
-            return d_term / d_norm
+    When testing, must change N to 37 by making the variable __corp_size = 37
+    :return:
     """
+    index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
+             'brutus': {0: 4, 1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
+             'caesar': {0: 232, 1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
+             'calpurnia': {0: 0, 1: 10, 2: 0, 3: 0, 4: 0, 5: 0},
+             'cleopatra': {0: 57, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+             'mercy': {0: 2, 1: 0, 2: 3, 3: 5, 4: 5, 5: 1},
+             'worser': {0: 2, 1: 0, 2: 1, 3: 1, 4: 1, 5: 0}}
+
+    print('Antony:\t\t' + str(__score('antony', 0, index)))
+    print('Brutus:\t\t' + str(__weighing(['brutus'], 0, index)))
+    print('caesar:\t\t' + str(__weighing(['caesar'], 0, index)))
+    print('Brutus, Caesar:\t\t' + str(__weighing(['brutus', 'caesar'], 0, index)))
+
+    index = {
+        'affection': {0: 115, 1: 58, 2: 20},
+        'jealous': {0: 10, 1: 7, 2: 11},
+        'gossip': {0: 2, 1: 0, 2: 6},
+        'wuthering': {0: 0, 1: 0, 2: 38}}
+
+    print('affection:\t\t' + str(__length_norm('affection', 0, index)))
+    print('jealous:\t\t' + str(__length_norm('jealous', 0, index)))
+    print('gossip:\t\t' + str(__length_norm('gossip', 0, index)))
+    print('wuthering\t\t' + str(__weighing('wuthering', 0, index)))
+
 
 if __name__ == '__main__':
     main()
