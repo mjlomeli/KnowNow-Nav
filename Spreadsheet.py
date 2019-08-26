@@ -20,7 +20,7 @@ __status__ = "Prototype"
 
 # default required values
 PATH = Path.cwd()
-DEFAULT_SPREADSHEET = PATH / Path("data") / Path("Patient Insights - Insights.csv")
+DEFAULT_SPREADSHEET = PATH / Path("data") / Path("Patient Insights - Reconciled insights")
 
 REQUIRE = ["Comparing Therapies", "Side Effects","Right treatment?", "Specific Therapy Inquiries",
            "Others' experience", 'Symptoms diagnosis', 'Side effect management', 'Recurrence Queries',
@@ -29,18 +29,8 @@ REQUIRE = ["Comparing Therapies", "Side Effects","Right treatment?", "Specific T
 STAGES = ['Stage 0', 'Stage 1', 'Stage 1A', 'Stage 1B', 'Stage 2', 'Stage 2A',
           'Stage 2B', 'Stage 3', 'Stage 3A', 'Stage 3B', 'Stage 3C', 'Stage 4']
 
-letter_replace = [('stage iv', 'stage 4'), ('stage iii', 'stage 3'), ('stage ii', 'stage 2'), ('stage i', 'stage 1'),
-                  ('4 ab', '4ab'), ('4 bc', '4bc'), ('4 ac', '4ac'), ('4 ba', '4ab'), ('4 cb', '4bc'), ('4 ca', '4ac'),
-                  ('4 b', '4b'), ('4 a', '4a'), ('4 c', '4c'), ('3 ab', '3ab'), ('3 bc', '3bc'), ('3 ac', '3ac'),
-                  ('3 ba', '3ab'), ('3 cb', '3bc'), ('3 ca', '3ac'), ('3 b', '3b'), ('3 a', '3a'), ('3 c', '3c'),
-                  ('2 ab', '2ab'), ('2 bc', '2bc'), ('2 ac', '2ac'), ('2 ba', '2ab'), ('2 cb', '2bc'),
-                  ('2 ca', '2ac'), ('2 b', '2b'), ('2 a', '2a'), ('2 c', '2c'),('1 ab', '1ab'), ('1 bc', '1bc'),
-                  ('1 ac', '1ac'), ('1 ba', '1ab'), ('1 cb', '1bc'), ('1 ca', '1ac'), ('1 b', '1b'), ('1 a', '1a'),
-                  ('1 c', '1c')]
-
-
 DEFAULT_TEXT_LENGTH = 30
-NORM_HEADERS = {
+DEPRECIATED_NORM_HEADERS = {    # not needed anymore, only for previous Insights.csv
     'Topic': 'topic',
     'Date discussion (month/ year)': 'date',
     'Patient Query/ Inquiry': 'query',
