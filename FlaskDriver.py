@@ -27,7 +27,7 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 
 # File variables
-__HOME_HTML = 'AlternateHomePage.mht'
+__HOME_HTML = 'Homepage.html'
 __RESULT_HTML = 'ResultsPage.html'
 __HOMEPAGE_PATH = Path.cwd() / Path('templates') / Path(__HOME_HTML)
 __RESULT_PATH = Path.cwd() / Path('templates') / Path(__RESULT_HTML)
