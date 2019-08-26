@@ -89,6 +89,10 @@ class Spreadsheet:
             self.__normalize(headers)
         else:
             self.headers = self.real_headers
+        self.testing = False
+
+    def keys(self):
+        return self.headers
 
     def exists(self, item=None):
         if item is None:

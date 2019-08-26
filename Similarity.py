@@ -24,12 +24,12 @@ __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
 __data = Path.cwd() / Path('data') / Path('scores.pickle')
-__sheet = Spreadsheet()
-__corp_size = 37
+__corpus = None             # must add your file/items here like your corpus    
+__corp_size = 37            # must change value
 __tokenizer = Tokenizer()
 __index = {}
-__max_postings_size = 15
-__IDF_WEIGHTING = False
+__max_postings_size = 15    # choose maximum number of results for cosine
+__IDF_WEIGHTING = False     # must set to True
 
 
 def __file():
@@ -158,8 +158,20 @@ def __weight_query(term, query, index=__index):
 
 
 def process_index():
-    for i, row in enumerate(__sheet):
-        __tokenizer.open(__sheet.convertToDict(row))
+    """
+    Your corpus must be iterable to use this function.
+    Also, it should allow to convert itself into a dictionary.
+    The keys will be the special tags which have additional weight.
+    :return: dict, index holding term frequency
+    """
+    for i, row in enumerate(__corpus):
+        try:
+            __tokenizer.open(dict(__corpus[i]))
+        except Exception:
+            try:
+                __tokenizer.open(__corpus.convertToDict(row))
+            except Exception:
+                pass
         tokens = __tokenizer.tokens
         for tok in tokens:
             if tok in __index:
