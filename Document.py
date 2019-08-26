@@ -24,8 +24,18 @@ __status__ = "Prototype"
 _TESTING = False
 _TOKENIZER = Tokenizer()
 _header_needing_tokenized = ['insights', 'topic']
+_associated_headers = {'intervention': 'side_effects',
+                       'side_effects': 'int_side_effects',
+                       'intervention': 'cohort'}
 _header_w_logic = ['intervention', 'side_effects']
-
+_NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
+                'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
+                'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
+                'Node (N)': 'node', 'Metastasis (M)': 'metastasis', 'Grade': 'grade', 'Recurrence': 'recurrence',
+                'Category Tag': 'category', 'Intervention': 'intervention', 'Associated Side effect': 'side_effects',
+                'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
+                'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
+                'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
 
 
 class Logic:
@@ -85,6 +95,7 @@ class Logic:
             self.inOrder(v.left) [logic goes here] self.inOrder(v.right)
     """
 
+
 class Cell(object):
     """A data descriptor that sets and returns values
        normally and prints a message logging their access.
@@ -130,6 +141,12 @@ class Cell(object):
         return self.__prev
         #TODO: add Jennifer and Anne's code here
 
+    def __add__(self, other):
+        if isinstance(other, str):
+            return self.val + other
+        elif isinstance(other, Cell):
+            return str(self) + str(other)
+
     def __eq__(self, other):
         return self.val == other
 
@@ -140,7 +157,10 @@ class Cell(object):
         return item in self.val
 
     def __str__(self):
-        return self.val
+        trunc = self.header[:10]
+        next = self.__next if self.__next is not None else 'None'
+        result = '(' + trunc + ')-->' + next
+        return result
 
     def __get__(self, obj, objtype):
         if _TESTING:
