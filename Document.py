@@ -43,16 +43,16 @@ _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': '
 
 
 class Cell(object):
-    """A data descriptor that sets and returns values
-       normally and prints a message logging their access.
+    """
+    Holds each individual data. Has higher level of control. Each cell makes up a node.
     """
     cell_total = 0
     cell_global_print = True
     cell_global = []
 
-    def __init__(self, cell=None, header_name=None, row_number=None, logic=False):
+    def __init__(self, content=None, header_name=None, row_number=None):
         Cell.cell_total += 1
-        self.val = cell
+        self.content = content
         self.header = header_name
         self.id = row_number
         self.__tokens = None
@@ -60,10 +60,10 @@ class Cell(object):
         self.__next = {}
         self.__prev = {}
         self.__index = 0
-        if header_name in _needing_lemma and cell is not None and isinstance(cell, str):
-            self.__tokenize(cell)
-        if header_name in _header_w_logic and cell is not None and isinstance(cell, str):
-            self.__logic(cell)
+        if header_name in _needing_lemma and content is not None and isinstance(content, str):
+            self.__tokenize(content)
+        if header_name in _header_w_logic and content is not None and isinstance(content, str):
+            self.__logic(content)
 
     def __print(self):
         trunc = self.header[:10]
@@ -82,15 +82,19 @@ class Cell(object):
                     result = result + '(' + cell.header + ')' + '\n'
             return result
 
-    def __tokenize(self, cell):
-        _TOKENIZER.open(cell)
+    def __tokenize(self, content):
+        _TOKENIZER.open(content)
         self.__tf = _TOKENIZER.tf
         self.__tokens = list(self.__tf.keys())
 
     def getTokens(self):
+        if self.__tokens is None:
+            self.__tokenize(self.content)
         return self.__tokens
 
     def getTF(self):
+        if self.__tf is None:
+            self.__tokenize(self.content)
         return self.__tf
 
     def setNext(self, next_cell):
@@ -147,7 +151,7 @@ class Cell(object):
 
     def __add__(self, other):
         if isinstance(other, str):
-            return self.val + other
+            return self.content + other
         elif isinstance(other, Cell):
             self.setNext(other)
         #Todo: add Jennifer and Anne's code here
@@ -160,7 +164,7 @@ class Cell(object):
 
     def __contains__(self, item):
         if isinstance(item, str):
-            return item in self.val
+            return item in self.content
         elif isinstance(item, Cell):
             return self == item
 
@@ -212,19 +216,19 @@ class Cell(object):
     def __get__(self, obj, objtype):
         if _TESTING:
             print('Retrieving ' + str(self.header) + ':' + str(self.row))
-        return self.val
+        return self.content
 
     def __set__(self, obj, val):
         if _TESTING:
             print('Updating ' + str(self.header) + ':' + str(self.row))
-        self.val = val
+        self.content = val
 
     def __eq__(self, other):
         if isinstance(other, str):
-            return self.val == other
+            return self.content == other
         elif isinstance(other, Cell):
             result = True
-            if other.val != self.val:
+            if other.val != self.content:
                 return False
             if other.header != self.header:
                 return False
@@ -236,9 +240,9 @@ class Cell(object):
 
     def __ne__(self, other):
         if isinstance(other, str):
-            return other != self.val
+            return other != self.content
         elif isinstance(other, Cell):
-            if other.val != self.val:
+            if other.val != self.content:
                 return True
             if other.header != self.header:
                 return True
@@ -249,7 +253,7 @@ class Cell(object):
             return True
 
     def __list_values(self):
-        return [item for sublist in list(self.values()) for item in sublist]
+        return [item for sublist in list(self.contentues()) for item in sublist]
 
     def __del__(self):
         Cell.cell_total -= 1

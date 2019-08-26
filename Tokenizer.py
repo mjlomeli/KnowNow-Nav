@@ -108,6 +108,8 @@ class Tokenizer:
         self.count = 0
         self.tokens = []
         self.tags = []
+        self.raw_text = None
+        self.__elements = []
         if sheet is not None:
             if isinstance(sheet, dict):
                 self.raw_text = sheet[self.__dict_text]
