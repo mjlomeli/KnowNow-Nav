@@ -23,10 +23,14 @@ __status__ = "Prototype"
 
 _TESTING = False
 _TOKENIZER = Tokenizer()
-_header_needing_tokenized = ['insights', 'topic']
-_associated_headers = {'intervention': 'side_effects',
-                       'side_effects': 'int_side_effects',
-                       'intervention': 'cohort'}
+_needing_lemma = ['insights', 'topic']
+_linking_headers = {
+    'intervention': ('causes', 'side_effects'),
+    'intervention': ('against', 'cohort'),
+    'side_effects': ('could be mitigated by', 'int_side_effects')
+    # 'side_effects': ('lasted for', 'duration'),
+    # 'side_effects': ('occurred after intervention', 'duration')
+}
 _header_w_logic = ['intervention', 'side_effects', 'int_side_effects']
 _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
                 'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
@@ -51,7 +55,7 @@ class Cell(object):
         self.__tf = None
         self.__next = None
         self.__prev = None
-        if header_name in _header_needing_tokenized and cell is not None and isinstance(cell, str):
+        if header_name in _needing_lemma and cell is not None and isinstance(cell, str):
             self.__tokenize(cell)
         if header_name in _header_w_logic and cell is not None and isinstance(cell, str):
             self.__logic(cell)
@@ -146,7 +150,7 @@ class Row:
         self.__set_associations()
 
     def __set_associations(self):
-        for node, link in _associated_headers:
+        for node, link in _linking_headers:
             if node in self.__row and link in self.__row:
                 self.__row[node].setNext(self.__row[link])
                 #Todo: Test if the plus sign works here too
