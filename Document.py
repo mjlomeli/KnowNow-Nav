@@ -46,19 +46,41 @@ class Cell(object):
     """A data descriptor that sets and returns values
        normally and prints a message logging their access.
     """
+    cell_total = 0
+    cell_global_print = True
+    cell_global = []
 
     def __init__(self, cell=None, header_name=None, row_number=None, logic=False):
+        Cell.cell_total += 1
         self.val = cell
         self.header = header_name
         self.id = row_number
         self.__tokens = None
         self.__tf = None
-        self.__next = None
-        self.__prev = None
+        self.__next = {}
+        self.__prev = {}
+        self.__index = 0
         if header_name in _needing_lemma and cell is not None and isinstance(cell, str):
             self.__tokenize(cell)
         if header_name in _header_w_logic and cell is not None and isinstance(cell, str):
             self.__logic(cell)
+
+    def __print(self):
+        trunc = self.header[:10]
+        next_cell = self.__next
+        if next_cell is None or len(next_cell) == 0:
+            return '(' + trunc + ')-->None\n'
+        else:
+            result = ''
+            next_cell = self.__list_values()
+            for cell in next_cell:
+                result += '(' + trunc + ')-->'
+                if cell not in Cell.cell_global:
+                    Cell.cell_global.append(cell)
+                    result += cell.__print()
+                else:
+                    result = result + '(' + cell.header + ')' + '\n'
+            return result
 
     def __tokenize(self, cell):
         _TOKENIZER.open(cell)
@@ -71,27 +93,63 @@ class Cell(object):
     def getTF(self):
         return self.__tf
 
-    def setNext(self, next):
-        self.__next = next
-        #TODO: add Jennifer and Anne's code here
-
-    def setPrev(self, prev):
-        self.__prev = prev
+    def setNext(self, next_cell):
+        if isinstance(next_cell, Cell):
+            if next_cell is not None:
+                if next_cell.header not in self.__next:
+                    self.__next[next_cell.header] = [next_cell]
+                else:
+                    self.__next[next_cell.header].append(next_cell)
+                next_cell.__prev = self
+        elif isinstance(next_cell, tuple):
+            if None not in next_cell and len(next_cell) > 1:
+                if next_cell[0] not in self.__next:
+                    self.__next[next_cell[0]] = [next_cell[1]]
+                else:
+                    self.__next[next_cell[0]].append(next_cell[1])
+                next_cell[1].__prev = self
         #TODO: add Jennifer and Anne's code here
 
     def getNext(self):
-        return self.__next
+        return self.__list_values()
         #TODO: add Jennifer and Anne's code here
 
     def getPrev(self):
         return self.__prev
         #TODO: add Jennifer and Anne's code here
 
+    def getLast(self):
+        """
+        Returns the end of every path if it exists.
+        :return: a list of all paths the have a None type
+        """
+        if self.__next is None or len(self.__next) == 0:
+            return [self]
+        else:
+            Cell.cell_global = []
+            temp = self.__getLastHelper(self.__list_values())
+            Cell.cell_global = []
+            return temp
+
+    def __getLastHelper(self, current):
+        if current is None or len(current) == 0:
+            return []
+        else:
+            result = []
+            for cell in current:
+                if cell not in Cell.cell_global:
+                    Cell.cell_global.append(cell)
+                    if len(cell.getNext()) == 0:
+                        result += [self]
+                    else:
+                        result += self.__getLastHelper(cell)
+            return result
+
     def __add__(self, other):
         if isinstance(other, str):
             return self.val + other
         elif isinstance(other, Cell):
-            return str(self) + str(other)
+            self.setNext(other)
         #Todo: add Jennifer and Anne's code here
         #Todo: to be able to link one node to another
 
@@ -100,20 +158,56 @@ class Cell(object):
         _evaluate(operation)
         #Todo: make additional nodes to point to intervention mitigating side effect
 
-    def __eq__(self, other):
-        return self.val == other
-
-    def __ne__(self, other):
-        return self.val != other
-
     def __contains__(self, item):
-        return item in self.val
+        if isinstance(item, str):
+            return item in self.val
+        elif isinstance(item, Cell):
+            return self == item
 
     def __str__(self):
-        trunc = self.header[:10]
-        next = self.__next if self.__next is not None else 'None'
-        result = '(' + trunc + ')-->' + next
+        Cell.cell_global = []
+        result = self.__print()
+        Cell.cell_global = []
         return result
+
+    def keys(self):
+        return self.__next.keys()
+
+    def values(self):
+        return self.__next.values()
+
+    def __iter__(self):
+        self.__index = 0
+        return self
+
+    def __next__(self):
+        if self.__index >= len(self):
+            raise StopIteration
+        temp = list(self.__list_values())[self.__index]
+        self.__index += 1
+        return temp
+
+    def __len__(self):
+        return len(self.__list_values())
+
+    def __getitem__(self, item):
+        if isinstance(item, int):
+            return self.__list_values()[item]
+        elif isinstance(item, str):
+            if item in self.__next:
+                return self.__next[item]
+        elif isinstance(item, Cell):
+            for cell in self.__list_values():
+                if item == cell:
+                    return cell
+
+    def __setitem__(self, key, value):
+        if isinstance(key, str) and key in self.__next:
+            if isinstance(value, list):
+                for item in value:
+                    self.setNext(item)
+            elif isinstance(value, Cell):
+                self.setNext(value)
 
     def __get__(self, obj, objtype):
         if _TESTING:
@@ -124,6 +218,41 @@ class Cell(object):
         if _TESTING:
             print('Updating ' + str(self.header) + ':' + str(self.row))
         self.val = val
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.val == other
+        elif isinstance(other, Cell):
+            result = True
+            if other.val != self.val:
+                return False
+            if other.header != self.header:
+                return False
+            if other.id != self.id:
+                return False
+            return True
+        else:
+            return False
+
+    def __ne__(self, other):
+        if isinstance(other, str):
+            return other != self.val
+        elif isinstance(other, Cell):
+            if other.val != self.val:
+                return True
+            if other.header != self.header:
+                return True
+            if other.id != self.id:
+                return True
+            return False
+        else:
+            return True
+
+    def __list_values(self):
+        return [item for sublist in list(self.values()) for item in sublist]
+
+    def __del__(self):
+        Cell.cell_total -= 1
 
 
 class Row:
@@ -187,50 +316,25 @@ class Row:
         table.add_row(self.__row.values())
         return str(table)
 
-    def __tokenize(self):
-        # TODO: here we will combine similarities among documents
-        self.__tokenized = True
-        self.__cell_cf = {}
-        for cell in self.__row.values():
-            if cell is not None:
-                pass
-
-        _TOKENIZER.open(self.val)
-        self.__tf = _TOKENIZER.tf
-
     def __and__(self, other):
-        if self.__tokenized is None:
-            self.__tokenize()
         return False
 
     def __or__(self, other):
-        if self.__tokenized is None:
-            self.__tokenize()
         return False
 
     def __xor__(self, other):
-        if self.__tokenized is None:
-            self.__tokenize()
         return False
 
     def __eq__(self, other):
-        if self.__tokenized is None:
-            self.__tokenize()
         return False
 
     def __ne__(self, other):
-        if self.__tokenized is None:
-            self.__tokenize()
-        return False
+        return True
 
     def __gt__(self, other):
-        if self.__tokenized is None:
-            self.__tokenize()
         return False
 
     def __lt__(self, other):
-        if self.__tokenized is None:
-            self.__tokenize()
         return False
 
     def __del__(self):
