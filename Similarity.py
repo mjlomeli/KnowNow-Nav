@@ -35,13 +35,25 @@ __max_postings_size = 15    # choose maximum number of results for cosine
 
 def file():
     if not __data.exists():
-        index = __process_index()
+        __index = __process_index()
         with open(__data, 'wb') as w:
-            pickle.dump(index, w)
-            __index = index
+            pickle.dump(__index, w)
+        return __index
     else:
         with open(__data, 'rb') as f:
             __index = pickle.load(f)
+            return __index
+
+
+def query(query_list, index=file()):
+    query_list = __tokenizer.keep_stop_words(query)
+    result = {
+        'index': cosine_score(query_list, index['index']),
+        'category': cosine_score(query_list, index['category']),
+        'cohort': cosine_score(query_list, index['cohort']),
+        'query_tag': cosine_score(query_list, index['query_tag'])
+    }
+    return result
 
 
 def __prob_idf(term, index=__index):
