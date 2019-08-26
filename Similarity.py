@@ -13,6 +13,7 @@ from Tokenizer import Tokenizer
 import pickle
 from math import log10, sqrt
 from heapq import nlargest
+from Document import Row
 
 __author__ = "Mauricio Lomeli"
 __credits__ = ['Prof. Mustafa Ibrahim']
@@ -26,23 +27,21 @@ __status__ = "Prototype"
 __data = Path.cwd() / Path('data') / Path('scores.pickle')
 __IDF_WEIGHTING = True     # must set to True to run original program
 __corpus = Spreadsheet()             # must add your file/items here like your corpus
-__corp_size = len(__corpus)            # must change value
+__corp_size = len(__corpus)                 # must change value
 __tokenizer = Tokenizer()
 __index = {}
 __max_postings_size = 15    # choose maximum number of results for cosine
 
 
-def __file():
+def file():
     if not __data.exists():
-        return {}
+        index = __process_index()
+        with open(__data, 'wb') as w:
+            pickle.dump(index, w)
+            __index = index
     else:
         with open(__data, 'rb') as f:
-            return pickle.load(f)
-
-
-def __write(pickle_data):
-    with open(__data, 'wb') as w:
-        pickle.dump(pickle_data, w)
+            __index = pickle.load(f)
 
 
 def __prob_idf(term, index=__index):
@@ -157,28 +156,47 @@ def __weight_query(term, query, index=__index):
     return __weighting(term, 0, q__index)
 
 
-def process_index():
+def combine_tf(tf: list):
+    combined = {}
+    for item in tf:
+        for term, freq in item.items():
+            if term in combined:
+                combined[term] += freq
+            else:
+                combined[term] = freq
+    return combined
+
+def __process_index():
     """
     Your corpus must be iterable to use this function.
     Also, it should allow to convert itself into a dictionary.
     The keys will be the special tags which have additional weight.
     :return: dict, index holding term frequency
     """
+    CATEGORIES = ["Comparing Therapies", "Side Effects", "Right treatment?", "Specific Therapy Inquiries",
+                  "Others' experience", 'Symptoms diagnosis', 'Side effect management', 'Recurrence Queries',
+                  'Specific Conditions', 'Data interpretation', 'Referral', 'Lifestyle', 'Positive Affirmations',
+                  'Encouragement', 'Inter-Personal Patient Connections', 'Other/ Miscellaneous']
+    corpus = []
+    rows = []
+    category = []
+    query_tag = []
+    cohort = []
     for i, row in enumerate(__corpus):
-        try:
-            __tokenizer.open(dict(__corpus[i]))
-        except Exception:
-            try:
-                __tokenizer.open(__corpus.convertToDict(row))
-            except Exception:
-                pass
-        tokens = __tokenizer.tokens
-        for tok in tokens:
-            if tok in __index:
-                __index[tok][i] = __tokenizer.tf[tok]
-            else:
-                __index[tok] = {i: __tokenizer.tf[tok]}
-    return __index
+        row_doc = Row(__corpus.headers, row)
+        corpus.append(row_doc)
+        rows += [cell.getTF() for cell in row_doc]
+
+        category += [cell.getTF() for cell in row_doc if row_doc['category'] is not None and row_doc['category'] is not '']
+        query_tag += [cell.getTF() for cell in row_doc if row_doc['query_tag'] is not None and row_doc['query_tag'] is not '']
+        cohort += [cell.getTF() for cell in row_doc if row_doc['cohort'] is not None and row_doc['cohort'] is not '']
+
+    category = combine_tf(category)
+    query_tag = combine_tf(query_tag)
+    cohort = combine_tf(cohort)
+    index = combine_tf(rows)
+
+    return {'category': category, 'query_tag': query_tag, 'cohort': cohort, 'index':index }
 
 
 def main():

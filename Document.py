@@ -8,10 +8,7 @@ that makes sense on its own, separated from the rest by a newline.
 
 from prettytable import PrettyTable
 from pathlib import Path
-import pickle
-from collections import namedtuple
 from Tokenizer import Tokenizer
-from Similarity import cosine_score
 
 # Programs author information
 __author__ = "Mauricio Lomeli"
@@ -27,7 +24,7 @@ _TESTING = False
 _STRING_LIMIT = 15
 _PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
 _TOKENIZER = Tokenizer()
-_needing_lemma = ['insights', 'topic']
+_needing_lemma = ['insights', 'topic', 'query', 'profile', ]
 _needing_logic = ['intervention', 'side_effects', 'int_side_effects']
 _linking_headers = {
     'intervention': [('causes', 'side_effects'), ('against', 'cohort')],
@@ -300,8 +297,6 @@ class Row:
         'intervention': [('causes', 'side_effects'), ('against', 'cohort')]
         """
         if cell.header in _linking_headers:
-            print(cell.header)
-            print(_linking_headers)
             for link in _linking_headers[cell.header]:
                 if link[1] in self.__row:
                     cell.setNext(self.__row[link[1]], link[0])
@@ -344,23 +339,29 @@ class Row:
         return self
 
     def __next__(self):
-        if self.__index > len(self):
+        if self.__index >= len(self.__list_values()):
             raise StopIteration
-        temp = self.__cells[self.__index]
+        temp = self.__list_values()[self.__index]
         self.__index += 1
         return temp
 
     def __len__(self):
-        self.__length
+        return len(self.__list_values())
 
     def __contains__(self, item):
-        return item in self.__row.keys() or item in self.__row.values()
+        return item in self.__row.keys() or item in self.__list_values()
 
     def __getitem__(self, item):
-        return self.__row[item]
+        if isinstance(item, int):
+            return self.__list_values()[item]
+        elif isinstance(item, str):
+            return self.__row[item]
 
     def keys(self):
         return self.__row.keys()
+
+    def values(self):
+        return self.__list_values()
 
     def __str__(self):
         keys = list(self.__row.keys())
@@ -390,6 +391,9 @@ class Row:
 
     def __lt__(self, other):
         return False
+
+    def __list_values(self):
+        return list(self.__row.values())
 
     def __del__(self):
         Row.total_rows -= 1

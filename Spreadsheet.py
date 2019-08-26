@@ -4,6 +4,7 @@
 Opens a CSV spreadsheet for reading and searching operations.
 Ideas: pickle handling with __call__ && __init__, print formatting,
 """
+from Document import Row
 from prettytable import PrettyTable
 from pathlib import Path
 import csv
@@ -22,6 +23,14 @@ __status__ = "Prototype"
 PATH = Path.cwd()
 _DEFAULT_SPREADSHEET = PATH / Path("data") / Path("insights.csv")
 _DEFAULT_TEXT_LENGTH = 30
+
+CATEGORIES = ["Comparing Therapies", "Side Effects", "Right treatment?", "Specific Therapy Inquiries",
+           "Others' experience", 'Symptoms diagnosis', 'Side effect management', 'Recurrence Queries',
+           'Specific Conditions', 'Data interpretation', 'Referral', 'Lifestyle', 'Positive Affirmations',
+           'Encouragement', 'Inter-Personal Patient Connections', 'Other/ Miscellaneous']
+STAGES = ['Stage 0', 'Stage 1', 'Stage 1A', 'Stage 1B', 'Stage 2', 'Stage 2A',
+          'Stage 2B', 'Stage 3', 'Stage 3A', 'Stage 3B', 'Stage 3C', 'Stage 4']
+
 _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
                 'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
                 'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
@@ -30,30 +39,13 @@ _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': '
                 'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
                 'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
                 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
+_NODE_HEADER = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Query Tag', 'query': 'Query',
+                'profile': 'Profile', 'cohort': 'Cohort', 'tumor': 'T', 'tumor_count': 'T Count', 'node': 'N',
+                'metastasis': 'M', 'grade': 'Grade', 'recurrence': 'Recurr', 'category': 'Category',
+                'intervention': 'Intervention', 'side_effects': 'Side Effect', 'int_side_effects': 'Int. Side Eff.',
+                'insights': 'Insights', 'volunteers': 'Volunt.', 'url': 'URL', 'HER2': 'HER2', 'HER': 'HER',
+                'BRCA': 'BRCA', 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
 
-
-REQUIRE = ["Comparing Therapies", "Side Effects","Right treatment?", "Specific Therapy Inquiries",
-           "Others' experience", 'Symptoms diagnosis', 'Side effect management', 'Recurrence Queries',
-           'Specific Conditions', 'Data interpretation', 'Referral', 'Lifestyle', 'Positive Affirmations',
-           'Encouragement', 'Inter-Personal Patient Connections', 'Other/ Miscellaneous']
-STAGES = ['Stage 0', 'Stage 1', 'Stage 1A', 'Stage 1B', 'Stage 2', 'Stage 2A',
-          'Stage 2B', 'Stage 3', 'Stage 3A', 'Stage 3B', 'Stage 3C', 'Stage 4']
-
-DEPRECIATED_NORM_HEADERS = {    # not needed anymore, only for previous Insights.csv
-    'Topic': 'topic',
-    'Date discussion (month/ year)': 'date',
-    'Patient Query/ Inquiry': 'query',
-    'Specific patient profile': 'profile',
-    'Patient cohort (definition)': 'cohort',
-    'Category tag': 'category',
-    'Secondary tags': 'secondary',
-    'Patient insight': 'insights',
-    'Volunteers': 'volunteers',
-    'Discussion URL': 'url',
-    'Notes/ comments/ questions': 'comments',
-    "Smruti Vidwans comments/ Topics": 'professor_comments',
-    'In Reconciled Insights Database': 'reconciled'
-}
 
 
 class Spreadsheet:
@@ -75,6 +67,7 @@ class Spreadsheet:
         print(sheet)
     """
     def __init__(self, spreadsheet=_DEFAULT_SPREADSHEET, headers=_NORM_HEADERS):
+        self.smart_sheet = []
         self.name = spreadsheet
         self.real_headers = None
         self.__norm_headers = headers
@@ -89,6 +82,7 @@ class Spreadsheet:
         else:
             self.headers = self.real_headers
         self.testing = False
+        self.smart_sheet = [Row(self.headers, row) for row in self.__spreadsheet]
 
     def keys(self):
         return self.headers
