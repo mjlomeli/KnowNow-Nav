@@ -24,17 +24,17 @@ __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
 _TESTING = False
+_STRING_LIMIT = 15
 _PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
 _TOKENIZER = Tokenizer()
 _needing_lemma = ['insights', 'topic']
+_needing_logic = ['intervention', 'side_effects', 'int_side_effects']
 _linking_headers = {
-    'intervention': ('causes', 'side_effects'),
-    'intervention': ('against', 'cohort'),
-    'side_effects': ('could be mitigated by', 'int_side_effects')
+    'intervention': [('causes', 'side_effects'), ('against', 'cohort')],
+    'side_effects': [('could be mitigated by', 'int_side_effects')]
     # 'side_effects': ('lasted for', 'duration'),
     # 'side_effects': ('occurred after intervention', 'duration')
 }
-_header_w_logic = ['intervention', 'side_effects', 'int_side_effects']
 _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
                 'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
                 'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
@@ -43,6 +43,13 @@ _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': '
                 'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
                 'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
                 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
+_NODE_HEADER = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Query Tag', 'query': 'Query',
+                'profile': 'Profile', 'cohort': 'Cohort', 'tumor': 'T', 'tumor_count': 'T Count', 'node': 'N',
+                'metastasis': 'M', 'grade': 'Grade', 'recurrence': 'Recurr', 'category': 'Category',
+                'intervention': 'Intervention', 'side_effects': 'Side Effect', 'int_side_effects': 'Int. Side Eff.',
+                'insights': 'Insights', 'volunteers': 'Volunt.', 'url': 'URL', 'HER2': 'HER2', 'HER': 'HER',
+                'BRCA': 'BRCA', 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
+
 
 
 class Cell(object):
@@ -61,29 +68,10 @@ class Cell(object):
         self.__tokens = None
         self.__tf = None
         self.__next = {}
-        self.__prev = {}
+        self.__link_name = header_name + ': ' + content if content is not None and header_name is not None else None
         self.__index = 0
         if header_name in _needing_lemma and content is not None and isinstance(content, str):
             self.__tokenize(content)
-        if header_name in _header_w_logic and content is not None and isinstance(content, str):
-            self.__logic(content)
-
-    def __print(self):
-        trunc = self.header[:10]
-        next_cell = self.__next
-        if next_cell is None or len(next_cell) == 0:
-            return '(' + trunc + ')-->None\n'
-        else:
-            result = ''
-            next_cell = self.__list_values()
-            for cell in next_cell:
-                result += '(' + trunc + ')-->'
-                if cell not in Cell.cell_global:
-                    Cell.cell_global.append(cell)
-                    result += cell.__print()
-                else:
-                    result = result + '(' + cell.header + ')' + '\n'
-            return result
 
     def __tokenize(self, content):
         _TOKENIZER.open(content)
@@ -100,29 +88,19 @@ class Cell(object):
             self.__tokenize(self.content)
         return self.__tf
 
-    def setNext(self, next_cell):
+    def setNext(self, next_cell, link_name=None):
         if isinstance(next_cell, Cell):
             if next_cell is not None:
+                if isinstance(link_name, str):
+                    self.__link_name = link_name
                 if next_cell.header not in self.__next:
                     self.__next[next_cell.header] = [next_cell]
                 else:
                     self.__next[next_cell.header].append(next_cell)
-                next_cell.__prev = self
-        elif isinstance(next_cell, tuple):
-            if None not in next_cell and len(next_cell) > 1:
-                if next_cell[0] not in self.__next:
-                    self.__next[next_cell[0]] = [next_cell[1]]
-                else:
-                    self.__next[next_cell[0]].append(next_cell[1])
-                next_cell[1].__prev = self
         #TODO: add Jennifer and Anne's code here
 
     def getNext(self):
         return self.__list_values()
-        #TODO: add Jennifer and Anne's code here
-
-    def getPrev(self):
-        return self.__prev
         #TODO: add Jennifer and Anne's code here
 
     def getLast(self):
@@ -160,11 +138,6 @@ class Cell(object):
         #Todo: add Jennifer and Anne's code here
         #Todo: to be able to link one node to another
 
-    def __logic(self, string):
-        operation = _splitting(string)
-        _evaluate(operation)
-        #Todo: make additional nodes to point to intervention mitigating side effect
-
     def __contains__(self, item):
         if isinstance(item, str):
             return item in self.content
@@ -176,6 +149,26 @@ class Cell(object):
         result = self.__print()
         Cell.cell_global = []
         return result
+
+    def __print(self):
+        content = self.content if len(self.content) < _STRING_LIMIT else self.content[:_STRING_LIMIT-3] + '...'
+        next_cell = self.getNext()
+        if next_cell is None or len(next_cell) == 0:
+            if self.content is not None and self.content is not '':
+                return '(' + content + ')-->None\n'
+            return 'None\n'
+        else:
+            result = ''
+            for cell in next_cell:
+                if cell.header is not '' and cell.header is not None:
+                    result += '(' + content + ')-' + self.__link_name + '->'
+                    if cell not in Cell.cell_global:
+                        Cell.cell_global.append(cell)
+                        result += cell.__print()
+                    else:
+                        cell_content = cell.content if len(cell.content) < _STRING_LIMIT else cell.content[:_STRING_LIMIT-3] + '...'
+                        result = result + '(' + cell_content + ')' + '\n'
+            return result
 
     def keys(self):
         return self.__next.keys()
@@ -231,7 +224,7 @@ class Cell(object):
             return self.content == other
         elif isinstance(other, Cell):
             result = True
-            if other.val != self.content:
+            if other.content != self.content:
                 return False
             if other.header != self.header:
                 return False
@@ -245,7 +238,7 @@ class Cell(object):
         if isinstance(other, str):
             return other != self.content
         elif isinstance(other, Cell):
-            if other.val != self.content:
+            if other.content != self.content:
                 return True
             if other.header != self.header:
                 return True
@@ -260,30 +253,28 @@ class Cell(object):
 
     def store(self):
         if self.id is not None and self.header is not None:
-            return {'cell': {
-                self.header: {
-                    self.id: {
+            return {self.id: {
                         'tf': self.__tf,
                         'tokens': self.__tokens,
                         'content': self.content,
                         'header': self.header,
                         'id': self.id,
-                        'next': self.__next,
-                        'prev': self.__prev
-                    }}}}
+                        'next': self.__next
+                    }}
 
     def __del__(self):
         Cell.cell_total -= 1
-        _store(self.store())
 
 
 class Row:
+    total_rows = 0
+
     def __init__(self, headers=None, cells=None, length=10):
         __total_rows = 0
         self.__row = {}
         self.__length = length
-        self.__pos = Row.__total_rows + 1
-        Row.__total_rows += 1
+        self.__pos = Row.total_rows + 1
+        Row.total_rows += 1
         self.__tf = None
         self.__index = 0
         self.__assemble(headers, cells, length)
@@ -294,18 +285,59 @@ class Row:
         if cells is None:
             cells = [Cell(None, None, None)] * length
         else:
-            cells = [Cell(txt, head, self.__pos) for txt, head in zip(headers, cells)]
+            cells = [Cell(txt, head, self.__pos) for txt, head in zip(cells, headers)]
         assert(len(headers) == len(cells))
         self.__row = dict(zip(headers, cells))
         self.__length == len(self.__row)
         self.__set_associations()
 
     def __set_associations(self):
-        for node, link in _linking_headers:
-            if node in self.__row and link in self.__row:
-                self.__row[node].setNext(self.__row[link])
-                #Todo: Test if the plus sign works here too
-                # self.__row[node] + self.__row[link]
+        for header in self.__row.keys():
+            self.__linking_headers(self.__row[header])
+
+    def __linking_headers(self, cell: Cell):
+        """
+        'intervention': [('causes', 'side_effects'), ('against', 'cohort')]
+        """
+        if cell.header in _linking_headers:
+            print(cell.header)
+            print(_linking_headers)
+            for link in _linking_headers[cell.header]:
+                if link[1] in self.__row:
+                    cell.setNext(self.__row[link[1]], link[0])
+                else:
+                    cell.setNext(Cell(link[0], link[1] + '_new', 0), link[0])
+
+    def __linking_logic(self, cell: Cell):
+        """
+        _needing_logic = ['intervention', 'side_effects', 'int_side_effects']
+        _linking_headers = {
+                    intervention': [('causes', 'side_effects'), ('against', 'cohort')]
+        """
+        if cell.header in self.__row:
+            if cell.content is not None and cell.content is not '':
+                operation = self.__evaluate(cell)
+                if cell.header not in _linking_headers:
+                    for link in operation:
+                        cell.setNext(Cell(link, link + '_new', 0))
+                else:
+                    for items in operation:
+                        for linkage in _linking_headers[cell.header]:
+                            link_name, to_header = linkage
+                            self.__linking_headers(cell, items)
+                            #cell.setNext(new_cell, link_name)
+
+    def __evaluate(self, cell: Cell):
+        operators = _splitting(cell.content)
+        if '' in operators and len(operators) > 1:
+            raise AssertionError('An AND or an OR must be followed by another variable')
+        elif '' not in operators:
+            if 'NOT' in operators:
+                return [' '.join(operators)]
+            elif 'OR' in operators:
+                return [x for x in operators if x != 'OR']
+            elif 'AND' in operators:
+                return [' '.join(operators).replace('AND', 'and')]
 
     def __iter__(self):
         self.__index = 0
@@ -322,7 +354,7 @@ class Row:
         self.__length
 
     def __contains__(self, item):
-        return item in self.__row.values()
+        return item in self.__row.keys() or item in self.__row.values()
 
     def __getitem__(self, item):
         return self.__row[item]
@@ -335,7 +367,7 @@ class Row:
         table = PrettyTable(keys)
         for head in keys:
             table.align[head] = 'c'
-        table.add_row(self.__row.values())
+        table.add_row([value.content[:_STRING_LIMIT] for value in self.__row.values()])
         return str(table)
 
     def __and__(self, other):
@@ -360,12 +392,14 @@ class Row:
         return False
 
     def __del__(self):
-        Row.__total_rows -= 1
+        Row.total_rows -= 1
 
 
 def _evaluate(items: list):
-    if '' in items:
+    if '' in items and len(items) > 1:
         raise AssertionError('An AND or an OR must be followed by another variable')
+    elif '' not in items:
+        pass
     # TODO: find a cell or row associated with each string variable
     # TODO: then apply a logical operation to it
 
@@ -377,6 +411,9 @@ def _splitting(string: str):
         or_pos = string.find('OR')
     if 'AND' in string:
         and_pos = string.find('AND')
+    if 'NOT' in string:
+        not_pos = string.find('NOT')
+        return ['NOT', string[not_pos + 3:].strip()]
     if not or_pos and not and_pos:
         return [string]
     if or_pos is not None:
@@ -398,17 +435,8 @@ def _splitting(string: str):
             raise NotImplementedError('You are not suppose to enter this whatsoever')
 
 
-def _store(index):
-    if isinstance(index, dict):
-        if not _PICKLE.exists():
-            with open(_PICKLE, 'w') as w:
-                pickle.dump(index, w)
-        else:
-            with open(_PICKLE, 'rb') as f:
-                data = pickle.load(f)
-            with open(_PICKLE, 'wb') as w:
-                data.update(index)
-                pickle.dump(data, w)
+def _store(index, key, id=None):
+    pass
 
 
 def main():
