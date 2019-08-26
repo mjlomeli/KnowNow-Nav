@@ -7,6 +7,8 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 from prettytable import PrettyTable
+from pathlib import Path
+import pickle
 from collections import namedtuple
 from Tokenizer import Tokenizer
 from Similarity import cosine_score
@@ -22,6 +24,7 @@ __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
 _TESTING = False
+_PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
 _TOKENIZER = Tokenizer()
 _needing_lemma = ['insights', 'topic']
 _linking_headers = {
@@ -253,10 +256,25 @@ class Cell(object):
             return True
 
     def __list_values(self):
-        return [item for sublist in list(self.contentues()) for item in sublist]
+        return [item for sublist in list(self.values()) for item in sublist]
+
+    def store(self):
+        if self.id is not None and self.header is not None:
+            return {'cell': {
+                self.header: {
+                    self.id: {
+                        'tf': self.__tf,
+                        'tokens': self.__tokens,
+                        'content': self.content,
+                        'header': self.header,
+                        'id': self.id,
+                        'next': self.__next,
+                        'prev': self.__prev
+                    }}}}
 
     def __del__(self):
         Cell.cell_total -= 1
+        _store(self.store())
 
 
 class Row:
@@ -378,6 +396,19 @@ def _splitting(string: str):
             return [string[:left].strip()] + ['AND'] + _splitting(string[left + 3:].strip())
         else:
             raise NotImplementedError('You are not suppose to enter this whatsoever')
+
+
+def _store(index):
+    if isinstance(index, dict):
+        if not _PICKLE.exists():
+            with open(_PICKLE, 'w') as w:
+                pickle.dump(index, w)
+        else:
+            with open(_PICKLE, 'rb') as f:
+                data = pickle.load(f)
+            with open(_PICKLE, 'wb') as w:
+                data.update(index)
+                pickle.dump(data, w)
 
 
 def main():
