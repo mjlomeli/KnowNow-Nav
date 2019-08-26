@@ -46,7 +46,7 @@ def file():
 
 
 def query(query_list, index=file()):
-    query_list = __tokenizer.keep_stop_words(query)
+    query_list = __tokenizer.keep_stop_words(query_list)
     result = {
         'index': cosine_score(query_list, index['index']),
         'category': cosine_score(query_list, index['category']),
