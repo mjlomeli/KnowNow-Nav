@@ -27,7 +27,7 @@ _header_needing_tokenized = ['insights', 'topic']
 _associated_headers = {'intervention': 'side_effects',
                        'side_effects': 'int_side_effects',
                        'intervention': 'cohort'}
-_header_w_logic = ['intervention', 'side_effects']
+_header_w_logic = ['intervention', 'side_effects', 'int_side_effects']
 _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
                 'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
                 'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
@@ -36,64 +36,6 @@ _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': '
                 'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
                 'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
                 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
-
-
-class Logic:
-    def __init__(self, string):
-        self.__string = string
-        self.__split(string)
-        self.root = None
-
-    def __is_oper(self, string: str):
-        return string in '()[]*/+-'
-
-    def __internal(self, string: str, count):
-        string = string.lower()
-        if '(' in string:
-            start = string.find('(') + 1
-
-            end = string.rfind(')') if ')' in string else len(string)
-            return string[start:end]
-        elif '[' in string:
-            start = string.find(']') + 1
-            end = string.rfind(']') if ']' in string else len(string)
-            return string[start:end]
-        else:
-            return None
-
-    def __split(self, string: str):
-        or_pos = None
-        and_pos = None
-        if 'OR' in string:
-            or_pos = string.find('OR')
-        if 'AND' in string:
-            and_pos = string.find('AND')
-        if not or_pos and not and_pos:
-            return [string]
-        if or_pos is not None:
-            if and_pos is not None:
-                if and_pos < or_pos:
-                    left = and_pos
-                    return [string[:left].strip()] + ['AND'] + self.__split(string[left + 3:].strip())
-                else:
-                    left = or_pos
-                    return [string[:left].strip()] + ['OR'] + self.__split(string[left + 2:].strip())
-            else:
-                left = or_pos
-                return [string[:left].strip()] + ['OR'] + self.__split(string[left + 2:].strip())
-        else:
-            if and_pos is not None:
-                left = and_pos
-                return [string[:left].strip()] + ['AND'] + self.__split(string[left + 3:].strip())
-            else:
-                raise NotImplementedError('You are not suppose to enter this whatsoever')
-
-
-    """
-    def inOrder(self, v):
-        if isInternal(v): # if is another node /if right and left are not values
-            self.inOrder(v.left) [logic goes here] self.inOrder(v.right)
-    """
 
 
 class Cell(object):
@@ -111,7 +53,7 @@ class Cell(object):
         self.__prev = None
         if header_name in _header_needing_tokenized and cell is not None and isinstance(cell, str):
             self.__tokenize(cell)
-        if logic and cell is not None and isinstance(cell, str):
+        if header_name in _header_w_logic and cell is not None and isinstance(cell, str):
             self.__logic(cell)
 
     def __tokenize(self, cell):
@@ -148,6 +90,11 @@ class Cell(object):
             return str(self) + str(other)
         #Todo: add Jennifer and Anne's code here
         #Todo: to be able to link one node to another
+
+    def __logic(self, string):
+        operation = _splitting(string)
+        _evaluate(operation)
+        #Todo: make additional nodes to point to intervention mitigating side effect
 
     def __eq__(self, other):
         return self.val == other
@@ -196,6 +143,14 @@ class Row:
         assert(len(headers) == len(cells))
         self.__row = dict(zip(headers, cells))
         self.__length == len(self.__row)
+        self.__set_associations()
+
+    def __set_associations(self):
+        for node, link in _associated_headers:
+            if node in self.__row and link in self.__row:
+                self.__row[node].setNext(self.__row[link])
+                #Todo: Test if the plus sign works here too
+                # self.__row[node] + self.__row[link]
 
     def __iter__(self):
         self.__index = 0
@@ -278,19 +233,14 @@ class Row:
         Row.__total_rows -= 1
 
 
-
-def passing():
-    pass
-
-
-def evaluate(items: list):
+def _evaluate(items: list):
     if '' in items:
         raise AssertionError('An AND or an OR must be followed by another variable')
     # TODO: find a cell or row associated with each string variable
     # TODO: then apply a logical operation to it
 
 
-def splitting(string: str):
+def _splitting(string: str):
     or_pos = None
     and_pos = None
     if 'OR' in string:
@@ -303,17 +253,17 @@ def splitting(string: str):
         if and_pos is not None:
             if and_pos < or_pos:
                 left = and_pos
-                return [string[:left].strip()] + ['AND'] + splitting(string[left + 3:].strip())
+                return [string[:left].strip()] + ['AND'] + _splitting(string[left + 3:].strip())
             else:
                 left = or_pos
-                return [string[:left].strip()] + ['OR'] + splitting(string[left + 2:].strip())
+                return [string[:left].strip()] + ['OR'] + _splitting(string[left + 2:].strip())
         else:
             left = or_pos
-            return [string[:left].strip()] + ['OR'] + splitting(string[left + 2:].strip())
+            return [string[:left].strip()] + ['OR'] + _splitting(string[left + 2:].strip())
     else:
         if and_pos is not None:
             left = and_pos
-            return [string[:left].strip()] + ['AND'] + splitting(string[left + 3:].strip())
+            return [string[:left].strip()] + ['AND'] + _splitting(string[left + 3:].strip())
         else:
             raise NotImplementedError('You are not suppose to enter this whatsoever')
 
