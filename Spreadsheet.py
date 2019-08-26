@@ -56,6 +56,36 @@ NORM_HEADERS = {
     'In Reconciled Insights Database': 'reconciled'
 }
 
+NORM_HEADERS = {
+    'id': 'id',
+    'Topic': 'topic',
+    'Query Tag': 'date',
+    'Patient Query/inquiry': 'query',
+    'Patient Cohort (Definition)': 'cohort',
+    'Tumor (T)': 'tumor',
+    'Tumor Count': 'tumor_count',
+    'Node (N)': 'node',
+    'Metastasis (M)': 'metastasis',
+    'Grade': 'grade',
+    'Recurrence': 'recurrence',
+    "Category Tag": 'category',
+    'Intervention': 'intervention',
+    'Associated Side effect': 'side_effects',
+    'Intervention mitigating side effect': 'int_side_effects',
+    'Patient Insight': 'insights',
+    'Volunteers': 'volunteers',
+    'Discussion URL': 'url',
+    'HER2': 'HER2',
+    'HER': 'HER',
+    'BRCA': 'BRCA',
+    'ER': 'ER',
+    'HR': 'HR',
+    'PR': 'PR',
+    'RP': 'RP',
+    'RO': 'RO'
+}
+
+
 
 class Spreadsheet:
     """

@@ -23,7 +23,7 @@ __status__ = "Prototype"
 
 _TESTING = False
 _TOKENIZER = Tokenizer()
-_header_needing_tokenized = ['insights', 'category', 'topic']
+_header_needing_tokenized = ['insights', 'topic']
 _header_w_logic = ['intervention', 'side_effects']
 
 
@@ -90,16 +90,15 @@ class Cell(object):
        normally and prints a message logging their access.
     """
 
-    def __init__(self, cell=None, header_name=None, row_number=None, tokenize=False, logic=False):
+    def __init__(self, cell=None, header_name=None, row_number=None, logic=False):
         self.val = cell
         self.header = header_name
-        self.row = row_number
-        self.__tokenized = tokenize
+        self.id = row_number
         self.__tokens = None
         self.__tf = None
         self.__next = None
         self.__prev = None
-        if tokenize and cell is not None and isinstance(cell, str):
+        if header_name in _header_needing_tokenized and cell is not None and isinstance(cell, str):
             self.__tokenize(cell)
         if logic and cell is not None and isinstance(cell, str):
             self.__logic(cell)
@@ -109,10 +108,11 @@ class Cell(object):
         self.__tf = _TOKENIZER.tf
         self.__tokens = list(self.__tf.keys())
 
-    def __logic(self, cell):
-        if _TESTING:
-            print('\033[94m' + 'Still need to finish Cell::__logic() function.' + '\033[0m')
-            # need an inorder traversal
+    def getTokens(self):
+        return self.__tokens
+
+    def getTF(self):
+        return self.__tf
 
     def setNext(self, next):
         self.__next = next
@@ -129,6 +129,18 @@ class Cell(object):
     def getPrev(self):
         return self.__prev
         #TODO: add Jennifer and Anne's code here
+
+    def __eq__(self, other):
+        return self.val == other
+
+    def __ne__(self, other):
+        return self.val != other
+
+    def __contains__(self, item):
+        return item in self.val
+
+    def __str__(self):
+        return self.val
 
     def __get__(self, obj, objtype):
         if _TESTING:
@@ -158,11 +170,7 @@ class Row:
         if cells is None:
             cells = [Cell(None, None, None)] * length
         else:
-            cells = []
-            for cont, head in zip(headers, cells):
-                if head in _header_needing_tokenized:
-                    cells.append(Cell(cont, head, self.__pos, tokenize=True))
-                cells.append(Cell(cont, head, self.__pos))
+            cells = [Cell(txt, head, self.__pos) for txt, head in zip(headers, cells)]
         assert(len(headers) == len(cells))
         self.__row = dict(zip(headers, cells))
         self.__length == len(self.__row)
@@ -181,8 +189,14 @@ class Row:
     def __len__(self):
         self.__length
 
+    def __contains__(self, item):
+        return item in self.__row.values()
+
     def __getitem__(self, item):
         return self.__row[item]
+
+    def keys(self):
+        return self.__row.keys()
 
     def __str__(self):
         keys = list(self.__row.keys())
@@ -193,6 +207,7 @@ class Row:
         return str(table)
 
     def __tokenize(self):
+        # TODO: here we will combine similarities among documents
         self.__tokenized = True
         self.__cell_cf = {}
         for cell in self.__row.values():
@@ -285,6 +300,29 @@ def main():
     pass
 
 
+def test():
+    insight = 'The cause of the headaches might be from the medication, Zofran, ' + \
+              'which suppresses nausea and vomiting. The body may need to adjust to the ' + \
+              'medications given to the new patient. The FDA has also approved Rolapitant to ' +\
+              'prevent chemotherapy-induced nausea and vomiting. Imitrex worked well for ' + \
+              'the patient to alleviate the headaches.'
+    topic = 'The patient is experiencing nausea associated with severe headaches and is' + \
+            ' asking for solutions for these'
+
+    c = Cell(insight, 'insights', 0)
+    print(c)
+    s = c
+    print(c.getTokens())
+    print(c.getTF())
+
+    d = Cell(topic, 'topic', 0)
+    print(d.getTokens())
+    print(d.getTF())
+
+    e = Cell('helloword', 'something', 0)
+    print(e.getTokens())
+    print(e.getTF())
+
+
 if __name__ == '__main__':
-    exp = 'OR with more thingsOR am working hereAND something ORsomeAND where AND some OR something else AND'
-    print(splitting(exp))
+    test()

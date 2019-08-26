@@ -24,12 +24,12 @@ __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
 __data = Path.cwd() / Path('data') / Path('scores.pickle')
-__corpus = None             # must add your file/items here like your corpus    
+__IDF_WEIGHTING = True     # must set to True to run original program
+__corpus = Spreadsheet()             # must add your file/items here like your corpus
 __corp_size = 37            # must change value
 __tokenizer = Tokenizer()
 __index = {}
 __max_postings_size = 15    # choose maximum number of results for cosine
-__IDF_WEIGHTING = False     # must set to True
 
 
 def __file():

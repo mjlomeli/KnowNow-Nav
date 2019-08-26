@@ -27,14 +27,6 @@ __dict_text = 'insights'
 class Tokenizer:
 
     def __init__(self):
-        self.__topic = 'topic'
-        self.__query = 'query'
-        self.__cohort = 'cohort'
-        self.__category = 'category'
-        self.__dict_text = 'insights'
-        self.__tag_list = ['topic', 'cohort', 'profile']
-        self.__url = 'url'
-
         self.__lemma = nltk.WordNetLemmatizer()
         self.__stop_words = set(nltk.corpus.stopwords.words('english'))
         self.__pattern = re.compile(r"[a-zA-Z]{3,15}")
