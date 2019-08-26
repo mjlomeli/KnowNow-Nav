@@ -178,7 +178,7 @@ def combine_tf(tf: list):
                 combined[term] = freq
     return combined
 
-def __process_index():
+def process_index():
     """
     Your corpus must be iterable to use this function.
     Also, it should allow to convert itself into a dictionary.
@@ -203,12 +203,16 @@ def __process_index():
         query_tag += [cell.getTF() for cell in row_doc if row_doc['query_tag'] is not None and row_doc['query_tag'] is not '']
         cohort += [cell.getTF() for cell in row_doc if row_doc['cohort'] is not None and row_doc['cohort'] is not '']
 
-    category = combine_tf(category)
-    query_tag = combine_tf(query_tag)
-    cohort = combine_tf(cohort)
-    index = combine_tf(rows)
+    rows = combine_tf(rows)
 
-    return {'category': category, 'query_tag': query_tag, 'cohort': cohort, 'index':index }
+    return rows
+
+
+def full_tf():
+    rows = []
+    for i, item in enumerate(__corpus):
+        rows.append(Row(__corpus.headers, item))
+    return combine_tf([cell.getTF() for cell in rows])
 
 
 def main():
