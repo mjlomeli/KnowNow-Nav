@@ -20,7 +20,17 @@ __status__ = "Prototype"
 
 # default required values
 PATH = Path.cwd()
-DEFAULT_SPREADSHEET = PATH / Path("data") / Path("Patient Insights - Reconciled insights")
+_DEFAULT_SPREADSHEET = PATH / Path("data") / Path("insights.csv")
+_DEFAULT_TEXT_LENGTH = 30
+_NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
+                'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
+                'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
+                'Node (N)': 'node', 'Metastasis (M)': 'metastasis', 'Grade': 'grade', 'Recurrence': 'recurrence',
+                'Category Tag': 'category', 'Intervention': 'intervention', 'Associated Side effect': 'side_effects',
+                'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
+                'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
+                'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
+
 
 REQUIRE = ["Comparing Therapies", "Side Effects","Right treatment?", "Specific Therapy Inquiries",
            "Others' experience", 'Symptoms diagnosis', 'Side effect management', 'Recurrence Queries',
@@ -29,7 +39,6 @@ REQUIRE = ["Comparing Therapies", "Side Effects","Right treatment?", "Specific T
 STAGES = ['Stage 0', 'Stage 1', 'Stage 1A', 'Stage 1B', 'Stage 2', 'Stage 2A',
           'Stage 2B', 'Stage 3', 'Stage 3A', 'Stage 3B', 'Stage 3C', 'Stage 4']
 
-DEFAULT_TEXT_LENGTH = 30
 DEPRECIATED_NORM_HEADERS = {    # not needed anymore, only for previous Insights.csv
     'Topic': 'topic',
     'Date discussion (month/ year)': 'date',
@@ -45,36 +54,6 @@ DEPRECIATED_NORM_HEADERS = {    # not needed anymore, only for previous Insights
     "Smruti Vidwans comments/ Topics": 'professor_comments',
     'In Reconciled Insights Database': 'reconciled'
 }
-
-NORM_HEADERS = {
-    'id': 'id',
-    'Topic': 'topic',
-    'Query Tag': 'date',
-    'Patient Query/inquiry': 'query',
-    'Patient Cohort (Definition)': 'cohort',
-    'Tumor (T)': 'tumor',
-    'Tumor Count': 'tumor_count',
-    'Node (N)': 'node',
-    'Metastasis (M)': 'metastasis',
-    'Grade': 'grade',
-    'Recurrence': 'recurrence',
-    "Category Tag": 'category',
-    'Intervention': 'intervention',
-    'Associated Side effect': 'side_effects',
-    'Intervention mitigating side effect': 'int_side_effects',
-    'Patient Insight': 'insights',
-    'Volunteers': 'volunteers',
-    'Discussion URL': 'url',
-    'HER2': 'HER2',
-    'HER': 'HER',
-    'BRCA': 'BRCA',
-    'ER': 'ER',
-    'HR': 'HR',
-    'PR': 'PR',
-    'RP': 'RP',
-    'RO': 'RO'
-}
-
 
 
 class Spreadsheet:
@@ -95,7 +74,7 @@ class Spreadsheet:
         'August 2018' in sheet
         print(sheet)
     """
-    def __init__(self, spreadsheet=DEFAULT_SPREADSHEET, headers=NORM_HEADERS):
+    def __init__(self, spreadsheet=_DEFAULT_SPREADSHEET, headers=_NORM_HEADERS):
         self.name = spreadsheet
         self.real_headers = None
         self.__norm_headers = headers
@@ -188,7 +167,7 @@ class Spreadsheet:
                 return dict(zip(self.headers, item))
         return None
 
-    def textLength(self, text, length=DEFAULT_TEXT_LENGTH):
+    def textLength(self, text, length=_DEFAULT_TEXT_LENGTH):
         if isinstance(text, list):
             return [value[:length] + '...' if len(value) > length else value for value in text]
         elif isinstance(text, str):
@@ -328,7 +307,7 @@ class Spreadsheet:
         self.__index += 1
         return item
 
-    def __call__(self, spreadsheet=DEFAULT_SPREADSHEET):
+    def __call__(self, spreadsheet=_DEFAULT_SPREADSHEET):
         with open(Path(spreadsheet), 'r', newline="", encoding="utf-8") as f:
             content = csv.DictReader(f)
             for element in content:
@@ -352,7 +331,7 @@ class Spreadsheet:
 def main():
     try:
         message = "Initializing with arguments: Spreadsheet(DEFAULT_SPREADSHEET, NORM_HEADERS)"
-        sheet = Spreadsheet(DEFAULT_SPREADSHEET, NORM_HEADERS)
+        sheet = Spreadsheet(_DEFAULT_SPREADSHEET, _NORM_HEADERS)
         print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
 
         message = "Initializing default constructor: Spreadsheet()"
