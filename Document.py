@@ -146,6 +146,8 @@ class Cell(object):
             return self.val + other
         elif isinstance(other, Cell):
             return str(self) + str(other)
+        #Todo: add Jennifer and Anne's code here
+        #Todo: to be able to link one node to another
 
     def __eq__(self, other):
         return self.val == other
