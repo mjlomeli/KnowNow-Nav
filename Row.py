@@ -106,55 +106,24 @@ class Row:
     def __link_associations(self, header, associates=None):
         if isinstance(_need_linking, dict):
             if header in _need_linking and associates is not None:
-                OR = associates['OR']
-                AND = associates['AND']
-                for link, next_cells_header in _need_linking[header]:
-                    if isinstance(self.__row[header], Cell):
-                        cell = self.__row[header]
-                        self.__row[header].setNext(self.__row[next_cells_header], link)
+                if isinstance(self.__row[header], Cell):
+                    for link, next_cells_header in _need_linking[header]:
+                        for assoc in associates:
+                            cell = self.__row[header]
+                            cell.setNext(Cell(assoc),
 
 
     def __eval_logic_and_link(self, header):
         if isinstance(self.__row[header], Cell):
             cell = self.__row[header]
             if cell.content is not None and cell.content is not '':
-                AND = []
-                OR = []
-                logic_split = _splitting(cell.content)
-                if len(logic_split) > 1 and '' in logic_split:
-                    raise SyntaxError('There is an OR and AND without a matching operand.')
-                length = len(logic_split)
-                i = 2
-                while i < length - 1:
-                    if 'AND' in logic_split[:i] and 'OR' in logic_split[:i]:
-                        raise SyntaxError('Cant have two logical operators side by side.')
-                    elif logic_split[:i] == ['AND', 'AND']:
-                        raise SyntaxError('Cant have two logical operators side by side.')
-                    elif logic_split[:i] == ['OR', 'OR']:
-                        raise SyntaxError('Cant have two logical operators side by side.')
-                    elif 'AND' in logic_split[:i]:
-                        AND.append(logic_split[i-2])
-                    elif 'OR' in logic_split[:i]:
-                        OR.append(logic_split[i-2])
-                    i += 2
-                    if i == length - 1:
-                        if 'AND' in logic_split[i-1:i+1]:
-                            AND.append(logic_split[i])
-                        elif 'OR' in logic_split[i-1:i+1]:
-                            OR.append(logic_split[i])
-            return {'AND': AND, 'OR': OR}
-
-    def __evaluate(self, cell: Cell):
-        operators = _splitting(cell.content)
-        if '' in operators and len(operators) > 1:
-            raise AssertionError('An AND or an OR must be followed by another variable')
-        elif '' not in operators:
-            if 'NOT' in operators:
-                return [' '.join(operators)]
-            elif 'OR' in operators:
-                return [x for x in operators if x != 'OR']
-            elif 'AND' in operators:
-                return [' '.join(operators).replace('AND', 'and')]
+                if 'OR' in cell.content:
+                    ANDS = [ands.strip() for ands in cell.content.split('OR')]
+                    return ANDS
+                else:
+                    return [cell.content]
+            else:
+                return None
 
     def __iter__(self):
         self.__index = 0
@@ -219,34 +188,6 @@ class Row:
 
     def __del__(self):
         Row.total_rows -= 1
-
-
-def _splitting(string: str):
-    or_pos = None
-    and_pos = None
-    if 'OR' in string:
-        or_pos = string.find('OR')
-    if 'AND' in string:
-        and_pos = string.find('AND')
-    if not or_pos and not and_pos:
-        return [string]
-    if or_pos is not None:
-        if and_pos is not None:
-            if and_pos < or_pos:
-                left = and_pos
-                return [string[:left].strip()] + ['AND'] + _splitting(string[left + 3:].strip())
-            else:
-                left = or_pos
-                return [string[:left].strip()] + ['OR'] + _splitting(string[left + 2:].strip())
-        else:
-            left = or_pos
-            return [string[:left].strip()] + ['OR'] + _splitting(string[left + 2:].strip())
-    else:
-        if and_pos is not None:
-            left = and_pos
-            return [string[:left].strip()] + ['AND'] + _splitting(string[left + 3:].strip())
-        else:
-            raise NotImplementedError('You are not suppose to enter this whatsoever')
 
 
 def _store(index, key, id=None):
