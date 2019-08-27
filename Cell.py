@@ -9,6 +9,7 @@ that makes sense on its own, separated from the rest by a newline.
 from Tokenizer import Tokenizer
 from Neo4jDriver import *
 from getpass import getpass
+from TestCases import TestCase
 
 PATH = Path.cwd()
 
@@ -72,7 +73,10 @@ class Cell(object):
             Cell.__neo4j_running = True
         # Adds the node in the database if it is running
         if Cell.__neo4j_running:
-            insertNode(Cell.__session, self.id, self.header, self.content)
+            try:
+                insertNode(Cell.__session, self.id, self.header, self.content)
+            except ConnectionRefusedError:
+                TestCase('_RUN_NEO4J', _RUN_NEO4J)
         # Static variable holding the count of all existing cells
         Cell.__cell_total += 1
 
@@ -101,8 +105,14 @@ class Cell(object):
                 self.__next[link_name].append(next_cell)
             if Cell.__neo4j_running:
                 link = '' if link_name is None else link_name
-                createNewRelation(
-                    Cell.__session, self.id, self.content, next_cell.id, next_cell.content, link, link)
+                try:
+                    createNewRelation(
+                        Cell.__session, self.id, self.content, next_cell.id, next_cell.content, link, link)
+                except Exception as e:
+                    print(e)
+                    TestCase('createNewRelation', self.id, self.content, next_cell.id, next_cell.content,
+                             link, link)
+
         elif isinstance(next_cell, list):
             for item in next_cell:
                 self.setNext(item, link_name)
@@ -313,8 +323,20 @@ class Cell(object):
         Cell.__ids.remove(self.id)
         if Cell.__cell_total == 0:
             if Cell.__neo4j_running:
-                closeDatabase(Cell.__session)
+                try:
+                    closeDatabase(Cell.__session)
+                except Exception as e:
+                    print(e)
+                    TestCase('closeDatabase', Cell.__session, Cell.__cell_total)
+
                 Cell.__neo4j_running = False
+        else:
+            if Cell.__neo4j_running:
+                try:
+                    removeNode(Cell.__session, self.id, self.content, self.content)
+                except Exception as e:
+                    print(e)
+                    TestCase('removeNode', Cell.__session, self.id, self.content, self.content)
 
 
 class Writing(Cell):
@@ -551,6 +573,7 @@ def test():
     c['new_link'] = Cell('new link')
     for item in c['new_link']:
         print(item.content)
+
 
 
 if __name__ == '__main__':
