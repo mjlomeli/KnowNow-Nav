@@ -4,7 +4,6 @@
 Opens a CSV spreadsheet for reading and searching operations.
 Ideas: pickle handling with __call__ && __init__, print formatting,
 """
-from Row import Row
 from prettytable import PrettyTable
 from pathlib import Path
 import csv
@@ -18,6 +17,7 @@ __version__ = "0.0.0.1"
 __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
+
 
 # default required values
 PATH = Path.cwd()
@@ -82,7 +82,6 @@ class Spreadsheet:
         else:
             self.headers = self.real_headers
         self.testing = False
-        self.smart_sheet = [Row(self.headers, row) for row in self.__spreadsheet]
 
     def keys(self):
         return self.headers
