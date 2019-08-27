@@ -125,3 +125,7 @@ class Tokenizer:
                 self.__elements = [sheet]
                 self.tags = None
         self.__start()
+
+
+def testTokenizer():
+    pass

@@ -322,7 +322,7 @@ class Spreadsheet:
         return str(table)
 
 
-def main():
+def testSpreadsheet():
     try:
         message = "Initializing with arguments: Spreadsheet(DEFAULT_SPREADSHEET, NORM_HEADERS)"
         sheet = Spreadsheet(_DEFAULT_SPREADSHEET, _NORM_HEADERS)
@@ -361,4 +361,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    testSpreadsheet()

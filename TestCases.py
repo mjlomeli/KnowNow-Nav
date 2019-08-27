@@ -7,6 +7,13 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 from pathlib import Path
+from Cell import testCell
+from FlaskDriver import testFlaskDriver
+from Tokenizer import testTokenizer
+from Spreadsheet import testSpreadsheet
+from Similarity import testSimilarity
+from Row import testRow
+from Document import testDocument
 
 PATH = Path.cwd()
 
@@ -72,3 +79,42 @@ def _openDatabase(*args):
     print('\033[93m' + str(args) + '\033[0m')
 
 
+def printProgressBar(iteration, total, prefix='', suffix='', color_temp=False, decimals=1, length=50, fill='█',
+                     color=''):
+    """
+    Displays a progress bar for each iteration.
+    Title: Progress Bar
+    Author: Benjamin Cordier
+    Date: 6/20/2019
+    Code version: n/a
+    Availability: https://stackoverflow.com/questions/3173320/text-progress-bar-in-the-console
+    """
+    colors = {'': '30m', 'gray': '90m', 'red': '31m', 'green': '92m', 'yellow': '93m', 'purple': '35m',
+              'orange': '33m', 'blue': '34m', 'pink': '95m', 'cyan': '96m', 'black': '97m'}
+    if int(iteration % (total / 100)) == 0 or iteration == total or prefix is not '' or suffix is not '':
+        # calculated percentage of completeness
+        percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+        filledLength = int(length * iteration // total)
+        # modifies the bar
+        bar = fill * filledLength + '-' * (length - filledLength)
+        # Creates the bar
+        if color_temp:
+            temp = {0.0: 'red', 35.0: 'orange', 65.0: 'yellow', 100.0: 'green'}
+            color = temp[min([0.0, 35.0, 65.0, 100.0], key=lambda x: abs(x - float(percent)))]
+        print('\033[' + colors[color] + '\r\t\t{} |{}| {}% {}\033[0m'.format(prefix, bar, percent, suffix), end='\r')
+        # Print New Line on Complete
+        if iteration == total:
+            print()
+
+def testAll():
+    print('\033[34m' + "_____Testing All Test Cases_____" + '\033[0m')
+    count = 0
+    total = 10
+    printProgressBar(count, total, 'Testing Spreadsheet')
+    testSpreadsheet()
+    testCell()
+    testRow()
+    testFlaskDriver()
+    testTokenizer()
+    testSimilarity()
+    testDocument()

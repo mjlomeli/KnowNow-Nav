@@ -215,3 +215,6 @@ def _merge_indexes(index1, index2):
         index1[key].update(index2[key])
     return index1
 
+
+def testWriting():
+    pass

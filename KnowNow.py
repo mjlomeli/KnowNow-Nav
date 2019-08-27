@@ -8,6 +8,7 @@ that makes sense on its own, separated from the rest by a newline.
 
 from pathlib import Path
 import sys
+from TestCases import testAll
 
 __DATA = Path.cwd() / Path('Data')
 
@@ -36,7 +37,7 @@ def __reset():
             file.unlink()
 
 
-def test():
+def testKnowNow():
     pass
 
 

@@ -344,10 +344,11 @@ class Cell(object):
 
 
 def main():
-    pass
+    if _TESTING:
+        testCell()
 
 
-def test():
+def testCell():
     header = ['calpurnia', 'sunny', 'egypt', 'capital']
     content = ['something', 'goes', 'in', 'here']
 
@@ -388,7 +389,6 @@ def test():
     c['new_link'] = Cell('new link')
     for item in c['new_link']:
         print(item.content)
-
 
 
 if __name__ == '__main__':

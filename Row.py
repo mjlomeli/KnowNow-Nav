@@ -198,9 +198,9 @@ def main():
     pass
 
 
-def test():
+def testRow():
     pass
 
 
 if __name__ == '__main__':
-    test()
+    main()

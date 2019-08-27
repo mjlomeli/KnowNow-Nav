@@ -121,7 +121,7 @@ def search():
         return render_template(__RESULT_HTML)
 
 
-def __test_function():
+def testFlaskDriver():
     """
     Raises an error and warns you to have everything installed in the appropriate places. If you fail any,
     it will output an error message of what could had happened.
@@ -134,7 +134,7 @@ def __test_function():
     assert __HOMEPAGE_PATH.exists(), error
 
 
-__test_function()
+testFlaskDriver()
 
 app.run()
 
