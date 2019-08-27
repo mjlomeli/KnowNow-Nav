@@ -41,36 +41,36 @@ def getDriver(driver):
     return driver
 
 def insertNode(session, label: str, label_property: str, specific_text: str):
-'''Insert a single node given a label, property, and property string'''
+    '''Insert a single node given a label, property, and property string'''
     insert_cq = ''' 
-    CREATE (n:''' + label + "{" + label_property + ":" +  specific_text + '''})
-    RETURN n})'''
+    CREATE (n:`''' + label + "`{`" + label_property + "`:\"" +  specific_text + '''\"}) 
+    RETURN n'''
 
     session.run(insert_cq)
 
 
 def removeNode(session, label: str, label_property: str, specific_text: str):
-'''Provide a specific label, its specific text + property. Finds it and deletes it from graph.'''
+    '''Provide a specific label, its specific text + property. Finds it and deletes it from graph.'''
 
     cypher_query = '''
-    MATCH (n:''' + label + "{" + label_property + ":" +  specific_text + '''})
+    MATCH (n:`''' + label + "`{`" + label_property + "`:\"" +  specific_text + '''\"})
     DELETE n'''
 
     session.run(cypher_query)
 
-def createNewRelation(session, label_from: str, label_from_text: str, label_to: str, label_to_text: str, new_relation: str, relation_text: str):
-'''creates a new relation from one specified node to another specified node with respective label and text'''
+def createNewRelation(session, label_from: str, label_from_prop: str, label_from_text: str, label_to: str, label_to_prop: str, label_to_text: str, new_relation: str, rel_prop: str, relation_text: str):
+    '''creates a new relation from one specified node to another specified node with respective label and text'''
 
-    cypher_query = "MATCH " + "(label_from: " + label_from + "{" + label_from + ":" + label_from_text + "})" + \
-                    "MATCH (label_to" +  ":" + label_to + " {" + label_to + ":" +  label_to_text + "})" + \
-                    "MERGE (label_from)-[rel:" + new_relation + "{" + new_relation + ":" +  relation_text + "}]->(label_to)"
+    cypher_query = "MATCH " + "(label_from: `" + label_from + "`{`" + label_from_prop + "`:\"" + label_from_text + "\"})" + \
+                    "MATCH (label_to" +  ":`" + label_to + "` {`" + label_to_prop + "`:\"" +  label_to_text + "\"})" + \
+                    "MERGE (label_from)-[rel:`" + new_relation + "`{`" + rel_prop + "`:\"" +  relation_text + "\"}]->(label_to)"
 
     session.run(cypher_query)
 
-def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str, relation_text: str):
-'''deletes a specified relation that is related to a specified node'''
-    cypher_query = "MATCH (n: " + label + "{" + prop + ":" + prop_text + "})-[" + relation + ":" + relation_text + ''']->()
-                    DELETE ''' + relation
+def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str):
+    '''deletes a specified relation that is related to a specified node'''
+    cypher_query = "MATCH (n: `" + label + "`{`" + prop + "`:\"" + prop_text + "\"})-[r:`" + relation + '''`]->()
+                    DELETE r''' 
                    
     session.run(cypher_query)
 
@@ -82,4 +82,11 @@ def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str
 
 #   print(record.get('p').start_node)
 #   print()
+
+
+
+
+
+
+
 
