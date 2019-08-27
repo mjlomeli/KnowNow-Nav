@@ -1,48 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<!-- <style type = "text/css">
-    body{
-        /* background-color: rgb(45, 91, 137); */
-        /* background-image: url("images/background_home.jpg"); */
-        /* background-position: center center; */
-    }
-    .container{
-        text-align: center;
-        margin-top: 200px;
-        height: 100%;
-    }
-    .center{
-        margin-bottom: 25px;
-    }
-    .tagDropdown{
-        background-color: rgb(45, 91, 137);
-        color:  rgb(252, 162, 7); 
-        border: 2px solid rgb(252, 162, 7);
-        /* background-color:black;
-        color:  white;
-        border: 2px solid white; */
-        height: 34px;
-        width: 200px;
-    }
-    #submitButton{
-        background-color: rgb(45, 91, 137);
-        color: rgb(252, 162, 7);
-        font-weight: bold;
-        border: 3px solid rgb(252, 162, 7);
-        margin-top: 30px;
-    }
-    #main-footer{
-        background: #000;
-        color: #fff;
-        text-align: center;
-        padding:20px;
-        margin-top: 300px;
-    }
-</style> -->
-
-<section class="container">
-    <h1 class="motto">Discover Patient Insights</h1>
+<section class="container-fluid main-div">
+    <h1 class="motto">Discover patient insights.</h1>
     <form action="form" method="GET" id=queryField>
         <select name="query" class="tagDropdown">
             <option value="" disabled selected hidden><strong>Select topic for patient insights</strong></option>
@@ -50,11 +10,9 @@
             <option value="side-effects">Side Effects</option>
         </select>
     </form>
-    <button class="btn" type="submit" form="queryField" value="submit" id="submitButton">Know Now!</button>
-</section>
-<!-- <footer id="main-footer">
-    <p>Copyright &copy; 2019 KnowNow </p>
-</footer> -->
+    <button class="btn knownow-btn" type="submit" form="queryField" value="submit" id="submitButton">Know Now!</button>
 
+    <div><img src="../static/knownow_art_coralblack-01.svg" alt="" class="art-img"></div>
+</section>
 
 {% endblock content %}

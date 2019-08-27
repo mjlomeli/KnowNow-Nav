@@ -1,89 +1,71 @@
 body {
-    font-family: comic sans ms;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 15px;
 }
 
-#mainNavbar {
-    font-size: 20px;
+.navbar-brand {
+    font-size: 2.2em;
+    padding-left: 1vw;
 }
 
-#mainNavbar .navbar-brand {
-    font-size: 30px;
-    border: 0;
-    border-radius: 0;
-}
-
-#mainNavbar .nav-item {
-    padding-left: 9vw;
-    border-bottom: 3px solid transparent;
-}
-
-.nav-item a:hover {
-    border-bottom: 3px solid rgb(252, 162, 7);
-}
-
-.nav-item a:active {
-    border-bottom: 3px solid rgb(252, 162, 7);
-}
-
-#mainNavbar .navbar-collapse {
-    text-align: center;
-}
-
-.body {
-    position: fixed;
-    overflow: hidden;
-}
-
-.container{
+.main-div {
     text-align: center;
     margin-top: 250px;
-    position: fixed center;
-    overflow: hidden;
 }
 
 .motto {
-    font-family:agency fb;
-    font-size: 60px;
-    font-style: italic;
-    color: rgba(57, 94, 133, 1);
-    border-bottom-width: 6px;
-    border-bottom-style: solid;
-    border-bottom-color: rgb(252, 162, 7);
-    text-decoration: solid overline rgb(252, 162, 7);
+    font-size: 4.0em;
 }
 
 .tagDropdown{
     background-color: rgb(255,255,255);
-    color:  rgb(57, 94, 133); 
-    border: 2px solid rgb(252, 162, 7);
-    height: 34px;
-    width: 400px;
+    color: #e8797c;
+    border: 2px solid #e8797c;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 7px;
+    height: 45px;
+    width: 350px;
     margin-top: 30px;
     outline: none;
-}
+ }
 
-.btn {
-    background-color: rgb(255,255,255);
-    color: rgb(57, 94, 133);
+.knownow-btn {
+    background-color: #e8797c;
+    color: white;
     font-weight: bold;
-    border: 2px solid rgb(252, 162, 7);
+    /* border: 2px solid rgb(252, 162, 7); */
     margin-top: 30px;
     cursor: pointer;
-    transition: 0.8s;
+    /* transition: 0.8s; */
 }
 
-.btn:hover{
-    background-color: rgb(252, 162, 7);
+.knownow-btn:hover {
+background-color: white;
+color: #e8797c;
+border: 2px solid #e8797c;
 }
 
-#logo {
-    height: 150px;
-    width: 400px;
+.art-img {
+    max-width: 1000px;
+    max-height: 1000px;
 }
-/* #main-footer{
-    background: #000;
-    color: #fff;
+#mainNavbar {
+    background-color: #e8797c;
+    font-size: 1.05em;
+
+}
+
+#mainNavbar .nav-item {
+    padding-left: 7vw;
+    color: white; /* fix this */
+}
+
+.nav-item a:hover {
+    border-bottom: 1px dashed white;
+}
+
+#mainNavbar .navbar-collapse {
     text-align: center;
-    padding:20px;
-    margin-top: 200px;
-} */
+    /* fix left padding when collapsed */
+}
