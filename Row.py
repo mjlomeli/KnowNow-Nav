@@ -26,12 +26,16 @@ _NORMALIZE_HEADERS = True
 _NORMALIZE_NODE_HEADERS = True
 _PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
 
-_need_logic_linking = ['Intervention', 'Associated Side effect', 'Intervention mitigating side effect']
+_need_logic_linking = {
+    'Associated Side effect': [('mitigated by', 'Intervention mitigating side effect')],
+    'Intervention': [('causes', 'Associated Side effect')],
+    'Intervention mitigating side effect': []
+}
 _need_linking = {
-    'Intervention': [('causes', 'Associated Side effect'), ('against', 'Patient Cohort (Definition)')],
-    'Associated Side effect': [('could be mitigated by', 'Intervention mitigating side effect')]
-    # 'Associated Side effect': ('lasted for', 'Duration'),
-    # 'Associated Side effect': ('occurred after intervention', 'Duration')}
+    'Intervention': [('causes', 'Associated Side effect'), ('fight against', 'Patient Cohort (Definition)')],
+    'Associated Side effect': [('mitigated by', 'Intervention mitigating side effect')]
+    # 'Associated Side effect': [('lasted for', 'Duration')],
+    # 'Associated Side effect': [('occurred after intervention', 'Duration')]}
 }
 
 _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
@@ -90,61 +94,55 @@ class Row:
 
     def __set_associations(self):
         for header in self.headers:
+            associates = {}
+            if header in _need_logic_linking:
+                associates = self.__eval_logic_and_link(header)
             if header in _need_linking:
-                self.__link_associations(header)
-            elif header in _need_logic_linking:
-                self.__eval_logic_and_link(header)
+                self.__link_associations(header, associates)
+            else:
+                #TODO: link them to nothing next
+                pass
 
-    def __link_associations(self, header):
-        for link, next_cells_header in _need_linking[header]:
-            if isinstance(self.__row[header], Cell):
-                cell = self.__row[header]
-                self.__row[header].setNext(self.__row[next_cells_header], link)
+    def __link_associations(self, header, associates=None):
+        if isinstance(_need_linking, dict):
+            if header in _need_linking and associates is not None:
+                OR = associates['OR']
+                AND = associates['AND']
+                for link, next_cells_header in _need_linking[header]:
+                    if isinstance(self.__row[header], Cell):
+                        cell = self.__row[header]
+                        self.__row[header].setNext(self.__row[next_cells_header], link)
+
 
     def __eval_logic_and_link(self, header):
         if isinstance(self.__row[header], Cell):
             cell = self.__row[header]
             if cell.content is not None and cell.content is not '':
+                AND = []
+                OR = []
                 logic_split = _splitting(cell.content)
-                index = len(logic_split)
-                OR = lambda curr, next: self.__row[header].setNext(next)
-                AND = lambda curr, next: self.__row[header].setNext
-                while(index > 0):
-                    operand, index = self.__iter_logic(logic_split, index)
-                    if index == 1:
-
-    def __OR(self, header, operands: list):
-        for oper in operands:
-            self.__row[header].setNext(oper)
-
-    def __AND(self, header, operands: list):
-        if len(operands) > 0:
-            cell = operands[0]
-            for other_cells in operands[1:]:
-                cell += other_cells
-
-    def __iter_logic(self, logic_split: list, index: int):
-        index -= 1
-        return logic_split.pop(), index
-
-    def __linking_logic(self, cell: Cell):
-        """
-        _needing_logic = ['intervention', 'side_effects', 'int_side_effects']
-        _linking_headers = {
-                    intervention': [('causes', 'side_effects'), ('against', 'cohort')]
-        """
-        if cell.header in self.__row:
-            if cell.content is not None and cell.content is not '':
-                operation = self.__evaluate(cell)
-                if cell.header not in _linking_headers:
-                    for link in operation:
-                        cell.setNext(Cell(link, link + '_new', 0))
-                else:
-                    for items in operation:
-                        for linkage in _linking_headers[cell.header]:
-                            link_name, to_header = linkage
-                            self.__linking_headers(cell, items)
-                            #cell.setNext(new_cell, link_name)
+                if len(logic_split) > 1 and '' in logic_split:
+                    raise SyntaxError('There is an OR and AND without a matching operand.')
+                length = len(logic_split)
+                i = 2
+                while i < length - 1:
+                    if 'AND' in logic_split[:i] and 'OR' in logic_split[:i]:
+                        raise SyntaxError('Cant have two logical operators side by side.')
+                    elif logic_split[:i] == ['AND', 'AND']:
+                        raise SyntaxError('Cant have two logical operators side by side.')
+                    elif logic_split[:i] == ['OR', 'OR']:
+                        raise SyntaxError('Cant have two logical operators side by side.')
+                    elif 'AND' in logic_split[:i]:
+                        AND.append(logic_split[i-2])
+                    elif 'OR' in logic_split[:i]:
+                        OR.append(logic_split[i-2])
+                    i += 2
+                    if i == length - 1:
+                        if 'AND' in logic_split[i-1:i+1]:
+                            AND.append(logic_split[i])
+                        elif 'OR' in logic_split[i-1:i+1]:
+                            OR.append(logic_split[i])
+            return {'AND': AND, 'OR': OR}
 
     def __evaluate(self, cell: Cell):
         operators = _splitting(cell.content)
