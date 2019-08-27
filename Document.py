@@ -22,5 +22,5 @@ __status__ = "Prototype"
 
 
 
-def testDocument()
+def testDocument():
     pass

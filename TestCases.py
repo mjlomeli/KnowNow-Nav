@@ -25,6 +25,7 @@ __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
+
 def TestCase(*args, **kwargs):
     if isinstance(args, str):
         print(args)
@@ -48,7 +49,6 @@ def TestCase(*args, **kwargs):
                 _createNewRelation(args)
 
 
-
 def _RUN_NEO4J(var=None):
     print('\033[31m' + 'You tried to run the Neo4j innapropriately:' + '\033[0m')
     if var is not None:
@@ -57,21 +57,25 @@ def _RUN_NEO4J(var=None):
         else:
             print('\033[93m' + 'Neo4j is crashing. Ask Anne and Jennifer about it.' + '\033[0m')
 
+
 def _createNewRelation(*args):
     print('\033[31m' + 'You tried to use Neo4j to link one node to another and it failed:' + '\033[0m')
     if len(args) == 7:
         print('\033[93m' + 'Here are some variables that were used.' + '\033[0m')
         print('\033[93m' + str(args) + '\033[0m')
 
+
 def _closeDatabase(*args):
     print('\033[31m' + 'Failed to close the database:' + '\033[0m')
     print('\033[93m' + 'These are the params (session, cell_count)' + '\033[0m')
     print('\033[93m' + str(args) + '\033[0m')
 
+
 def _removeNode(*args):
     print('\033[31m' + 'Error removing a node from Neo4j:' + '\033[0m')
     print('\033[93m' + 'These are the params(session, id, header, content)' + '\033[0m')
     print('\033[93m' + str(args) + '\033[0m')
+
 
 def _openDatabase(*args):
     print('\033[31m' + 'Error opening the database from Neo4j:' + '\033[0m')
@@ -79,38 +83,8 @@ def _openDatabase(*args):
     print('\033[93m' + str(args) + '\033[0m')
 
 
-def printProgressBar(iteration, total, prefix='', suffix='', color_temp=False, decimals=1, length=50, fill='█',
-                     color=''):
-    """
-    Displays a progress bar for each iteration.
-    Title: Progress Bar
-    Author: Benjamin Cordier
-    Date: 6/20/2019
-    Code version: n/a
-    Availability: https://stackoverflow.com/questions/3173320/text-progress-bar-in-the-console
-    """
-    colors = {'': '30m', 'gray': '90m', 'red': '31m', 'green': '92m', 'yellow': '93m', 'purple': '35m',
-              'orange': '33m', 'blue': '34m', 'pink': '95m', 'cyan': '96m', 'black': '97m'}
-    if int(iteration % (total / 100)) == 0 or iteration == total or prefix is not '' or suffix is not '':
-        # calculated percentage of completeness
-        percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-        filledLength = int(length * iteration // total)
-        # modifies the bar
-        bar = fill * filledLength + '-' * (length - filledLength)
-        # Creates the bar
-        if color_temp:
-            temp = {0.0: 'red', 35.0: 'orange', 65.0: 'yellow', 100.0: 'green'}
-            color = temp[min([0.0, 35.0, 65.0, 100.0], key=lambda x: abs(x - float(percent)))]
-        print('\033[' + colors[color] + '\r\t\t{} |{}| {}% {}\033[0m'.format(prefix, bar, percent, suffix), end='\r')
-        # Print New Line on Complete
-        if iteration == total:
-            print()
-
 def testAll():
     print('\033[34m' + "_____Testing All Test Cases_____" + '\033[0m')
-    count = 0
-    total = 10
-    printProgressBar(count, total, 'Testing Spreadsheet')
     testSpreadsheet()
     testCell()
     testRow()
