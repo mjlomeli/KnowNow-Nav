@@ -368,7 +368,7 @@ class Writing(Cell):
         header = ''
 
         if isinstance(other, str):
-            content = '' if other is None
+            content = '' if other is None else other
         elif isinstance(other, Cell) or isinstance(other, Writing):
             content = '' if other.content is None else other.content
             header = '' if other.header is None else other.content
