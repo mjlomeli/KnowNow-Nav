@@ -1,27 +1,34 @@
 from bs4 import BeautifulSoup
-import urllib3, certifi
+import urllib3, certifi, csv
 from requests_html import HTMLSession
 
 
-keywords = ["cancer", "treatment", "radiotherapy"]
 
 # urls = ["https://www.cancerresearchuk.org/about-cancer/cancer-chat/thread/radiotherapy-side-effects", "https://www.reddit.com/r/cancer/comments/522471/what_is_radiation_therapy_like/"]
 
 
 
 class Scraper():
-	def __init__(self):
+	def __init__(self, keywords):
+		self.keywords = keywords
+
 		self.http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
 
-		query_url = self.site_lookup(["radiotherapy", "treatment"], "reddit.com/r/cancer") #reddit query works
-		# query_url = self.site_lookup(["radiotherapy", "treatment"], "cancerresearchuk")  #cancerresearchuk does not
-		print(query_url)
+		gsheet = "./data/Patient Insights - Insights.csv"
 
-		search_results = self.get_search_urls(query_url)
-		print(search_results)
+		gsheet_dict = self.prep_gsheet(gsheet)
 
-		keyword_posts = self.grab_posts(keywords, search_results)
-		print(keyword_posts)
+		self.get_posts_gsheet(self.keywords, gsheet_dict)
+
+		# query_url = self.site_lookup(["radiotherapy", "treatment"], "reddit.com/r/cancer") #reddit query works
+		# # query_url = self.site_lookup(["radiotherapy", "treatment"], "cancerresearchuk")  #cancerresearchuk does not
+		# print(query_url)
+
+		# search_results = self.get_search_urls(query_url)
+		# print(search_results)
+
+		# keyword_posts = self.grab_posts(self.keywords, search_results)
+		# print(keyword_posts)
 
 	def site_lookup(self, query, site):
 		if "cancerresearchuk" in site:
@@ -111,5 +118,44 @@ class Scraper():
 
 		return all_paras
 
-s = Scraper()
+	def prep_gsheet(self, gsheet):
+		post_dict = {
+			"Comparing Therapies":[],
+			"Side Effects":[],
+			"Right treatment?":[],
+			"Specific Therapy Inquiries":[],
+			"Others' experience":[],
+			"Symptoms diagnosis":[],
+			"Side effect management":[],
+			"Recurrence Queries":[],
+			"Specific Conditions":[],
+			"Data interpretation":[],
+			"Referral":[],
+			"Lifestyle":[],
+			"Positive Affirmations":[],
+			"Encouragement":[],
+			"Inter-Personal Patient Connections":[],
+			"Other/ Miscellaneous":[]
+		}
+		with open(gsheet, newline='') as csvfile:
+			sheet = csv.reader(csvfile, delimiter=',')
+			for line in sheet:
+				keyword = line[5].split(';')[0]
+				insight = line[7]
+				if keyword in post_dict:
+					post_dict[keyword].append(insight)
+
+		return post_dict
+
+	def get_posts_gsheet(self, keywords, gsheet_dict):
+		all_posts = []
+
+		for keyword in keywords:
+			all_posts.append(gsheet_dict[keyword])
+		
+		return all_posts
+
+
+
+s = Scraper(["Side Effects"]) #enter any number of keywords here
 
