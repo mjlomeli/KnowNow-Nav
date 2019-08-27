@@ -94,3 +94,7 @@ def testAll():
     testSimilarity()
     testDocument()
     testKnowNow()
+
+
+if __name__ == '__main__':
+    testAll()
