@@ -147,26 +147,16 @@ class Cell(object):
         :param other: the other param
         :return: string concatenation
         """
+        header = ''
         if isinstance(other, str):
-            return self.content + other
+            content = '' if other is None else other
         elif isinstance(other, Cell):
-            if other.content is not None and self.content is not None:
-                content = self.content + ' ' + other.content
-            elif other.content is not None and self.content is None:
-                content = other.content
-            elif other.content is None and self.content is not None:
-                content = self.content
-            else:
-                content = None
-            if other.header is not None and self.header is not None:
-                header = self.header + ' ' + other.header
-            elif other.header is not None and self.header is None:
-                header = other.header
-            elif other.header is None and self.header is not None:
-                header = self.header
-            else:
-                header = None
-            return Cell(content, header)
+            content = '' if other.content is None else other.content
+            header = '' if other.header is None else other.header
+        else:
+            raise TypeError('Can only add TF among Writing, Cell, and str.')
+
+        return Cell(self.content + content, self.header + header)
 
     def __contains__(self, item):
         """
@@ -366,9 +356,6 @@ class Writing(Cell):
             self.__tokenize(self.content)
         return self.__tf
 
-    def __add_indexes(self, index1: dict, index2: dict)->dict:
-        return self.__merge_indexes(index1, index2)
-
     def __add__(self, other):
         """
         Concatenates a string and a cell's text
@@ -377,25 +364,18 @@ class Writing(Cell):
         """
         if self.__tf is None:
             self.__tokenize(self.content)
-        tf = {}
-        if isinstance(other, Writing):
-            if len(other) > 0:
-                if len(self.__tf) > 0:
-                    both = set(list(other.keys()) + list(self.__tf.keys()))
-                    for key in both:
-                        other_val = other[key] if key in other else 0
-                        self_val = self.__tf[key] if key in self.__tf else 0
-                        tf[key] = {other_val + self_val} # change
-                    return tf
-                else:
-                    return other
-            else:
-                return self.__tf if len(self.__tf) > 0 else tf
-        elif isinstance(other, Cell) or isinstance(other, str):
-            return self.__add_tf(Writing(other))
+
+        header = ''
+
+        if isinstance(other, str):
+            content = '' if other is None
+        elif isinstance(other, Cell) or isinstance(other, Writing):
+            content = '' if other.content is None else other.content
+            header = '' if other.header is None else other.content
         else:
             raise TypeError('Can only add TF among Writing, Cell, and str.')
 
+        return Writing(self.content + content, self.header + header)
 
     def __str__(self):
         """
