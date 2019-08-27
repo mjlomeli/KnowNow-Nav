@@ -37,6 +37,9 @@ def results():
 def about_us():
     return render_template('aboutus.html', title='About Us')
 
+@app.route("/contactus")
+def contact_us():
+    return render_template('contactus.html', title='Contact Us')
 
 if __name__ == "__main__":
     app.run()
