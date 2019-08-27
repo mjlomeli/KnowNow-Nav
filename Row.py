@@ -110,7 +110,7 @@ class Row:
                     for link, next_cells_header in _need_linking[header]:
                         for assoc in associates:
                             cell = self.__row[header]
-                            cell.setNext(Cell(assoc),
+                            cell.setNext(Cell(assoc))
 
 
     def __eval_logic_and_link(self, header):
