@@ -24,12 +24,12 @@ __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
 __data = Path.cwd() / Path('data') / Path('scores.pickle')
-__IDF_WEIGHTING = True     # must set to True to run original program
-__corpus = Spreadsheet()             # must add your file/items here like your corpus
-__corp_size = len(__corpus)                 # must change value
+__IDF_WEIGHTING = True  # must set to True to run original program
+__corpus = Spreadsheet()  # must add your file/items here like your corpus
+__corp_size = len(__corpus)  # must change value
 __tokenizer = Tokenizer()
 __index = {}
-__max_postings_size = 15    # choose maximum number of results for cosine
+__max_postings_size = 15  # choose maximum number of results for cosine
 
 
 def file():
@@ -118,7 +118,7 @@ def __length_norm(term, row, index=__index):
         if __IDF_WEIGHTING:
             d_norm = sqrt(sum([__weighting(words, row, index) ** 2 for words in index.keys()]))
         else:
-            d_norm = sqrt(sum([__score(words, row, index)**2 for words in index.keys()]))
+            d_norm = sqrt(sum([__score(words, row, index) ** 2 for words in index.keys()]))
         if d_norm > 0:
             return d_term / d_norm
         else:
@@ -177,6 +177,65 @@ def combine_tf(tf: list):
                 combined[term] = freq
     return combined
 
+
+def __convert_index(tf):
+    if tf is None:
+        raise TypeError('Cant convert None into an index.')
+    if len(tf.values()) > 1 and isinstance(list(tf.values())[0], dict):
+        return tf
+    else:
+        return {key: {0: value} for key, value in tf.items()}
+
+
+def __increment_index(self, index, val):
+    i = {}
+    for key, values in index.items():
+        for key1, val2 in values.items():
+            if key not in i:
+                i[key] = {key1 + val: val2}
+            else:
+                i[key][key1 + val] = val2
+    return i
+
+
+def __reconstruct_index(new_start, index, keys):
+    new_index = {}
+    length = 0
+    if len(index) > 0:
+        k = list(index.values())[0]
+        if k is not None:
+            length = len(k)
+    if length > 0:
+        for key in keys:
+            if key in index:
+                for i, value in enumerate(index[key].values()):
+                    if key not in new_index:
+                        new_index[key] = {new_start + i: value}
+                    else:
+                        new_index[key][new_start + i] = value
+            else:
+                for i in range(length):
+                    if key not in new_index:
+                        new_index[key] = {new_start + i: 0}
+                    else:
+                        new_index[key][new_start + i] = 0
+    return new_index
+
+
+def __merge_indexes(index1, index2):
+    index1 = __convert_index(index1)
+    index2 = __convert_index(index2)
+    start = min(list(index1.values())[0])
+    end = max(list(index1.values())[0]) + 1
+    if index1.keys() != index2.keys():
+        keys = set(index1.keys()).union(index2.keys())
+        index1 = __reconstruct_index(start, index1, keys)
+        index2 = __reconstruct_index(end, index2, keys)
+    for key in index1.keys():
+        index1[key].update(index2[key])
+    return index1
+
+
 def process_index():
     """
     Your corpus must be iterable to use this function.
@@ -198,8 +257,10 @@ def process_index():
         corpus.append(row_doc)
         rows += [cell.getTF() for cell in row_doc]
 
-        category += [cell.getTF() for cell in row_doc if row_doc['category'] is not None and row_doc['category'] is not '']
-        query_tag += [cell.getTF() for cell in row_doc if row_doc['query_tag'] is not None and row_doc['query_tag'] is not '']
+        category += [cell.getTF() for cell in row_doc if
+                     row_doc['category'] is not None and row_doc['category'] is not '']
+        query_tag += [cell.getTF() for cell in row_doc if
+                      row_doc['query_tag'] is not None and row_doc['query_tag'] is not '']
         cohort += [cell.getTF() for cell in row_doc if row_doc['cohort'] is not None and row_doc['cohort'] is not '']
 
     rows = combine_tf(rows)
@@ -247,7 +308,7 @@ def test():
             'jealous': {0: 10, 1: 7, 2: 11},
             'gossip': {0: 2, 1: 0, 2: 6},
             'wuthering': {0: 0, 1: 0, 2: 38}}
-        
+
         result = __length_norm('affection', 0, index)
         assert abs(result - 0.789) < 0.01, '__length_norm(affection,0) must be about 0.78, result=' + str(result)
         result = __length_norm('jealous', 0, index)
@@ -274,5 +335,3 @@ if __name__ == '__main__':
         test()
     else:
         main()
-
-

@@ -384,7 +384,7 @@ class Writing(Cell):
                     i[key][key1 + val] = val2
         return i
 
-    def __reconstruct_index(new_start, keys, index):
+    def __reconstruct_index(new_start, index, keys):
         new_index = {}
         length = 0
         if len(index) > 0:
@@ -413,41 +413,12 @@ class Writing(Cell):
         start = min(list(index1.values())[0])
         end = max(list(index1.values())[0]) + 1
         if index1.keys() != index2.keys():
-            i = {}
             keys = set(index1.keys()).union(index2.keys())
-            for key in keys:
-                if key not in index1:
-                    while(start < end):
-                        if key not in i:
-                            i[key] = {start: 0}
-                        else:
-                            i[key][start] = index1[start]
-                        start += 1
-                else:
-                    while(start < end):
-                        if key not in i:
-                            i[key] = {start: index1[start]}
-                        else:
-                            i[key][start] = index1[start]
-                        start += 1
-                if start < end:
-                    if key not in i:
-                        i[key] = {start: 0}
-                    else:
-                        i[key][start] = index1[start]
-                    start += 1
-                else:
-                    if key not in i:
-                        i[key] = {end: 0}
-                    else:
-                        i[key][end] = index2[end]
-                    end += 1
-            return i
-        else:
-            index2 = self.__increment_index(index2, end)  # structure checked inside the method
-            for key in index1.keys():
-                index1[key].update(index2[key])
-            return index1
+            index1 = self.__reconstruct_index(start, index1, keys)
+            index2 = self.__reconstruct_index(end, index2, keys)
+        for key in index1.keys():
+            index1[key].update(index2[key])
+        return index1
 
     def __add_indexes(self, index1: dict, index2: dict)->dict:
         return self.__merge_indexes(index1, index2)
