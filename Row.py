@@ -21,14 +21,11 @@ __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
 
-
-_TESTING = False
 _STRING_LIMIT = 15
+_TESTING = False
 _NEO4J_RUNNING = False
-_SESSION = openDatabase(input('URI: '), input('Username'), getpass('Password: ')) if _NEO4J_RUNNING else None
+_NORMALIZE_Headers = True
 _PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
-_TOKENIZER = Tokenizer()
-
 
 _needing_logic = ['intervention', 'side_effects', 'int_side_effects']
 _linking_headers = {
@@ -56,28 +53,36 @@ _NODE_HEADER = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Quer
 
 class Row:
     total_rows = 0
+    __auto_id = 0
 
-    def __init__(self, headers=None, cells=None, length=10):
+    def __init__(self, cells=None):
         # TODO: need to change id structure to row:column, 0:0, 0:1
-        # TODO: SUM of TF in 0:1, where 0 is the row
-        # TODO: UPDATE(TF: empty TF w/ words) -> updated TF
-        __total_rows = 0
-        self.__row = {}
-        self.__length = length
-        self.__pos = Row.total_rows + 1
-        Row.total_rows += 1
-        self.__tf = None
+        self.headers = None
+        self.length = 0
+        self.__row = None
         self.__index = 0
-        self.__assemble(headers, cells, length)
+        self.__assemble(cells)
 
-    def __assemble(self, headers=None, cells=None, length=10):
-        if headers is None:
-            headers = [i for i in range(length)]
+    def __assemble(self, cells):
+        headers = []
+        cells = []
         if cells is None:
-            cells = [Cell(None, None, None)] * length
+            pass
+        elif isinstance(cells, Cell):
+            headers = [cells.header]
+            cells = [cells]
+        elif isinstance(cells, list) and len(cells) > 0:
+            if isinstance(cells, Cell):
+                headers = [cell.header for cell in cells]
+                cells = [cell for cell in cells]
+        elif isinstance(cells, Row):
+            headers = list(cells.__row.keys())
+            cells = list(cells.__row.values())
         else:
-            cells = [Cell(txt, head, self.__pos) for txt, head in zip(cells, headers)]
+            raise TypeError('The constructor accepts only type Row, Cell, and list of Cells')
+
         assert(len(headers) == len(cells))
+        self.headers = headers
         self.__row = dict(zip(headers, cells))
         self.__length == len(self.__row)
         self.__set_associations()
