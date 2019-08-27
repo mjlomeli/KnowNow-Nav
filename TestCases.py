@@ -65,3 +65,10 @@ def _removeNode(*args):
     print('\033[31m' + 'Error removing a node from Neo4j:' + '\033[0m')
     print('\033[93m' + 'These are the params(session, id, header, content)' + '\033[0m')
     print('\033[93m' + str(args) + '\033[0m')
+
+def _openDatabase(*args):
+    print('\033[31m' + 'Error opening the database from Neo4j:' + '\033[0m')
+    print('\033[93m' + 'These are the params(uri, username, password)' + '\033[0m')
+    print('\033[93m' + str(args) + '\033[0m')
+
+
