@@ -6,7 +6,6 @@ If the description is long, the first line should be a short summary of Cell.py
 that makes sense on its own, separated from the rest by a newline.
 """
 
-from Tokenizer import Tokenizer
 from Neo4jDriver import *
 from getpass import getpass
 from TestCases import TestCase
