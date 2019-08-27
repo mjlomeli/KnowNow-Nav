@@ -28,14 +28,14 @@ def openDatabase(uri: str, username: str, password: str):
         return (session, driver)
 
     except:
-        pass
+        print("Could not open database.")
 
 def closeDatabase(session):
     try:
         session.close()
 
     except:
-        pass
+        print("Could not close database.")
 
 def getSession(session):
     return session
@@ -52,7 +52,7 @@ def insertNode(session, label: str, label_property: str, specific_text: str):
 
         session.run(insert_cq)
     except:
-        pass
+        print("Could not insert node")
 
 
 def removeNode(session, label: str, label_property: str, specific_text: str):
@@ -65,7 +65,7 @@ def removeNode(session, label: str, label_property: str, specific_text: str):
         session.run(cypher_query)
 
     except: 
-        pass
+        print("Could not remove node")
 
 def createNewRelation(session, label_from: str, label_from_prop: str, label_from_text: str, label_to: str, label_to_prop: str, label_to_text: str, new_relation: str, rel_prop: str, relation_text: str):
     '''creates a new relation from one specified node to another specified node with respective label and text'''
@@ -76,7 +76,7 @@ def createNewRelation(session, label_from: str, label_from_prop: str, label_from
 
         session.run(cypher_query)
     except:
-        pass
+        print("Could not relate the two specified nodes")
 
 def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str):
     '''deletes a specified relation that is related to a specified node'''
@@ -86,4 +86,4 @@ def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str
                        
         session.run(cypher_query)
     except:
-        pass
+        print("Could not delete the relationship specified with the specific node.")
