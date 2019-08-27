@@ -366,63 +366,8 @@ class Writing(Cell):
             self.__tokenize(self.content)
         return self.__tf
 
-    def __convert_index(self, tf):
-        if tf is None:
-            raise TypeError('Cant convert None into an index.')
-        if len(tf.values()) > 1 and isinstance(list(tf.values())[0], dict):
-            return tf
-        else:
-            return {key: {0: value} for key, value in tf.items()}
-
-    def __increment_index(self, index, val):
-        i = {}
-        for key, values in index.items():
-            for key1, val2 in values.items():
-                if key not in i:
-                    i[key] = {key1 + val: val2}
-                else:
-                    i[key][key1 + val] = val2
-        return i
-
-    def __reconstruct_index(new_start, index, keys):
-        new_index = {}
-        length = 0
-        if len(index) > 0:
-            k = list(index.values())[0]
-            if k is not None:
-                length = len(k)
-        if length > 0:
-            for key in keys:
-                if key in index:
-                    for i, value in enumerate(index[key].values()):
-                        if key not in new_index:
-                            new_index[key] = {new_start + i: value}
-                        else:
-                            new_index[key][new_start + i] = value
-                else:
-                    for i in range(length):
-                        if key not in new_index:
-                            new_index[key] = {new_start + i: 0}
-                        else:
-                            new_index[key][new_start + i] = 0
-        return new_index
-
-    def __merge_indexes(self, index1, index2):
-        index1 = self.__convert_index(index1)
-        index2 = self.__convert_index(index2)
-        start = min(list(index1.values())[0])
-        end = max(list(index1.values())[0]) + 1
-        if index1.keys() != index2.keys():
-            keys = set(index1.keys()).union(index2.keys())
-            index1 = self.__reconstruct_index(start, index1, keys)
-            index2 = self.__reconstruct_index(end, index2, keys)
-        for key in index1.keys():
-            index1[key].update(index2[key])
-        return index1
-
     def __add_indexes(self, index1: dict, index2: dict)->dict:
         return self.__merge_indexes(index1, index2)
-
 
     def __add__(self, other):
         """
@@ -497,7 +442,62 @@ class Writing(Cell):
         pass
 
 
+def __increment_index(index, val):
+    i = {}
+    for key, values in index.items():
+        for key1, val2 in values.items():
+            if key not in i:
+                i[key] = {key1 + val: val2}
+            else:
+                i[key][key1 + val] = val2
+    return i
 
+
+def __reconstruct_index(new_start, index, keys):
+    new_index = {}
+    length = 0
+    if len(index) > 0:
+        k = list(index.values())[0]
+        if k is not None:
+            length = len(k)
+    if length > 0:
+        for key in keys:
+            if key in index:
+                for i, value in enumerate(index[key].values()):
+                    if key not in new_index:
+                        new_index[key] = {new_start + i: value}
+                    else:
+                        new_index[key][new_start + i] = value
+            else:
+                for i in range(length):
+                    if key not in new_index:
+                        new_index[key] = {new_start + i: 0}
+                    else:
+                        new_index[key][new_start + i] = 0
+    return new_index
+
+
+def __convert_index(tf):
+    if tf is None:
+        raise TypeError('Cant convert None into an index.')
+    if len(tf.values()) > 1 and isinstance(list(tf.values())[0], dict):
+        return tf
+    else:
+        return {key: {0: value} for key, value in tf.items()}
+
+
+def __merge_indexes(index1, index2):
+    index1 = __convert_index(index1)
+    index2 = __convert_index(index2)
+    start = min(list(index1.values())[0])
+    end = max(list(index1.values())[0]) + 1
+    if index1.keys() != index2.keys():
+        keys = set(index1.keys()).union(index2.keys())
+        index1 = __reconstruct_index(start, index1, keys)
+        index2 = __reconstruct_index(end, index2, keys)
+    for key in index1.keys():
+        index1[key].update(index2[key])
+    return index1
 
 
 
