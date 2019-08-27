@@ -7,8 +7,9 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 from prettytable import PrettyTable
-from pathlib import Path
 from Tokenizer import Tokenizer
+from Neo4jDriver import *
+from getpass import getpass
 
 # Programs author information
 __author__ = "Mauricio Lomeli"
@@ -22,9 +23,12 @@ __status__ = "Prototype"
 
 _TESTING = False
 _STRING_LIMIT = 15
+_NEO4J_RUNNING = False
+_SESSION = openDatabase(input('URI: '), input('Username'), getpass('Password: ')) if _NEO4J_RUNNING else None
 _PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
 _TOKENIZER = Tokenizer()
-_needing_lemma = ['insights', 'topic', 'query', 'profile', ]
+
+
 _needing_logic = ['intervention', 'side_effects', 'int_side_effects']
 _linking_headers = {
     'intervention': [('causes', 'side_effects'), ('against', 'cohort')],
@@ -32,6 +36,7 @@ _linking_headers = {
     # 'side_effects': ('lasted for', 'duration'),
     # 'side_effects': ('occurred after intervention', 'duration')
 }
+
 _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
                 'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
                 'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
@@ -48,13 +53,11 @@ _NODE_HEADER = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Quer
                 'BRCA': 'BRCA', 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
 
 
-
 class Cell(object):
     """
     Holds each individual data. Has higher level of control. Each cell makes up a node.
     """
     cell_total = 0
-    cell_global_print = True
     cell_global = []
 
     def __init__(self, content=None, header_name=None, row_number=None):
@@ -69,6 +72,8 @@ class Cell(object):
         self.__index = 0
         if header_name in _needing_lemma and content is not None and isinstance(content, str):
             self.__tokenize(content)
+        if _NEO4J_RUNNING:
+            insertNode(_SESSION, self.header+':'+str(self.id), self.header, self.content)
 
     def __tokenize(self, content):
         _TOKENIZER.open(content)
@@ -88,17 +93,22 @@ class Cell(object):
     def setNext(self, next_cell, link_name=None):
         if isinstance(next_cell, Cell):
             if next_cell is not None:
+                label_from = self.header+':'+str(self.id)
+                label_to = next_cell.header+':'+str(next_cell.id)
                 if isinstance(link_name, str):
                     self.__link_name = link_name
+                    createNewRelation(_SESSION, label_from, self.content, label_to,
+                                      next_cell.content, link_name, link_name)
+                else:
+                    createNewRelation(_SESSION, label_from, self.content, label_to,
+                                      next_cell.content, '', '')
                 if next_cell.header not in self.__next:
                     self.__next[next_cell.header] = [next_cell]
                 else:
                     self.__next[next_cell.header].append(next_cell)
-        #TODO: add Jennifer and Anne's code here
 
     def getNext(self):
         return self.__list_values()
-        #TODO: add Jennifer and Anne's code here
 
     def getLast(self):
         """
@@ -132,8 +142,8 @@ class Cell(object):
             return self.content + other
         elif isinstance(other, Cell):
             self.setNext(other)
-        #Todo: add Jennifer and Anne's code here
-        #Todo: to be able to link one node to another
+            createNewRelation(_SESSION, self.header+':'+str(self.id), self.content, other.header+':'+str(other.id),
+                              other.content, '', '')
 
     def __contains__(self, item):
         if isinstance(item, str):
@@ -399,44 +409,6 @@ class Row:
         Row.total_rows -= 1
 
 
-def _evaluate(items: list):
-    if '' in items and len(items) > 1:
-        raise AssertionError('An AND or an OR must be followed by another variable')
-    elif '' not in items:
-        pass
-    # TODO: find a cell or row associated with each string variable
-    # TODO: then apply a logical operation to it
-
-
-def _splitting(string: str):
-    or_pos = None
-    and_pos = None
-    if 'OR' in string:
-        or_pos = string.find('OR')
-    if 'AND' in string:
-        and_pos = string.find('AND')
-    if 'NOT' in string:
-        not_pos = string.find('NOT')
-        return ['NOT', string[not_pos + 3:].strip()]
-    if not or_pos and not and_pos:
-        return [string]
-    if or_pos is not None:
-        if and_pos is not None:
-            if and_pos < or_pos:
-                left = and_pos
-                return [string[:left].strip()] + ['AND'] + _splitting(string[left + 3:].strip())
-            else:
-                left = or_pos
-                return [string[:left].strip()] + ['OR'] + _splitting(string[left + 2:].strip())
-        else:
-            left = or_pos
-            return [string[:left].strip()] + ['OR'] + _splitting(string[left + 2:].strip())
-    else:
-        if and_pos is not None:
-            left = and_pos
-            return [string[:left].strip()] + ['AND'] + _splitting(string[left + 3:].strip())
-        else:
-            raise NotImplementedError('You are not suppose to enter this whatsoever')
 
 
 def _store(index, key, id=None):

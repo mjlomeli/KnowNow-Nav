@@ -1,7 +1,6 @@
 # !/usr/bin/env python
 
 """Neo4jdriver
-
 If the description is long, the first line should be a short summary of Neo4jDriver.py
 that makes sense on its own, separated from the rest by a newline.
 """
@@ -11,51 +10,75 @@ from neo4j import GraphDatabase, basic_auth
 
 PATH = Path.cwd()
 
-# program's author information and licenses
-__authors__ = "Jennifer Kwon, Anne Wang, Mauricio Lomeli"
-__credits__ = ["Smruti Vidwans"]
-__date__ = "8/15/2019"
+__author__ = "Mauricio Lomeli"
+__date__ = "8/17/2019"
 __license__ = "MIT"
 __version__ = "0.0.0.1"
-__maintainer__ = "Jennifer Kwon, Anne Wang"
+__maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
-driver = GraphDatabase.driver(
-    "bolt://34.203.33.130:38790",
-    auth=basic_auth("neo4j", "excuses-bush-reels"))
-session = driver.session()
-
-cypher_query = '''
-MATCH (n)
-RETURN id(n) AS id
-LIMIT 10
-'''
-
-results = session.run(cypher_query,
-  parameters={})
-
-for record in results:
-  print(record['id'])
+# driver = GraphDatabase.driver(
+#     "bolt://localhost:7687",
+#     auth=basic_auth("username", "password"))
+# session = driver.session()
 
 
-class HelloWorldExample(object):
+def openDatabase(uri: str, username: str, password: str):
+    driver = GraphDatabase.driver(
+            uri, auth=basic_auth(username, password))
+    session = driver.session()
+    return (session, driver)
 
-    def __init__(self, uri, user, password):
-        self._driver = GraphDatabase.driver(uri, auth=(user, password))
+def closeDatabase(session):
+    session.close()
 
-    def close(self):
-        self._driver.close()
+def getSession(session):
+    return session
 
-    def print_greeting(self, message):
-        with self._driver.session() as session:
-            greeting = session.write_transaction(self._create_and_return_greeting, message)
-            print(greeting)
+def getDriver(driver):
+    return driver
 
-    @staticmethod
-    def _create_and_return_greeting(tx, message):
-        result = tx.run("CREATE (a:Greeting) "
-                        "SET a.message = $message "
-                        "RETURN a.message + ', from node ' + id(a)", message=message)
-        return result.single()[0]
+def insertNode(session, label: str, label_property: str, specific_text: str):
+    '''Insert a single node given a label, property, and property string'''
+    insert_cq = ''' 
+    CREATE (n:''' + label + "{" + label_property + ":" +  specific_text + '''})
+    RETURN n})'''
+
+    session.run(insert_cq)
+
+
+def removeNode(session, label: str, label_property: str, specific_text: str):
+    '''Provide a specific label, its specific text + property. Finds it and deletes it from graph.'''
+
+    cypher_query = '''
+    MATCH (n:''' + label + "{" + label_property + ":" +  specific_text + '''})
+    DELETE n'''
+
+    session.run(cypher_query)
+
+def createNewRelation(session, label_from: str, label_from_text: str, label_to: str, label_to_text: str, new_relation: str, relation_text: str):
+    '''creates a new relation from one specified node to another specified node with respective label and text'''
+
+    cypher_query = "MATCH " + "(label_from: " + label_from + "{" + label_from + ":" + label_from_text + "})" + \
+                    "MATCH (label_to" +  ":" + label_to + " {" + label_to + ":" +  label_to_text + "})" + \
+                    "MERGE (label_from)-[rel:" + new_relation + "{" + new_relation + ":" +  relation_text + "}]->(label_to)"
+
+    session.run(cypher_query)
+
+def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str, relation_text: str):
+    '''deletes a specified relation that is related to a specified node'''
+    cypher_query = "MATCH (n: " + label + "{" + prop + ":" + prop_text + "})-[" + relation + ":" + relation_text + ''']->()
+                    DELETE ''' + relation
+
+    session.run(cypher_query)
+
+    # # # results is a neo4j.BoltStatementResult
+
+    # for record in results:
+    #   # record is a neo4j.Record obj
+    #   # record.get('p') is a 'neo4j.types.graph.Path' obj
+
+    #   print(record.get('p').start_node)
+    #   print()
 
