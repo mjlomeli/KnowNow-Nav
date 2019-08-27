@@ -9,6 +9,7 @@ that makes sense on its own, separated from the rest by a newline.
 from Tokenizer import Tokenizer
 from Neo4jDriver import *
 from getpass import getpass
+
 PATH = Path.cwd()
 
 __author__ = "Mauricio Lomeli"
@@ -41,13 +42,11 @@ class Cell(object):
         self.content = content
         self.header = header_name
         self.id = id
-        self.__tokens = None
-        self.__tf = None
         self.__next = {}
         self.__index = 0
         self.__assemble()
 
-    def __assemble(self):
+    def __assemble(self, run_neo4j=_RUN_NEO4J):
         """
         Executes the necessary functions for the cell to exist.
         """
@@ -59,13 +58,8 @@ class Cell(object):
             raise AssertionError('id must be unique. ' + str(self.id) + ' exists.')
         else:
             Cell.__ids.append(self.id)
-        # Tokenizes the cell if it is in a certain column
-        if self.header in _NEED_LEMMA:
-            if self.content is not None:
-                if isinstance(self.content, str):
-                    self.__tokenize(self.content)
         # Opens the database
-        if Cell.__cell_total == 0 and _RUN_NEO4J:
+        if Cell.__cell_total == 0 and run_neo4j:
             Cell.__session = self.__openDB()
             Cell.__neo4j_running = True
         # Adds the node in the database if it is running
@@ -85,35 +79,6 @@ class Cell(object):
         username = input('Enter your username: ')
         password = getpass('Enter your password: ')
         return openDatabase(uri, username, password)
-
-    def __tokenize(self, text):
-        """
-        Cleans a cell's text and brings it to the root meaning.
-        Then stores the result in the member variables.
-        :param content: the cell's text
-        """
-        _TOKENIZER.open(text)
-        self.__tf = _TOKENIZER.tf
-        self.__tokens = list(self.__tf.keys())
-
-    def getTokens(self):
-        """
-        Gets the cleaned text from the cell.
-        :return: text
-        """
-        if self.__tokens is None:
-            self.__tokenize(self.content)
-        return self.__tokens
-
-    def getTF(self):
-        """
-        Gets a dictionary of every word in the cell
-        and their count.
-        :return: dictionary: Term Frequency
-        """
-        if self.__tf is None:
-            self.__tokenize(self.content)
-        return self.__tf
 
     def setNext(self, next_cell, link_name=None):
         """
@@ -222,11 +187,11 @@ class Cell(object):
         """
         result = ''
         for link, cells in self.__next.items():
-            for next in cells:
+            for next_cell in cells:
                 link = '' if link is None else link
                 result += '\033[95m(' + self.content[:_STRING_LIMIT] + ')\033[0m'
                 result += '\033[93m-' + link + '->\033[0m'
-                result += '\033[95m(' + next.content[:_STRING_LIMIT] + ')\033[0m'
+                result += '\033[95m(' + next_cell.content[:_STRING_LIMIT] + ')\033[0m'
                 result += '\n'
         return result
 
@@ -305,7 +270,6 @@ class Cell(object):
 
     def __set__(self, obj, val):
         if _TESTING:
-            print('Updating ' + str(self.id))
             test_msg = '\033[94m' + 'Updating: {}'.format(self.id)
             test_msg += ' from Cell({}{}{})'.format(self.content, self.header, self.id) + '\033[0m'
             print(test_msg)
@@ -355,6 +319,217 @@ class Cell(object):
                 Cell.__neo4j_running = False
 
 
+class Writing(Cell):
+    def __init__(self, text=None, title=None, id=None):
+        super().__init__(self, text, title, id)
+        self.__tokens = None
+        self.__tf = {}
+        self.count = 0
+        self.length = None
+        self.__assemble()
+
+    def __assemble(self):
+        # Tokenizes the cell if it is in a certain column
+        if self.header in _NEED_LEMMA:
+            if self.content is not None:
+                if isinstance(self.content, str):
+                    self.__tokenize(self.content)
+        self.length = len(self.content)
+        self.count = len(self.content.split(' '))
+
+    def __tokenize(self, text):
+        """
+        Cleans a cell's text and brings it to the root meaning.
+        Then stores the result in the member variables.
+        :param content: the cell's text
+        """
+        _TOKENIZER.open(text)
+        self.__tf = _TOKENIZER.tf
+        self.__tokens = list(self.__tf.keys())
+
+    def getTokens(self):
+        """
+        Gets the cleaned text from the cell.
+        :return: text
+        """
+        if self.__tokens is None:
+            self.__tokenize(self.content)
+        return self.__tokens
+
+    def getTF(self):
+        """
+        Gets a dictionary of every word in the cell
+        and their count.
+        :return: dictionary: Term Frequency
+        """
+        if self.__tf is None:
+            self.__tokenize(self.content)
+        return self.__tf
+
+    def __convert_index(self, tf):
+        if tf is None:
+            raise TypeError('Cant convert None into an index.')
+        if len(tf.values()) > 1 and isinstance(list(tf.values())[0], dict):
+            return tf
+        else:
+            return {key: {0: value} for key, value in tf.items()}
+
+    def __increment_index(self, index, val):
+        i = {}
+        for key, values in index.items():
+            for key1, val2 in values.items():
+                if key not in i:
+                    i[key] = {key1 + val: val2}
+                else:
+                    i[key][key1 + val] = val2
+        return i
+
+    def __reconstruct_index(new_start, keys, index):
+        new_index = {}
+        length = 0
+        if len(index) > 0:
+            k = list(index.values())[0]
+            if k is not None:
+                length = len(k)
+        if length > 0:
+            for key in keys:
+                if key in index:
+                    for i, value in enumerate(index[key].values()):
+                        if key not in new_index:
+                            new_index[key] = {new_start + i: value}
+                        else:
+                            new_index[key][new_start + i] = value
+                else:
+                    for i in range(length):
+                        if key not in new_index:
+                            new_index[key] = {new_start + i: 0}
+                        else:
+                            new_index[key][new_start + i] = 0
+        return new_index
+
+    def __merge_indexes(self, index1, index2):
+        index1 = self.__convert_index(index1)
+        index2 = self.__convert_index(index2)
+        start = min(list(index1.values())[0])
+        end = max(list(index1.values())[0]) + 1
+        if index1.keys() != index2.keys():
+            i = {}
+            keys = set(index1.keys()).union(index2.keys())
+            for key in keys:
+                if key not in index1:
+                    while(start < end):
+                        if key not in i:
+                            i[key] = {start: 0}
+                        else:
+                            i[key][start] = index1[start]
+                        start += 1
+                else:
+                    while(start < end):
+                        if key not in i:
+                            i[key] = {start: index1[start]}
+                        else:
+                            i[key][start] = index1[start]
+                        start += 1
+                if start < end:
+                    if key not in i:
+                        i[key] = {start: 0}
+                    else:
+                        i[key][start] = index1[start]
+                    start += 1
+                else:
+                    if key not in i:
+                        i[key] = {end: 0}
+                    else:
+                        i[key][end] = index2[end]
+                    end += 1
+            return i
+        else:
+            index2 = self.__increment_index(index2, end)  # structure checked inside the method
+            for key in index1.keys():
+                index1[key].update(index2[key])
+            return index1
+
+    def __add_indexes(self, index1: dict, index2: dict)->dict:
+        return self.__merge_indexes(index1, index2)
+
+
+    def __add__(self, other):
+        """
+        Concatenates a string and a cell's text
+        :param other: the other param
+        :return: string concatenation
+        """
+        if self.__tf is None:
+            self.__tokenize(self.content)
+        tf = {}
+        if isinstance(other, Writing):
+            if len(other) > 0:
+                if len(self.__tf) > 0:
+                    both = set(list(other.keys()) + list(self.__tf.keys()))
+                    for key in both:
+                        other_val = other[key] if key in other else 0
+                        self_val = self.__tf[key] if key in self.__tf else 0
+                        tf[key] = {other_val + self_val} # change
+                    return tf
+                else:
+                    return other
+            else:
+                return self.__tf if len(self.__tf) > 0 else tf
+        elif isinstance(other, Cell) or isinstance(other, str):
+            return self.__add_tf(Writing(other))
+        else:
+            raise TypeError('Can only add TF among Writing, Cell, and str.')
+
+
+    def __str__(self):
+        """
+        prints the node relationships.
+        :return: string
+        """
+        result = '\033[1m\033[92m' + 'Title: {}'.format(self.header) + '\033[0m\n'
+        result += '\033[1m\033[92m' + 'Text: {}'.format(self.content) + '\033[0m\n'
+        return result
+
+    def print_relationships(self):
+        print(super())
+
+    def __gt__(self, other):
+        if isinstance(other, Writing):
+            tf = self.__add_tf(other)
+
+    def __and__(self, other):
+        if isinstance(other, Writing):
+            tf = self.__add_tf(other)
+            #cosine(0, 1)
+
+    def __or__(self, other):
+        pass
+
+    def __xor__(self, other):
+        pass
+
+
+
+    def __lt__(self, other):
+        pass
+
+    def __le__(self, other):
+        pass
+
+    def __ge__(self, other):
+        pass
+
+    def __mod__(self, other):
+        pass
+
+    def __imod__(self, other):
+        pass
+
+
+
+
+
+
 def main():
     pass
 
@@ -362,7 +537,7 @@ def main():
 def test():
     header = ['calpurnia', 'sunny', 'egypt', 'capital']
     content = ['something', 'goes', 'in', 'here']
-    
+
     # test auto id
     for head, cont in zip(header, content):
         temp = Cell(head, cont)

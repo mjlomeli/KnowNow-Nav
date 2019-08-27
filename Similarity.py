@@ -13,7 +13,6 @@ from Tokenizer import Tokenizer
 import pickle
 from math import log10, sqrt
 from heapq import nlargest
-from Document import Row
 
 __author__ = "Mauricio Lomeli"
 __credits__ = ['Prof. Mustafa Ibrahim']

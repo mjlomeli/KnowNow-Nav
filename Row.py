@@ -9,6 +9,7 @@ that makes sense on its own, separated from the rest by a newline.
 from Tokenizer import Tokenizer
 from Neo4jDriver import *
 from getpass import getpass
+from Cell import Cell
 PATH = Path.cwd()
 
 __author__ = "Mauricio Lomeli"

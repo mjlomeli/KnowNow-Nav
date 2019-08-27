@@ -4,7 +4,7 @@
 Opens a CSV spreadsheet for reading and searching operations.
 Ideas: pickle handling with __call__ && __init__, print formatting,
 """
-from Document import Row
+from Row import Row
 from prettytable import PrettyTable
 from pathlib import Path
 import csv
