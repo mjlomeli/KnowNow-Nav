@@ -178,16 +178,7 @@ def combine_tf(tf: list):
     return combined
 
 
-def __convert_index(tf):
-    if tf is None:
-        raise TypeError('Cant convert None into an index.')
-    if len(tf.values()) > 1 and isinstance(list(tf.values())[0], dict):
-        return tf
-    else:
-        return {key: {0: value} for key, value in tf.items()}
-
-
-def __increment_index(self, index, val):
+def _increment_index(index, val):
     i = {}
     for key, values in index.items():
         for key1, val2 in values.items():
@@ -198,7 +189,7 @@ def __increment_index(self, index, val):
     return i
 
 
-def __reconstruct_index(new_start, index, keys):
+def _reconstruct_index(new_start, index, keys):
     new_index = {}
     length = 0
     if len(index) > 0:
@@ -219,21 +210,33 @@ def __reconstruct_index(new_start, index, keys):
                         new_index[key] = {new_start + i: 0}
                     else:
                         new_index[key][new_start + i] = 0
+    else:
+        return {key: {i: 0} for i, key in enumerate(keys)}
     return new_index
 
 
-def __merge_indexes(index1, index2):
-    index1 = __convert_index(index1)
-    index2 = __convert_index(index2)
-    start = min(list(index1.values())[0])
-    end = max(list(index1.values())[0]) + 1
-    if index1.keys() != index2.keys():
+def _convert_index(tf):
+    if tf is None or len(tf) == 0:
+        return {}
+    if len(tf.values()) > 1 and isinstance(list(tf.values())[0], dict):
+        return tf
+    else:
+        return {key: {0: value} for key, value in tf.items()}
+
+
+def _merge_indexes(index1, index2):
+    index1 = _convert_index(index1)
+    index2 = _convert_index(index2)
+    start = min(list(index1.values())[0]) if len(index1) > 0 else 0
+    end = max(list(index1.values())[0]) + 1 if len(index1) > 0 else 0
+    if index1.keys() != index2.keys() or end == 0 and len(index2) == 0:
         keys = set(index1.keys()).union(index2.keys())
-        index1 = __reconstruct_index(start, index1, keys)
-        index2 = __reconstruct_index(end, index2, keys)
+        index1 = _reconstruct_index(start, index1, keys)
+        index2 = _reconstruct_index(end, index2, keys)
     for key in index1.keys():
         index1[key].update(index2[key])
     return index1
+
 
 
 def process_index():
