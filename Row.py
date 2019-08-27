@@ -111,7 +111,7 @@ class Row:
                         for assoc in associates:
                             cell = self.__row[header]
                             cell.setNext(Cell(assoc))
-
+                            # TODO: finish this part where we link more
 
     def __eval_logic_and_link(self, header):
         if isinstance(self.__row[header], Cell):
