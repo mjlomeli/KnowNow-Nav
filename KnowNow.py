@@ -45,8 +45,6 @@ if __name__ == '__main__':
     if '-r' in sys.argv:
         __reset()
     if '-t' in sys.argv:
-        test()
-
-
+        testAll()
 
     main()

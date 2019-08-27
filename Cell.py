@@ -344,8 +344,7 @@ class Cell(object):
 
 
 def main():
-    if _TESTING:
-        testCell()
+    pass
 
 
 def testCell():
@@ -392,4 +391,4 @@ def testCell():
 
 
 if __name__ == '__main__':
-    test()
+    main()

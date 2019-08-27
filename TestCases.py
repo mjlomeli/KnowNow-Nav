@@ -14,6 +14,7 @@ from Spreadsheet import testSpreadsheet
 from Similarity import testSimilarity
 from Row import testRow
 from Document import testDocument
+from KnowNow import testKnowNow
 
 PATH = Path.cwd()
 
@@ -92,3 +93,4 @@ def testAll():
     testTokenizer()
     testSimilarity()
     testDocument()
+    testKnowNow()
