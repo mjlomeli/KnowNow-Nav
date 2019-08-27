@@ -28,6 +28,14 @@ _TOKENIZER = Tokenizer()
 _NEED_LEMMA = ['insights', 'topic', 'query', 'profile', ]
 
 
+_NORM_NODE_HEAD = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Query Tag', 'query': 'Query',
+                'profile': 'Profile', 'cohort': 'Cohort', 'tumor': 'T', 'tumor_count': 'T Count', 'node': 'N',
+                'metastasis': 'M', 'grade': 'Grade', 'recurrence': 'Recurr', 'category': 'Category',
+                'intervention': 'Intervention', 'side_effects': 'Side Effect', 'int_side_effects': 'Int. Side Eff.',
+                'insights': 'Insights', 'volunteers': 'Volunt.', 'url': 'URL', 'HER2': 'HER2', 'HER': 'HER',
+                'BRCA': 'BRCA', 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
+
+
 class Cell(object):
     """
     Holds each individual data. Has higher level of control. Each cell makes up a node.
@@ -377,6 +385,18 @@ class Writing(Cell):
 
         return Writing(self.content + content, self.header + header)
 
+    def __iadd__(self, other):
+        if self.__tf is None:
+            self.__tokenize(self.content)
+
+        if isinstance(other, str):
+            self.content = '' if other is None else other
+        elif isinstance(other, Cell) or isinstance(other, Writing):
+            self.content = '' if other.content is None else other.content
+            self.header = '' if other.header is None else other.content
+        else:
+            raise TypeError('Can only add TF among Writing, Cell, and str.')
+
     def __str__(self):
         """
         prints the node relationships.
@@ -409,8 +429,6 @@ class Writing(Cell):
 
     def __xor__(self, other):
         pass
-
-
 
     def __lt__(self, other):
         pass

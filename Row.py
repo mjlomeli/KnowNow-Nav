@@ -6,11 +6,9 @@ If the description is long, the first line should be a short summary of Row.py
 that makes sense on its own, separated from the rest by a newline.
 """
 
-from Tokenizer import Tokenizer
-from Neo4jDriver import *
-from getpass import getpass
+from pathlib import Path
 from Cell import Cell
-PATH = Path.cwd()
+from prettytable import PrettyTable
 
 __author__ = "Mauricio Lomeli"
 __date__ = "8/17/2019"
@@ -24,15 +22,16 @@ __status__ = "Prototype"
 _STRING_LIMIT = 15
 _TESTING = False
 _NEO4J_RUNNING = False
-_NORMALIZE_Headers = True
+_NORMALIZE_HEADERS = True
+_NORMALIZE_NODE_HEADERS = True
 _PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
 
-_needing_logic = ['intervention', 'side_effects', 'int_side_effects']
-_linking_headers = {
-    'intervention': [('causes', 'side_effects'), ('against', 'cohort')],
-    'side_effects': [('could be mitigated by', 'int_side_effects')]
-    # 'side_effects': ('lasted for', 'duration'),
-    # 'side_effects': ('occurred after intervention', 'duration')
+_need_logic_linking = ['Intervention', 'Associated Side effect', 'Intervention mitigating side effect']
+_need_linking = {
+    'Intervention': [('causes', 'Associated Side effect'), ('against', 'Patient Cohort (Definition)')],
+    'Associated Side effect': [('could be mitigated by', 'Intervention mitigating side effect')]
+    # 'Associated Side effect': ('lasted for', 'Duration'),
+    # 'Associated Side effect': ('occurred after intervention', 'Duration')}
 }
 
 _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
@@ -43,64 +42,90 @@ _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': '
                 'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
                 'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
                 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
-_NODE_HEADER = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Query Tag', 'query': 'Query',
-                'profile': 'Profile', 'cohort': 'Cohort', 'tumor': 'T', 'tumor_count': 'T Count', 'node': 'N',
-                'metastasis': 'M', 'grade': 'Grade', 'recurrence': 'Recurr', 'category': 'Category',
-                'intervention': 'Intervention', 'side_effects': 'Side Effect', 'int_side_effects': 'Int. Side Eff.',
-                'insights': 'Insights', 'volunteers': 'Volunt.', 'url': 'URL', 'HER2': 'HER2', 'HER': 'HER',
-                'BRCA': 'BRCA', 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
 
 
 class Row:
     total_rows = 0
     __auto_id = 0
 
-    def __init__(self, cells=None):
+    def __init__(self, cells=None, headers=None):
         # TODO: need to change id structure to row:column, 0:0, 0:1
         self.headers = None
+        self.norm_headers = None
         self.length = 0
+        self.id = None
         self.__row = None
         self.__index = 0
         self.__assemble(cells)
 
-    def __assemble(self, cells):
-        headers = []
-        cells = []
+    def __assemble(self, cells, headers=None):
         if cells is None:
             pass
+        elif isinstance(cells, str):
+            row = {0: Cell(cells)}
         elif isinstance(cells, Cell):
             headers = [cells.header]
-            cells = [cells]
+            row = {cells.header: cells}
         elif isinstance(cells, list) and len(cells) > 0:
-            if isinstance(cells, Cell):
+            if isinstance(cells[0], Cell):
                 headers = [cell.header for cell in cells]
-                cells = [cell for cell in cells]
+                row = {cell.header: cell for cell in cells}
+            elif isinstance(cells[0], str):
+                row = {i: Cell(cell[i], id=i) for i, cell in enumerate(cells)}
+                headers = list(row.keys())
         elif isinstance(cells, Row):
             headers = list(cells.__row.keys())
-            cells = list(cells.__row.values())
+            row = cells.__row
         else:
             raise TypeError('The constructor accepts only type Row, Cell, and list of Cells')
 
         assert(len(headers) == len(cells))
         self.headers = headers
-        self.__row = dict(zip(headers, cells))
-        self.__length == len(self.__row)
+        self.id = Row.__auto_id
+        self.__row = row
+        self.__length = 0 if row is None else len(row)
+        self.norm_headers = _NORM_HEADERS if _NORMALIZE_HEADERS else None
+        Row.__auto_id += 1
         self.__set_associations()
 
     def __set_associations(self):
-        for header in self.__row.keys():
-            self.__linking_headers(self.__row[header])
+        for header in self.headers:
+            if header in _need_linking:
+                self.__link_associations(header)
+            elif header in _need_logic_linking:
+                self.__eval_logic_and_link(header)
 
-    def __linking_headers(self, cell: Cell):
-        """
-        'intervention': [('causes', 'side_effects'), ('against', 'cohort')]
-        """
-        if cell.header in _linking_headers:
-            for link in _linking_headers[cell.header]:
-                if link[1] in self.__row:
-                    cell.setNext(self.__row[link[1]], link[0])
-                else:
-                    cell.setNext(Cell(link[0], link[1] + '_new', 0), link[0])
+    def __link_associations(self, header):
+        for link, next_cells_header in _need_linking[header]:
+            if isinstance(self.__row[header], Cell):
+                cell = self.__row[header]
+                self.__row[header].setNext(self.__row[next_cells_header], link)
+
+    def __eval_logic_and_link(self, header):
+        if isinstance(self.__row[header], Cell):
+            cell = self.__row[header]
+            if cell.content is not None and cell.content is not '':
+                logic_split = _splitting(cell.content)
+                index = len(logic_split)
+                OR = lambda curr, next: self.__row[header].setNext(next)
+                AND = lambda curr, next: self.__row[header].setNext
+                while(index > 0):
+                    operand, index = self.__iter_logic(logic_split, index)
+                    if index == 1:
+
+    def __OR(self, header, operands: list):
+        for oper in operands:
+            self.__row[header].setNext(oper)
+
+    def __AND(self, header, operands: list):
+        if len(operands) > 0:
+            cell = operands[0]
+            for other_cells in operands[1:]:
+                cell += other_cells
+
+    def __iter_logic(self, logic_split: list, index: int):
+        index -= 1
+        return logic_split.pop(), index
 
     def __linking_logic(self, cell: Cell):
         """
@@ -198,6 +223,32 @@ class Row:
         Row.total_rows -= 1
 
 
+def _splitting(string: str):
+    or_pos = None
+    and_pos = None
+    if 'OR' in string:
+        or_pos = string.find('OR')
+    if 'AND' in string:
+        and_pos = string.find('AND')
+    if not or_pos and not and_pos:
+        return [string]
+    if or_pos is not None:
+        if and_pos is not None:
+            if and_pos < or_pos:
+                left = and_pos
+                return [string[:left].strip()] + ['AND'] + _splitting(string[left + 3:].strip())
+            else:
+                left = or_pos
+                return [string[:left].strip()] + ['OR'] + _splitting(string[left + 2:].strip())
+        else:
+            left = or_pos
+            return [string[:left].strip()] + ['OR'] + _splitting(string[left + 2:].strip())
+    else:
+        if and_pos is not None:
+            left = and_pos
+            return [string[:left].strip()] + ['AND'] + _splitting(string[left + 3:].strip())
+        else:
+            raise NotImplementedError('You are not suppose to enter this whatsoever')
 
 
 def _store(index, key, id=None):
