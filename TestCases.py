@@ -7,14 +7,6 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 from pathlib import Path
-from Cell import testCell
-from FlaskDriver import testFlaskDriver
-from Tokenizer import testTokenizer
-from Spreadsheet import testSpreadsheet
-from Similarity import testSimilarity
-from Row import testRow
-from Document import testDocument
-from KnowNow import testKnowNow
 
 PATH = Path.cwd()
 
@@ -84,17 +76,53 @@ def _openDatabase(*args):
     print('\033[93m' + str(args) + '\033[0m')
 
 
-def testAll():
-    print('\033[34m' + "_____Testing All Test Cases_____" + '\033[0m')
-    testSpreadsheet()
-    testCell()
-    testRow()
-    testFlaskDriver()
-    testTokenizer()
-    testSimilarity()
-    testDocument()
-    testKnowNow()
 
 
-if __name__ == '__main__':
-    testAll()
+class TestMaker:
+    def __init__(self, data_type: type, variable):
+        self.variables = [None, -100, -100.01, 'hello', "HOW",
+                          Path, str, int, list, dict, float, True, False,
+                          '', [], {}, set([]), [1, -100, [], {}, str, "hello"]]
+        if isinstance(data_type, type) and isinstance(variable, object):
+            self.__index = 0
+            self.__type = data_type
+            self.__var = variable
+            self.test_creating()
+            self.test_getting_called()
+            self.test_operations()
+    
+    def __iter__(self):
+        self.__index = 0
+        return self
+    
+    def test_creating(self):
+        for item in self.variables:
+            try:
+                self.__type(item)
+                print('\033[92m' + 'Passed: ' + str(self.__type)[13:-1] + '(' + str(type(item))[8:-2] + ')' + '\033[0m')
+            except Exception as e:
+                print('\033[31m' + 'Failed: ' + str(self.__type)[13:-1] + '(' + str(type(item))[8:-2] + ')' + '\033[0m')
+
+    def test_operations(self):
+        try:
+            for item in ['*', '+', '%', '/', '-', '+=', '-=', 'and', 'or', 'in', '!=', '==']:
+                eval('self.__type' + item + 'self.__type')
+            print('\033[92m' + 'Passed: ' + str(self.variables)[13:-2] + ' ' + type(item) + ' ' + str(self.variables)[13:-2] + ' \033[0m')
+        except Exception as e:
+            print(e)
+            print('\033[31m' + 'Failed: ' + str(self.variables)[13:-2] + ' + ' + str(self.variables)[13:-2] + ' \033[0m')
+
+    def test_getting_called(self):
+        for item in self.variables:
+            try:
+                item(self.__type)
+                print('\033[92m' + 'Passed: ' + str(self.__type)[13:-2] + '(' + str(type(item))[8:-2] + ')' + '\033[0m')
+            except Exception as e:
+                print('\033[31m' + 'Failed: ' + str(self.__type)[13:-2] + '(' + str(type(item))[8:-2] + ')' + '\033[0m')
+
+    def __next__(self):
+        if self.__index >= len(self.variables):
+            raise StopIteration
+        temp = self.variables[self.__index]
+        self.__index += 1
+        return temp

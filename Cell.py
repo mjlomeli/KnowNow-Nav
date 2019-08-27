@@ -346,7 +346,7 @@ def main():
     pass
 
 
-def testCell():
+def TestCell():
     header = ['calpurnia', 'sunny', 'egypt', 'capital']
     content = ['something', 'goes', 'in', 'here']
 
