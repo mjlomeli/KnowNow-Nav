@@ -34,6 +34,8 @@ _NORM_NODE_HEAD = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Q
                 'insights': 'Insights', 'volunteers': 'Volunt.', 'url': 'URL', 'HER2': 'HER2', 'HER': 'HER',
                 'BRCA': 'BRCA', 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
 
+_LOCAL_HOST = 'bolt://localhost:7687'
+
 
 class Cell(object):
     """
@@ -52,6 +54,7 @@ class Cell(object):
         self.__next = {}
         self.__index = 0
         self.__assemble()
+        self.__relation = None
 
     def __assemble(self):
         """
@@ -119,8 +122,11 @@ class Cell(object):
             link = '' if link_name is None else link_name
             try:
                 # TODO: Check with Jennifer and Anne if our code checks out
-                createNewRelation(
-                    Cell.__session, self.id, self.content, next_cell.id, next_cell.content, link, link)
+                self.__relation = link_name
+                insertNode(Cell.__session, self.header, str(self.id), self.content)
+                createNewRelation(Cell.__session, self.header, self.id, self.content,
+                                  next_cell.header, next_cell.id, next_cell.content,
+                                  link_name, self.id, link_name)
             except Exception as e:
                 print(e)
                 TestCase('createNewRelation', self.id, self.content, next_cell.id, next_cell.content,
@@ -327,6 +333,11 @@ class Cell(object):
         else:
             return []
 
+    def find_link(self, id):
+        values = list(self.__next.values())
+        if id in values:
+            return values[values.index(id)]
+
     def __del__(self):
         """
         De-allocates variables and storage values.
@@ -348,7 +359,9 @@ class Cell(object):
             if Cell.__neo4j_running:
                 try:
                     # TODO: Check with Jennifer and Anne about removing a Node
-                    removeNode(Cell.__session, self.id, self.content, self.content)
+                    deleteRelation(Cell.__session, self.header, self.id, self.content,
+                                   self.__relation)
+                    removeNode(Cell.__session, self.header, self.id, self.content)
                 except Exception as e:
                     print(e)
                     TestCase('removeNode', Cell.__session, self.id, self.content, self.content)
