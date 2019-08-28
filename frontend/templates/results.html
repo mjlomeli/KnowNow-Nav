@@ -1,34 +1,58 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<section class="container-fluid results-div my-5 p-5">
+<section class="container my-5 p-5">
+
     <div class="row mb-3">
 
-        <h2 class="col-lg-2 mx-0 mx-lg-3 my-3 my-lg-0">Results</h2>
+        <h1 class="col-md-6 results-title">Results: {{ query }}</h1>
+
         <!-- Search form -->
-        <form class="form-inline col-lg-8">
-            <i class="fas fa-search" aria-hidden="true"></i>
-            <input class="form-control w-100 w-lg-50" type="text" placeholder="Search"
+        <form class="form-inline col-md-6">
+            <input class="form-control w-100 w-md-50" type="text" placeholder="Search"
             aria-label="Search">
         </form>
     
     </div>
     <div class="row">
 
-        <div class="col-lg-2 bg-light border border-primary mx-lg-3 my-3 my-lg-0">
-            <p>Refine your results</p>
+        <div class="col-md-2 pt-0 pt-md-5 mx-md-3 my-3 my-md-0 refine-div">
+            <p>Refine your results:</p>
+            <p>Stage:</p>
+            <select name="refine1" id="stage">
+                <option value="" disabled selected hidden><strong>Select one</strong></option>
+                <option value="filler1">Filler 1</option>
+                <option value="filler2">Filler 2</option>
+            </select>
+            <hr/>
+            <p>Histology:</p>
+            <select name="refine2" id="histology">
+                <option value="" disabled selected hidden><strong>Select one</strong></option>
+                <option value="filler1">Filler 1</option>
+                <option value="filler2">Filler 2</option>
+            </select>
+            <hr/>
+            <p>Previous teatment:</p>
+            <select name="refine3" id="previous-treatment">
+                <option value="" disabled selected hidden><strong>Select one</strong></option>
+                <option value="filler1">Filler 1</option>
+                <option value="filler2">Filler 2</option>
+            </select>
         </div>
 
-        <div class="col-lg-8 bg-light border border-primary">
+        <div class="col-md-8 results-div">
             {% for post in posts %}
-                <div class="card m-3">
+
+                <div class="card m-3 border-none">
                     <div class="card-body">
-                        <h3 class="card-title">{{ post['topic'] }}</h3>
+                        <h4 class="card-title">{{ post['topic'] }}</h4>
                         <h5 class="card-subtitle text-muted">This is a sample subtitle</h5>
                         <p class="card-text">{{ post['Patient Insight'] }}</p>
                         <a href="{{ post['Discussion URL'] }}" class="card-link">{{ post['Discussion URL'] }}</a>
                     </div>
                 </div>
+
+                <hr/>
             {% endfor %}
         </div>
         

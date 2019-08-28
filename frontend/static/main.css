@@ -3,6 +3,23 @@ body {
     font-size: 15px;
 }
 
+a {
+    color: #e8797c;
+}
+
+a:hover {
+    color: #dc383d;
+}
+
+a:visited {
+    color: #a9a9a9;
+}
+
+.form-control:focus {
+    border-color: #e8797c !important;
+    box-shadow: 0 0 5px rgba(232, 121, 124, 1) !important;
+}
+
 .navbar-brand {
     font-size: 2.2em;
     padding-left: 1vw;
@@ -15,6 +32,28 @@ body {
 
 .motto {
     font-size: 4.0em;
+}
+
+.card {
+    border: none;
+}
+
+.refine-div {
+    text-align: center;
+}
+.refine-div select {
+    background-color: rgb(255,255,255);
+    color: #e8797c;
+    border: 2px solid #e8797c;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 7px;
+    outline: none;
+}
+
+.results-title {
+    text-align: center;
+
 }
 
 .tagDropdown{
@@ -43,7 +82,7 @@ body {
 .knownow-btn:hover {
 background-color: white;
 color: #e8797c;
-border: 2px solid #e8797c;
+border: 1px solid #e8797c;
 }
 
 .art-img {
@@ -56,16 +95,10 @@ border: 2px solid #e8797c;
 
 }
 
-#mainNavbar .nav-item {
-    padding-left: 7vw;
-    color: white; /* fix this */
-}
-
 .nav-item a:hover {
     border-bottom: 1px dashed white;
 }
 
 #mainNavbar .navbar-collapse {
     text-align: center;
-    /* fix left padding when collapsed */
 }
