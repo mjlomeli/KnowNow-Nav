@@ -101,12 +101,12 @@ class Cell(object):
         if isinstance(next_cell, Cell):
             if link_name not in self.__next:
                 self.__next[link_name] = [next_cell]
-                self.insert_N4j(self, link_name, next_cell)
+                self.insert_N4j(link_name, next_cell)
 
             else:
                 if link_name in self.__next and next_cell not in self.__next[link_name]:
                     self.__next[link_name].append(next_cell)
-                    self.insert_N4j(self, link_name, next_cell)
+                    self.insert_N4j(link_name, next_cell)
         elif isinstance(next_cell, list):
             for item in next_cell:
                 self.setNext(item, link_name)
