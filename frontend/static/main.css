@@ -102,3 +102,38 @@ border: 1px solid #e8797c;
 #mainNavbar .navbar-collapse {
     text-align: center;
 }
+
+.about-div {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+ }
+
+.about-div::after {
+    content: “”;
+    background-image: url(pink4.jpg);
+    background-size: cover;
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.about-title {
+    text-align: center;
+    font-size: 4.0em;
+    text-shadow: 2px 2px;
+}
+
+.intro-text {
+    border: 3px dashed rgba(232, 121, 124, 1);
+    box-shadow: 3px 3px 5px 6px rgba(232, 121, 124, 1);
+    text-indent: 1.5em;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: rgba(232, 121, 124, 0.3);
+    color: black;
+}
