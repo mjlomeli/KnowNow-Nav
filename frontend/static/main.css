@@ -69,6 +69,19 @@ a:visited {
     outline: none;
  }
 
+ .countryDropdown{
+    background-color: rgb(255,255,255);
+    color: #e8797c;
+    border: 2px solid #e8797c;
+    padding-left: 10px;
+    padding-top: 5px;
+    /* padding-bottom: 7px; */
+    height: 45px;
+    width: 350px;
+    /* margin-top: 30px; */
+    outline: none;
+ }
+
 .knownow-btn {
     background-color: #e8797c;
     color: white;
@@ -83,6 +96,21 @@ a:visited {
 background-color: white;
 color: #e8797c;
 border: 1px solid #e8797c;
+}
+
+.submit_button{
+    background-color: #e8797c;
+    color: white;
+    font-weight: bold;
+    /* border: 2px solid rgb(252, 162, 7); */
+    /* margin-top: 30px; */
+    cursor: pointer;
+}
+
+.submit_button:hover{
+    background-color: white;
+    color: #e8797c;
+    border: 1px solid #e8797c;
 }
 
 .art-img {
