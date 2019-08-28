@@ -9,6 +9,7 @@ that makes sense on its own, separated from the rest by a newline.
 from Neo4jDriver import *
 from getpass import getpass
 from TestCases import TestCase
+from Spreadsheet import Spreadsheet
 
 PATH = Path.cwd()
 
@@ -353,10 +354,6 @@ class Cell(object):
 
 
 def main():
-    pass
-
-
-def first_25_rows_test():
     pass
 
 

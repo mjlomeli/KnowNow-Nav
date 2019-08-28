@@ -238,7 +238,6 @@ def _merge_indexes(index1, index2):
     return index1
 
 
-
 def _process_index():
     """
     Your corpus must be iterable to use this function.
@@ -250,7 +249,6 @@ def _process_index():
                   "Others' experience", 'Symptoms diagnosis', 'Side effect management', 'Recurrence Queries',
                   'Specific Conditions', 'Data interpretation', 'Referral', 'Lifestyle', 'Positive Affirmations',
                   'Encouragement', 'Inter-Personal Patient Connections', 'Other/ Miscellaneous']
-
     return None
 
 

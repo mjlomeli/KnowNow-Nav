@@ -226,7 +226,9 @@ def _store(index, key, id=None):
 
 
 def main():
-    pass
+    sheet = Spreadsheet()
+    practice = [Row(sheet[i], sheet.headers) for i in range(25)]
+    print(practice[0])
 
 
 def testRow():
@@ -273,4 +275,4 @@ def testRow():
 
 
 if __name__ == '__main__':
-    testRow()
+    main()
