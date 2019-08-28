@@ -121,6 +121,18 @@ def search():
         return render_template(__RESULT_HTML)
 
 
+@app.route("/graph")
+@app.route("/neo4j")
+def graph():
+    """
+    Renders the homepage. While the program is running, if a user
+    enters 'localhost:5000/' into their web browser, they'll be
+    rerouted to the homepage: Homepage.html
+    :return:
+    """
+    return redirect('http://localhost:7474')
+
+
 def testFlaskDriver():
     """
     Raises an error and warns you to have everything installed in the appropriate places. If you fail any,
