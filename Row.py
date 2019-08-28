@@ -115,9 +115,8 @@ class Row:
                 associates = self.__eval_logic_and_link(header)
             if header in _need_linking:
                 self.__link_associations(header, associates)
-            else:
-                # TODO: link them to nothing next
-                pass
+
+
 
     def __link_associations(self, header, associates=None):
         if isinstance(_need_linking, dict):
@@ -126,7 +125,7 @@ class Row:
                     for link, next_cells_header in _need_linking[header]:
                         for assoc in associates:
                             cell = self.__row[header]
-                            cell.setNext(Cell(assoc))
+                            cell.setNext(Cell(assoc, next_cells_header), link)
                             # TODO: finish this part where we link more
 
     def __eval_logic_and_link(self, header):
