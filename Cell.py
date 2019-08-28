@@ -72,9 +72,10 @@ class Cell(object):
 
     def insert_N4j(self, link_name, next_cell):
         if _RUNNING_NEO4J:
-            link = 'EMPTY STRING' if link_name is None else link_name
-            createNewRelation(
-                Cell.__session, self.id, self.content, next_cell.id, next_cell.content, link, link)
+            link = 'EMPTY_STRING' if link_name is None else link_name
+            content = 'EMPTY_STRING' if next_cell.content is None else next_cell.content
+            query = "CREATE ({})-[:{}]->({})".format(self.content.replace(' ', '_'),
+                                                     link.replace(' ', '_'), next_cell.content.replace(' ', '_'))
 
     def hasNext(self, cell):
         return cell in self.__list_values()
@@ -287,7 +288,9 @@ class Cell(object):
             _SESSION.close()
         else:
             if _RUNNING_NEO4J:
-                removeNode(Cell.__session, self.id, self.content, self.content)
+                query = "MATCH (n:{} {{}: {}})".format(self.header.replace('', "EMPTY STRING"),
+                                                       self.content.replace('', "EMPTY STRING"))
+                _SESSION.run(query)
 
 
 def main():
