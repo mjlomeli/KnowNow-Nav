@@ -7,7 +7,6 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 from neo4j import GraphDatabase, basic_auth
-from TestCases import TestCase
 from pathlib import Path
 
 
@@ -291,6 +290,43 @@ class Cell(object):
                 query = "MATCH (n:{} {{}: {}})".format(self.header.replace('', "EMPTY STRING"),
                                                        self.content.replace('', "EMPTY STRING"))
                 _SESSION.run(query)
+
+
+
+def create_database():
+    from Spreadsheet import Spreadsheet
+    sheet = Spreadsheet()
+    query = "CREATE (n:PatientCohorts"
+    for i, row in enumerate(sheet):
+        query += "({}: Discussion ".format(i) + str({{}: content for head, content in zip(sheet.headers, row)}) + '),'
+    return query[:-1] + ")"
+
+
+def setNext(header1, start, link, header2, end):
+    header1 = 'Number_' + str(header1) if isinstance(header1, int) else header1
+    header2 = 'Number_' + str(header2) if isinstance(header2, int) else header2
+    link = 'Number_' + str(link) if isinstance(link, int) else link
+    start = 'Number_' + str(start) if isinstance(start, int) else start
+    end = 'Number_' + str(end) if isinstance(end, int) else end
+
+    header1 = 'Number_' + str(int(header1)) if isinstance(header1, float) else header1
+    header2 = 'Number_' + str(int(header2)) if isinstance(header2, float) else header2
+    link = 'Number_' + str(int(link)) if isinstance(link, float) else link
+    start = 'Number_' + str(int(start)) if isinstance(start, float) else start
+    end = 'Number_' + str(int(end)) if isinstance(end, float) else end
+
+    header1 = None if header1 == '' else header1
+    header2 = None if header2 == '' else header2
+    link = None if link == '' else link
+    start = None if start == '' else start
+    end = None if end == '' else end
+    _SESSION.run("CREATE (n:{0}".format(str(start)) + " { " + " {0}: '{1}'".format(str(header1), str(
+        start)) + "})-[:" + "{0}]->(m:{1}".format(str(link), str(end)) + " {" + "{0}: '{1}'".format(str(header2),
+                                                                                                    str(end)) + "})")
+
+
+# Example problem should work
+setNext(None, '', 'became_friends', 21, 'Anne')
 
 
 def main():
