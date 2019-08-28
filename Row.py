@@ -10,6 +10,8 @@ from pathlib import Path
 from Cell import Cell
 from prettytable import PrettyTable
 from Spreadsheet import Spreadsheet
+from datetime import date
+import lxml as html
 
 __author__ = "Mauricio Lomeli"
 __date__ = "8/17/2019"
@@ -19,12 +21,13 @@ __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
-
 _STRING_LIMIT = 15
 _TESTING = False
 _NEO4J_RUNNING = False
 _NORMALIZE_HEADERS = True
 _NORMALIZE_NODE_HEADERS = True
+_DEFAULT_SPREADSHEET = Path.cwd() / Path("data") / Path("insights.csv")
+_DEFAULT_TEXT_LENGTH = 30
 _PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
 
 _need_logic_linking = {
@@ -39,33 +42,42 @@ _need_linking = {
     # 'Associated Side effect': [('occurred after intervention', 'Duration')]}
 }
 
+_TAGS = [int, str, date, list, str, str, list, list, int, list, list, list, list, str,
+         str, str, str, str, str, html, list, list, list, list, list, list, list, list]
+
 _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
-                'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
-                'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
-                'Node (N)': 'node', 'Metastasis (M)': 'metastasis', 'Grade': 'grade', 'Recurrence': 'recurrence',
-                'Category Tag': 'category', 'Intervention': 'intervention', 'Associated Side effect': 'side_effects',
-                'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
-                'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
-                'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
+                 'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
+                 'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
+                 'Node (N)': 'node', 'Metastasis (M)': 'metastasis', 'Grade': 'grade', 'Recurrence': 'recurrence',
+                 'Category Tag': 'category', 'Intervention': 'intervention', 'Associated Side effect': 'side_effects',
+                 'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
+                 'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
+                 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
+_REGULAR_HEADERS = ['id', 'Topic', 'Date Discussion (Month/Year)', 'Query Tag', 'Patient Query/inquiry',
+                    'Specific Patient Profile', 'Patient Cohort (Definition)', 'Tumor (T)', 'Tumor Count', 'Node (N)',
+                    'Metastasis (M)', 'Grade', 'Recurrence', 'Category Tag', 'Intervention', 'Associated Side effect',
+                    'Intervention mitigating side effect', 'Patient Insight', 'Volunteers', 'Discussion URL', 'HER2',
+                    'HER', 'BRCA', 'ER', 'HR', 'PR', 'RP', 'RO']
 
 
 class Row:
     total_rows = 0
     __auto_id = 0
 
-    def __init__(self, cells=None, headers=None):
+    def __init__(self, cells=None, headers=_REGULAR_HEADERS, tags=_TAGS):
         # TODO: need to change id structure to row:column, 0:0, 0:1
-        self.headers = None
+        self.headers = headers
         self.norm_headers = None
         self.length = 0
         self.id = None
+        self.tags = tags
         self.__row = None
         self.__index = 0
-        self.__assemble(cells)
+        self.__assemble(cells, headers)
 
     def __assemble(self, cells, headers=None):
         if cells is None:
-            pass
+            self.__row = None
         elif isinstance(cells, str):
             row = {0: Cell(cells)}
         elif isinstance(cells, Cell):
@@ -76,7 +88,10 @@ class Row:
                 headers = [cell.header for cell in cells]
                 row = {cell.header: cell for cell in cells}
             elif isinstance(cells[0], str):
-                row = {i: Cell(cell) for i, cell in enumerate(cells)}
+                if self.headers is None:
+                    row = {i: Cell(cell[i]) for i, cell in enumerate(cells)}
+                else:
+                    row = {self.headers[i]: Cell(cell) for i, cell in enumerate(cells)}
                 headers = list(row.keys())
         elif isinstance(cells, Row):
             headers = list(cells.__row.keys())
@@ -84,7 +99,7 @@ class Row:
         else:
             raise TypeError('The constructor accepts only type Row, Cell, and list of Cells')
         if isinstance(headers, list) and isinstance(cells, list):
-            assert(len(headers) == len(cells))
+            assert (len(headers) == len(cells))
             self.headers = headers
             self.id = Row.__auto_id
             self.__row = row
@@ -101,7 +116,7 @@ class Row:
             if header in _need_linking:
                 self.__link_associations(header, associates)
             else:
-                #TODO: link them to nothing next
+                # TODO: link them to nothing next
                 pass
 
     def __link_associations(self, header, associates=None):
@@ -147,9 +162,19 @@ class Row:
         if isinstance(item, int):
             return self.__list_values()[item]
         elif isinstance(item, str):
+            if _NORMALIZE_HEADERS:
+                if item in _NORM_HEADERS:
+                    return self.__row[_NORM_HEADERS[item]]
+                elif item in self.headers:
+                    return self.__row[item]
+                else:
+                    return None
             return self.__row[item]
         elif isinstance(item, Cell):
             return self.__row[item.id]
+        elif isinstance(item, int) or isinstance(item, slice):
+            print(self.__row)
+            return list(self.__row.values())[item]
 
     def keys(self):
         return self.__row.keys()
@@ -205,35 +230,47 @@ def main():
 
 
 def testRow():
-    r = Row(headers=_NORM_HEADERS.keys())
-    s = Row(headers=_NORM_HEADERS.values())
+    pass
 
-    sheet = Spreadsheet()
 
-    row = Row(sheet[0], sheet.headers)
+def testRow():
+    try:
+        sheet = Spreadsheet()
+        message = "Initializing with arguments: Row(sheet[0], sheet.headers)"
+        row = Row(sheet[0], sheet.headers)
+        print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
 
-    for i in row:
-        if 'topic' in row or 'cohort' in row:
-            print(row.keys())
-            print(row.values())
-            print(row[sheet.headers[i]])
-    print(row.keys())
-    print(row.values())
-    print(sheet.headers)
-    if isinstance(sheet.headers, list):
-        print('it is a list')
-        for i in sheet:
-            print('type:' + str(type(i)))
-            print(i)
+        message = "Initializing default constructor: Row()"
+        r = Row()
+        print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
 
-    if isinstance(sheet.headers, list):
-        print(sheet.headers)
-        print(sheet.headers[0])
-    print(row[sheet.headers])
+        message = "Iterating through first 3 rows in Spreadsheet"
+        assert len(row[:3]) == 3
+        for cell in row[:3]:
+            pass
+        print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
 
-    print(row)
-    print(row[0])
+        message = "Find row with 'Associated Side effect'"
+        assert len(row['Associated Side effect']) > 0
+        print('\t' + str(row['Associated Side effect']))
+        print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
+
+        message = "Find something that doesn't exist"
+        assert row['it shouldnt exist'] is None
+        print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
+
+        message = "First cell in the Row"
+        if isinstance(row[0], Cell) and len(row[0]) > 0:
+            print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
+
+        message = "Printing the table"
+        response = input("Would you like to print the table?")
+        if 'y' in response.lower():
+            print(row)
+
+    except Exception:
+        print('\033[1m' + '\033[31m' + "FAIL:" + message + '\033[0m')
 
 
 if __name__ == '__main__':
-    main()
+    testRow()
