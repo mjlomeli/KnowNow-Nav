@@ -137,3 +137,46 @@ border: 1px solid #e8797c;
     background-color: rgba(232, 121, 124, 0.3);
     color: black;
 }
+
+.container_contact {
+    margin-top: 40px;
+    text-align: center;
+    position: center;
+}
+
+.my-form{
+	padding: 5px;
+}
+
+.my-form .form-group{
+	padding-bottom: 10px;
+}
+
+::placeholder{
+    color: #e8797c;
+}
+.my-form label{
+	display: block;
+}
+
+.my-form input[type="text"], .my-form textarea{
+	padding: 8px;
+    width: 50%;
+    outline: 0 none;
+}
+
+#fname{
+    border: 1px solid #e8797c;
+    /* box-shadow: 0 1px 1px rgba(233, 49, 156, 0.075) inset, 0 0 8px rgba(236, 45, 118, 0.6); */
+    outline: 0 none;
+}
+
+#lname{
+    border: 1px solid #e8797c;
+    /* box-shadow: 0 1px 1px rgba(233, 49, 156, 0.075) inset, 0 0 8px rgba(236, 45, 118, 0.6); */
+    outline: 0 none;
+}
+
+#subject {
+    border: 1px solid #e8797c;
+}
