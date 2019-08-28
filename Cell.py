@@ -71,10 +71,7 @@ class Cell(object):
 
     def insert_N4j(self, link_name, next_cell):
         if _RUNNING_NEO4J:
-            link = 'EMPTY_STRING' if link_name is None else link_name
-            content = 'EMPTY_STRING' if next_cell.content is None else next_cell.content
-            query = "CREATE ({})-[:{}]->({})".format(self.content.replace(' ', '_'),
-                                                     link.replace(' ', '_'), next_cell.content.replace(' ', '_'))
+            setNext(self.header, self.content, link_name, next_cell.header, next_cell.content)
 
     def hasNext(self, cell):
         return cell in self.__list_values()
@@ -326,7 +323,9 @@ def setNext(header1, start, link, header2, end):
 
 
 def main():
-    pass
+    from Spreadsheet import Spreadsheet
+    sheet = Spreadsheet()
+
 
 
 def TestCell():

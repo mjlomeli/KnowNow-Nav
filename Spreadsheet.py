@@ -294,6 +294,11 @@ class Spreadsheet:
         self.__index = 0
         return self
 
+    def __setitem__(self, key, value):
+        if isinstance(key, tuple):
+            self.__spreadsheet[key[0]][key[1]] = value
+
+
     def __next__(self):
         if self.__index >= len(self.__spreadsheet):
             raise StopIteration
