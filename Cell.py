@@ -325,10 +325,6 @@ def setNext(header1, start, link, header2, end):
                                                                                                     str(end)) + "})")
 
 
-# Example problem should work
-setNext(None, '', 'became_friends', 21, 'Anne')
-
-
 def main():
     pass
 
