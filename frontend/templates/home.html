@@ -1,18 +1,28 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<section class="container-fluid main-div">
+<section class="container">
     <h1 class="motto">Discover patient insights.</h1>
-    <form action="form" method="GET" id=queryField>
-        <select name="query" class="tagDropdown">
-            <option value="" disabled selected hidden><strong>Select topic for patient insights</strong></option>
-            <option value="treatments">Treatments</option>
-            <option value="side-effects">Side Effects</option>
-        </select>
-    </form>
-    <button class="btn knownow-btn" type="submit" form="queryField" value="submit" id="submitButton">Know Now!</button>
 
-    <div><img src="../static/knownow_art_coralblack-01.svg" alt="" class="art-img"></div>
+    <div class="row justify-content-md-center">
+        <div class="col-lg-5">
+            <form action="form" method="GET" id=queryField>
+                <select name="query" class="tagDropdown">
+                    <option value="" disabled selected hidden><strong>Select topic for patient insights</strong></option>
+                    <option value="treatments">Treatments</option>
+                    <option value="side-effects">Side Effects</option>
+                </select>
+            </form>
+        </div>
+        
+        <div class="col-lg-2">
+            <button class="btn knownow-btn" type="submit" form="queryField" value="submit" id="submitButton">Know Now!</button>
+        </div>
+        
+    </div>
+
 </section>
+
+<img src="../static/knownow_coralblack-01.svg" alt="" class="home_art fixed-bottom">
 
 {% endblock content %}
