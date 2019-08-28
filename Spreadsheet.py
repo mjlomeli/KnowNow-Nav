@@ -338,7 +338,7 @@ def testSpreadsheet():
         print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
 
         message = "Find row with 'Specific Therapy Inquries'"
-        assert len(sheet['Specific Therapy Inquries']) > 0
+        assert len(sheet['Patient Query/inquiry']) > 0
         print('\t' + str(sheet['Specific Therapy Inquries']))
         print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
 
@@ -347,8 +347,8 @@ def testSpreadsheet():
         print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
 
         message = "First item in the Spreadsheet"
-        print('\t' + str(sheet[0]))
-        print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
+        if isinstance(sheet[0], list) and len(sheet[0]) > 0:
+            print('\033[1m' + '\033[92m' + "PASS: " + message + '\033[0m')
 
         message = "Printing the table"
         response = input("Would you like to print the table?")
