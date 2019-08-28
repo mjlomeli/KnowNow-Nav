@@ -101,23 +101,32 @@ class Cell(object):
         if isinstance(next_cell, Cell):
             if link_name not in self.__next:
                 self.__next[link_name] = [next_cell]
-            else:
-                self.__next[link_name].append(next_cell)
-            if Cell.__neo4j_running:
-                link = '' if link_name is None else link_name
-                try:
-                    createNewRelation(
-                        Cell.__session, self.id, self.content, next_cell.id, next_cell.content, link, link)
-                except Exception as e:
-                    print(e)
-                    TestCase('createNewRelation', self.id, self.content, next_cell.id, next_cell.content,
-                             link, link)
+                self.insert_N4j(self, link_name, next_cell)
 
+            else:
+                if link_name in self.__next and next_cell not in self.__next[link_name]:
+                    self.__next[link_name].append(next_cell)
+                    self.insert_N4j(self, link_name, next_cell)
         elif isinstance(next_cell, list):
             for item in next_cell:
                 self.setNext(item, link_name)
+                self.insert_N4j(self, link_name, next_cell)
         else:
             raise TypeError('Can only set next to a Cell or list of Cells')
+
+    def insert_N4j(self, link_name, next_cell):
+        if Cell.__neo4j_running:
+            link = '' if link_name is None else link_name
+            try:
+                createNewRelation(
+                    Cell.__session, self.id, self.content, next_cell.id, next_cell.content, link, link)
+            except Exception as e:
+                print(e)
+                TestCase('createNewRelation', self.id, self.content, next_cell.id, next_cell.content,
+                         link, link)
+
+    def hasNext(self, cell):
+        return cell in self.__list_values()
 
     def getNext(self):
         """
@@ -197,9 +206,9 @@ class Cell(object):
         for link, cells in self.__next.items():
             for next_cell in cells:
                 link = '' if link is None else link
-                result += '\033[95m(' + self.content[:_STRING_LIMIT] + ')\033[0m'
+                result += '\033[95m(' + str(self.content)[:_STRING_LIMIT] + ')\033[0m'
                 result += '\033[93m-' + link + '->\033[0m'
-                result += '\033[95m(' + next_cell.content[:_STRING_LIMIT] + ')\033[0m'
+                result += '\033[95m(' + str(next_cell.content)[:_STRING_LIMIT] + ')\033[0m'
                 result += '\n'
         return result
 
