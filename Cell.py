@@ -26,6 +26,19 @@ _PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
 _DRIVER = GraphDatabase.driver('bolt://localhost:7687', auth=basic_auth('neo4j', 'knownow'))
 _SESSION = _DRIVER.session()
 
+_need_logic_linking = {
+    'Associated Side effect': [('mitigated by', 'Intervention mitigating side effect')],
+    'Intervention': [('causes', 'Associated Side effect')],
+    'Intervention mitigating side effect': []
+}
+_need_linking = {
+    'Intervention': [('causes', 'Associated Side effect'), ('fight against', 'Patient Cohort (Definition)')],
+    'Associated Side effect': [('mitigated by', 'Intervention mitigating side effect')]
+    # 'Associated Side effect': [('lasted for', 'Duration')],
+    # 'Associated Side effect': [('occurred after intervention', 'Duration')]}
+}
+
+
 _NORM_NODE_HEAD = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Query Tag', 'query': 'Query',
                 'profile': 'Profile', 'cohort': 'Cohort', 'tumor': 'T', 'tumor_count': 'T Count', 'node': 'N',
                 'metastasis': 'M', 'grade': 'Grade', 'recurrence': 'Recurr', 'category': 'Category',
@@ -321,11 +334,35 @@ def setNext(header1, start, link, header2, end):
         start)) + "})-[:" + "{0}]->(m:{1}".format(str(link), str(end)) + " {" + "{0}: '{1}'".format(str(header2),
                                                                                                     str(end)) + "})")
 
-
-def main():
+def convert_to_cells():
     from Spreadsheet import Spreadsheet
     sheet = Spreadsheet()
+    for i in range(len(sheet)):
+        for j in range(len(sheet[i])):
+            sheet[i][j] = Cell(sheet[i][j], sheet.headers[j])
 
+    for i in range(len(sheet)):
+        for j in range(len(sheet[i])):
+            if sheet.real_headers[j] in _need_linking:
+                needed = _need_linking[sheet.real_headers[j]]
+                header1 = sheet.headers[j]
+                start = sheet[i][j]
+                for linking in needed:
+                    try:
+                        link = linking[0]
+                        header2_index = sheet.real_headers.index(linking[1])
+                        end = sheet[i][header2_index]
+                        setNext(header1, start, link, sheet.headers[header2_index], end)
+                    except Exception as e:
+                        pass
+                for linking in _need_logic_linking[sheet.real_headers[j]]:
+                    try:
+                        link = linking[0]
+                        header2 = linking[1]
+                        end = sheet[i][sheet.real_headers.index(header2)]
+                        setNext(header1, start, link, header2, end)
+                    except Exception as e:
+                        pass
 
 
 def TestCell():
@@ -372,4 +409,4 @@ def TestCell():
 
 
 if __name__ == '__main__':
-    main()
+    pass

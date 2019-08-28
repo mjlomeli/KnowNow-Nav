@@ -8,7 +8,7 @@ that makes sense on its own, separated from the rest by a newline.
 
 from pathlib import Path
 import sys
-from TestCases import testAll
+from Cell import convert_to_cells
 
 __DATA = Path.cwd() / Path('Data')
 
@@ -28,17 +28,13 @@ __status__ = "Prototype"
 
 
 def main():
-    pass
+    convert_to_cells()
 
 
 def __reset():
     for file in __DATA.iterdir():
         if '.pickle' in file.name:
             file.unlink()
-
-
-def testKnowNow():
-    pass
 
 
 if __name__ == '__main__':
