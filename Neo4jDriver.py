@@ -6,7 +6,7 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 from pathlib import Path
-from neo4j import GraphDatabase, basic_auth
+
 
 PATH = Path.cwd()
 
@@ -18,26 +18,21 @@ __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
-# driver = GraphDatabase.driver(
-#     "bolt://localhost:7687",
-#     auth=basic_auth("username", "password"))
-# session = driver.session()
+def createNode(start, link, end):
+    return "CREATE ({})-[:{}]->({})".format(start.replace(' ', '_'),link.replace(' ', '_'),end.replace(' ', '_'))
 
 
-def openDatabase(uri: str, username: str, password: str):
-    driver = GraphDatabase.driver(
-            uri, auth=basic_auth(username, password))
-    session = driver.session()
-    return (session, driver)
+def create_database():
+    from Spreadsheet import Spreadsheet
+    sheet = Spreadsheet()
+    query = "CREATE "
+    for i, row in enumerate(sheet):
+        query += '(' + str(i) + ':Discussion ' + str({head: content.replace(' ', '_').replace('', 'EMPTY_STRING') for
+                                              head, content in zip(sheet.headers, sheet[i])}) + '),'
+    return query
 
-def closeDatabase(session):
-    session.close()
 
-def getSession(session):
-    return session
 
-def getDriver(driver):
-    return driver
 
 def insertNode(session, label: str, label_property: str, specific_text: str):
     '''Insert a single node given a label, property, and property string'''
@@ -72,13 +67,4 @@ def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str
                     DELETE ''' + relation
 
     session.run(cypher_query)
-
-    # # # results is a neo4j.BoltStatementResult
-
-    # for record in results:
-    #   # record is a neo4j.Record obj
-    #   # record.get('p') is a 'neo4j.types.graph.Path' obj
-
-    #   print(record.get('p').start_node)
-    #   print()
 

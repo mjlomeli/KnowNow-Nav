@@ -75,7 +75,7 @@ class Row:
                 headers = [cell.header for cell in cells]
                 row = {cell.header: cell for cell in cells}
             elif isinstance(cells[0], str):
-                row = {i: Cell(cell[i], id=i) for i, cell in enumerate(cells)}
+                row = {i: Cell(cell) for i, cell in enumerate(cells)}
                 headers = list(row.keys())
         elif isinstance(cells, Row):
             headers = list(cells.__row.keys())

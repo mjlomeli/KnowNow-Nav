@@ -6,11 +6,10 @@ If the description is long, the first line should be a short summary of Cell.py
 that makes sense on its own, separated from the rest by a newline.
 """
 
-from Neo4jDriver import *
-from getpass import getpass
+from neo4j import GraphDatabase, basic_auth
 from TestCases import TestCase
+from pathlib import Path
 
-PATH = Path.cwd()
 
 __author__ = "Mauricio Lomeli"
 __date__ = "8/17/2019"
@@ -21,10 +20,12 @@ __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
 _TESTING = True
-_RUN_NEO4J = False
+_RUNNING_NEO4J = False
 _STRING_LIMIT = 15
+_ROW_LENGTH = 28
 _PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
-
+_DRIVER = GraphDatabase.driver('bolt://localhost:7687', auth=basic_auth('neo4j', 'knownow'))
+_SESSION = _DRIVER.session()
 
 _NORM_NODE_HEAD = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Query Tag', 'query': 'Query',
                 'profile': 'Profile', 'cohort': 'Cohort', 'tumor': 'T', 'tumor_count': 'T Count', 'node': 'N',
@@ -39,58 +40,14 @@ class Cell(object):
     Holds each individual data. Has higher level of control. Each cell makes up a node.
     """
     __cell_total = 0
-    __cell_global = []
-    __ids = []
-    __session = None
-    __neo4j_running = False
 
-    def __init__(self, content=None, header_name=None):
+    def __init__(self, content=None, header_name=None, id=None):
+        Cell.__cell_total += 1
         self.content = content
         self.header = header_name
-        self.id = Cell.__cell_total
+        self.id = id
         self.__next = {}
         self.__index = 0
-        self.__assemble()
-
-    def __assemble(self):
-        """
-        Executes the necessary functions for the cell to exist.
-        """
-        # Keeps track that all ids are unique, else auto-generates
-        if self.id is None:
-            self.id = Cell.__cell_total
-            Cell.__ids.append(self.id)
-        elif self.id in Cell.__ids:
-            raise AssertionError('id must be unique. ' + str(self.id) + ' exists.')
-        else:
-            Cell.__ids.append(self.id)
-        # Opens the database
-        if Cell.__cell_total == 0 and _RUN_NEO4J:
-            Cell.__session = self.__openDB()
-            Cell.__neo4j_running = True
-        # Adds the node in the database if it is running
-        if Cell.__neo4j_running:
-            try:
-                insertNode(Cell.__session, self.id, self.header, self.content)
-            except ConnectionRefusedError:
-                TestCase('_RUN_NEO4J', _RUN_NEO4J)
-        # Static variable holding the count of all existing cells
-        Cell.__cell_total += 1
-
-    def __openDB(self):
-        """
-        Opens the database. It will prompt you for your
-        username and password. As well as the URI to
-        establis hteh connection.
-        :return: session
-        """
-        uri = input('Enter URI connection: ')
-        username = input('Enter your username: ')
-        password = getpass('Enter your password: ')
-        try:
-            return openDatabase(uri, username, password)
-        except Exception as e:
-            TestCase('openDatabase', uri, username, password)
 
     def setNext(self, next_cell, link_name=None):
         """
@@ -102,7 +59,6 @@ class Cell(object):
             if link_name not in self.__next:
                 self.__next[link_name] = [next_cell]
                 self.insert_N4j(link_name, next_cell)
-
             else:
                 if link_name in self.__next and next_cell not in self.__next[link_name]:
                     self.__next[link_name].append(next_cell)
@@ -115,15 +71,10 @@ class Cell(object):
             raise TypeError('Can only set next to a Cell or list of Cells')
 
     def insert_N4j(self, link_name, next_cell):
-        if Cell.__neo4j_running:
-            link = '' if link_name is None else link_name
-            try:
-                createNewRelation(
-                    Cell.__session, self.id, self.content, next_cell.id, next_cell.content, link, link)
-            except Exception as e:
-                print(e)
-                TestCase('createNewRelation', self.id, self.content, next_cell.id, next_cell.content,
-                         link, link)
+        if _RUNNING_NEO4J:
+            link = 'EMPTY STRING' if link_name is None else link_name
+            createNewRelation(
+                Cell.__session, self.id, self.content, next_cell.id, next_cell.content, link, link)
 
     def hasNext(self, cell):
         return cell in self.__list_values()
@@ -332,23 +283,11 @@ class Cell(object):
         :return:
         """
         Cell.__cell_total -= 1
-        Cell.__ids.remove(self.id)
-        if Cell.__cell_total == 0:
-            if Cell.__neo4j_running:
-                try:
-                    closeDatabase(Cell.__session)
-                except Exception as e:
-                    print(e)
-                    TestCase('closeDatabase', Cell.__session, Cell.__cell_total)
-
-                Cell.__neo4j_running = False
+        if Cell.__cell_total < 1 and _RUNNING_NEO4J:
+            _SESSION.close()
         else:
-            if Cell.__neo4j_running:
-                try:
-                    removeNode(Cell.__session, self.id, self.content, self.content)
-                except Exception as e:
-                    print(e)
-                    TestCase('removeNode', Cell.__session, self.id, self.content, self.content)
+            if _RUNNING_NEO4J:
+                removeNode(Cell.__session, self.id, self.content, self.content)
 
 
 def main():
