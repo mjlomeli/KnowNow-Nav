@@ -9,6 +9,7 @@ that makes sense on its own, separated from the rest by a newline.
 from pathlib import Path
 from Cell import Cell
 from prettytable import PrettyTable
+from Spreadsheet import Spreadsheet
 
 __author__ = "Mauricio Lomeli"
 __date__ = "8/17/2019"
@@ -75,22 +76,22 @@ class Row:
                 headers = [cell.header for cell in cells]
                 row = {cell.header: cell for cell in cells}
             elif isinstance(cells[0], str):
-                row = {i: Cell(cell[i], id=i) for i, cell in enumerate(cells)}
+                row = {i: Cell(cell) for i, cell in enumerate(cells)}
                 headers = list(row.keys())
         elif isinstance(cells, Row):
             headers = list(cells.__row.keys())
             row = cells.__row
         else:
             raise TypeError('The constructor accepts only type Row, Cell, and list of Cells')
-
-        assert(len(headers) == len(cells))
-        self.headers = headers
-        self.id = Row.__auto_id
-        self.__row = row
-        self.__length = 0 if row is None else len(row)
-        self.norm_headers = _NORM_HEADERS if _NORMALIZE_HEADERS else None
-        Row.__auto_id += 1
-        self.__set_associations()
+        if isinstance(headers, list) and isinstance(cells, list):
+            assert(len(headers) == len(cells))
+            self.headers = headers
+            self.id = Row.__auto_id
+            self.__row = row
+            self.__length = 0 if row is None else len(row)
+            self.norm_headers = _NORM_HEADERS if _NORMALIZE_HEADERS else None
+            Row.__auto_id += 1
+            self.__set_associations()
 
     def __set_associations(self):
         for header in self.headers:
@@ -147,6 +148,8 @@ class Row:
             return self.__list_values()[item]
         elif isinstance(item, str):
             return self.__row[item]
+        elif isinstance(item, Cell):
+            return self.__row[item.id]
 
     def keys(self):
         return self.__row.keys()
@@ -155,12 +158,15 @@ class Row:
         return self.__list_values()
 
     def __str__(self):
-        keys = list(self.__row.keys())
-        table = PrettyTable(keys)
-        for head in keys:
-            table.align[head] = 'c'
-        table.add_row([value.content[:_STRING_LIMIT] for value in self.__row.values()])
-        return str(table)
+        if self.__row is not None:
+            keys = list(self.__row.keys())
+            table = PrettyTable(keys)
+            for head in keys:
+                table.align[head] = 'c'
+            table.add_row([value.content[:_STRING_LIMIT] for value in self.__row.values()])
+            return str(table)
+        else:
+            return ''
 
     def __and__(self, other):
         return False
@@ -199,7 +205,34 @@ def main():
 
 
 def testRow():
-    pass
+    r = Row(headers=_NORM_HEADERS.keys())
+    s = Row(headers=_NORM_HEADERS.values())
+
+    sheet = Spreadsheet()
+
+    row = Row(sheet[0], sheet.headers)
+
+    for i in row:
+        if 'topic' in row or 'cohort' in row:
+            print(row.keys())
+            print(row.values())
+            print(row[sheet.headers[i]])
+    print(row.keys())
+    print(row.values())
+    print(sheet.headers)
+    if isinstance(sheet.headers, list):
+        print('it is a list')
+        for i in sheet:
+            print('type:' + str(type(i)))
+            print(i)
+
+    if isinstance(sheet.headers, list):
+        print(sheet.headers)
+        print(sheet.headers[0])
+    print(row[sheet.headers])
+
+    print(row)
+    print(row[0])
 
 
 if __name__ == '__main__':

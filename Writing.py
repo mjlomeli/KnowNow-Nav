@@ -25,11 +25,11 @@ _TOKENIZER = Tokenizer()
 _NEED_LEMMA = ['insights', 'topic', 'query', 'profile', ]
 
 
-
-
 class Writing(Cell):
     def __init__(self, text=None, title=None, id=None):
         super().__init__(self, text, title, id)
+        self.header = title
+        self.content = text
         self.__tokens = None
         self.__tf = None
         self.count = 0
@@ -38,12 +38,15 @@ class Writing(Cell):
 
     def __assemble(self):
         # Tokenizes the cell if it is in a certain column
-        if self.header in _NEED_LEMMA:
-            if self.content is not None:
-                if isinstance(self.content, str):
-                    self.__tokenize(self.content)
-        self.length = len(self.content)
-        self.count = len(self.content.split(' '))
+        try:
+            if self.header in _NEED_LEMMA:
+                if self.content is not None:
+                    if isinstance(self.content, str):
+                        self.__tokenize(self.content)
+            self.length = len(self.content)
+            self.count = len(self.content.split(' '))
+        except Exception as e:
+            print(e)
 
     def __tokenize(self, text):
         """
@@ -112,15 +115,17 @@ class Writing(Cell):
         prints the node relationships.
         :return: string
         """
-        result = '\033[1m\033[92m' + 'Title: {}'.format(self.header) + '\033[0m\n'
-        result += '\033[1m\033[92m' + 'Text: {}'.format(self.content) + '\033[0m\n'
+        result = ''
+        if self.header is not None:
+            result = '\033[1m\033[92m' + 'Title: {}'.format(self.header) + '\033[0m\n'
+            result += '\033[1m\033[92m' + 'Text: {}'.format(self.content) + '\033[0m\n'
         return result
 
     def print_relationships(self):
         print(super())
 
     def __gt__(self, other):
-        if self.__tf is None:
+        if self.__tf is None and self.content is not None:
             self.__tokenize(self.content)
         tf = {} if other.getTF() is None else other.getTF()
         if isinstance(other, Writing):

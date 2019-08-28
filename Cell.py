@@ -56,14 +56,8 @@ class Cell(object):
         """
         Executes the necessary functions for the cell to exist.
         """
-        # Keeps track that all ids are unique, else auto-generates
-        if self.id is None:
-            self.id = Cell.__cell_total
-            Cell.__ids.append(self.id)
-        elif self.id in Cell.__ids:
-            raise AssertionError('id must be unique. ' + str(self.id) + ' exists.')
-        else:
-            Cell.__ids.append(self.id)
+        # Keeps track that all ids are unique, else auto-generate
+
         # Opens the database
         if Cell.__cell_total == 0 and _RUN_NEO4J:
             Cell.__session = self.__openDB()
@@ -71,11 +65,16 @@ class Cell(object):
         # Adds the node in the database if it is running
         if Cell.__neo4j_running:
             try:
+                # TODO: Check with Anne and Jennifer that this works
                 insertNode(Cell.__session, self.id, self.header, self.content)
             except ConnectionRefusedError:
                 TestCase('_RUN_NEO4J', _RUN_NEO4J)
         # Static variable holding the count of all existing cells
+
+        self.id = Cell.__cell_total
+        Cell.__ids.append(self.id)
         Cell.__cell_total += 1
+
 
     def __openDB(self):
         """
@@ -88,6 +87,7 @@ class Cell(object):
         username = input('Enter your username: ')
         password = getpass('Enter your password: ')
         try:
+            # TODO: Check with Jennifer and Anne if the database opens well enough.
             return openDatabase(uri, username, password)
         except Exception as e:
             TestCase('openDatabase', uri, username, password)
@@ -101,16 +101,14 @@ class Cell(object):
         if isinstance(next_cell, Cell):
             if link_name not in self.__next:
                 self.__next[link_name] = [next_cell]
-                self.insert_N4j(self, link_name, next_cell)
-
             else:
                 if link_name in self.__next and next_cell not in self.__next[link_name]:
                     self.__next[link_name].append(next_cell)
-                    self.insert_N4j(self, link_name, next_cell)
+            self.insert_N4j(link_name, next_cell)
         elif isinstance(next_cell, list):
             for item in next_cell:
                 self.setNext(item, link_name)
-                self.insert_N4j(self, link_name, next_cell)
+                self.insert_N4j(link_name, next_cell)
         else:
             raise TypeError('Can only set next to a Cell or list of Cells')
 
@@ -118,6 +116,7 @@ class Cell(object):
         if Cell.__neo4j_running:
             link = '' if link_name is None else link_name
             try:
+                # TODO: Check with Jennifer and Anne if our code checks out
                 createNewRelation(
                     Cell.__session, self.id, self.content, next_cell.id, next_cell.content, link, link)
             except Exception as e:
@@ -336,6 +335,7 @@ class Cell(object):
         if Cell.__cell_total == 0:
             if Cell.__neo4j_running:
                 try:
+                    # TODO: Check with Jennifer and Anne about closing the DB
                     closeDatabase(Cell.__session)
                 except Exception as e:
                     print(e)
@@ -345,6 +345,7 @@ class Cell(object):
         else:
             if Cell.__neo4j_running:
                 try:
+                    # TODO: Check with Jennifer and Anne about removing a Node
                     removeNode(Cell.__session, self.id, self.content, self.content)
                 except Exception as e:
                     print(e)
@@ -355,7 +356,11 @@ def main():
     pass
 
 
-def TestCell():
+def first_25_rows_test():
+    pass
+
+
+def test():
     header = ['calpurnia', 'sunny', 'egypt', 'capital']
     content = ['something', 'goes', 'in', 'here']
 
@@ -380,10 +385,6 @@ def TestCell():
         print(item.id)
         print(item.content)
         print(item.header)
-
-    # test tokenizer
-    tokens = a.getTokens()
-    tf = b.getTF()
 
     # keys
     print(c.keys())

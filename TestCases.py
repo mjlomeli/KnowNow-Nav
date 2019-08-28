@@ -5,7 +5,6 @@
 If the description is long, the first line should be a short summary of TestCases.py
 that makes sense on its own, separated from the rest by a newline.
 """
-
 from pathlib import Path
 
 PATH = Path.cwd()
@@ -126,3 +125,11 @@ class TestMaker:
         temp = self.variables[self.__index]
         self.__index += 1
         return temp
+
+
+def main():
+    TestCase()
+
+
+if __name__ == '__main__':
+    main()
