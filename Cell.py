@@ -21,8 +21,8 @@ __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
-_TESTING = True
-_RUN_NEO4J = False
+_TESTING = False
+_RUN_NEO4J = True
 _STRING_LIMIT = 15
 _PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
 
@@ -87,14 +87,13 @@ class Cell(object):
         establis hteh connection.
         :return: session
         """
-        uri = input('Enter URI connection: ')
         username = input('Enter your username: ')
         password = getpass('Enter your password: ')
         try:
             # TODO: Check with Jennifer and Anne if the database opens well enough.
-            return openDatabase(uri, username, password)
+            return openDatabase(_LOCAL_HOST, username, password)
         except Exception as e:
-            TestCase('openDatabase', uri, username, password)
+            TestCase('openDatabase', _LOCAL_HOST, username, password)
 
     def setNext(self, next_cell, link_name=None):
         """
@@ -368,7 +367,26 @@ class Cell(object):
 
 
 def main():
-    pass
+    a = Cell('July 2015', 'Date')
+    b = Cell('Treatment', 'Query Tag')
+    c = Cell('Patient Query',
+             r'Patient had to get her implants removed after her breast expanders got infected. Now she is on zoladex and tamoxifen and is worried about the swelling and pain in her feet.')
+    d = Cell('Category Tag', 'Side Effects')
+    e = Cell('Intervention', 'Tamoxifen')
+    f = Cell('Associated Side effect', 'Joint pain OR swelling OR pain in feet')
+    g = Cell('Intervention mitigating side effect', None)
+    h = Cell('Intervention', 'Taxmoxifen')
+
+    e.setNext(a)
+    a.setNext(b)
+    b.setNext(c)
+
+
+    d.setNext(f, 'does verb')
+    f.setNext(g, 'got linked')
+    f.setNext(d, 'goes around')
+
+
 
 
 def test():
