@@ -4,9 +4,32 @@
 If the description is long, the first line should be a short summary of Neo4jDriver.py
 that makes sense on its own, separated from the rest by a newline.
 """
-
+import authenticate as authenticate
+import psycopg2
 from pathlib import Path
-from neo4j import GraphDatabase, basic_auth
+from py2neo import Database, Graph,Node,Relationship,RelationshipMatcher, RelationshipMatch, NodeMatcher, NodeMatch, Subgraph, Table
+from neo4j import *
+
+
+authenticate("localhost:7474", "neo4j", "password")
+n4j_graph = Graph("http://localhost:7474/db/knownow/")
+
+try:
+    conn=psycopg2.connect("dbname='db_name' user='user' password='password'")
+
+except Exception as e:
+    print(e)
+
+
+class User:
+    def __init__(self, username):
+        self.username = username
+
+    def find(self):
+        user = n4j_graph.
+
+
+
 
 PATH = Path.cwd()
 
@@ -24,11 +47,11 @@ __status__ = "Prototype"
 # session = driver.session()
 
 
-def openDatabase(uri: str, username: str, password: str):
-    driver = GraphDatabase.driver(
-            uri, auth=basic_auth(username, password))
-    session = driver.session()
-    return (session, driver)
+
+
+
+___driver = GraphDatabase.driver('bolt://localhost:7687', auth=basic_auth('neo4j', 'knownow'))
+__session = driver.session()
 
 def closeDatabase(session):
     session.close()
@@ -39,11 +62,30 @@ def getSession(session):
 def getDriver(driver):
     return driver
 
-def insertNode(session, label: str, label_property: str, specific_text: str):
-    '''Insert a single node given a label, property, and property string'''
-    insert_cq = ''' 
-    CREATE (n:''' + label + "{" + label_property + ":" +  specific_text + '''})
-    RETURN n})'''
+def create_node(start, link, end):
+    query = 'CREATE ({})-[:{}]->({})'.format(start.replace(' ', '_'), link.replace(' ', '_'), end.replace(' ', '_'))
+    session.run(query)
+
+def smrutis_graph():
+
+
+def create_database():
+    """
+    CREATE  (1:Discussion { query_tag: 'treatment', category_tag: 'Side Effects' }),
+            (2:Discussion { name: 'Bill', eyeColor: 'brown' }),
+            (3:Discussion { name: 'Carol', eyeColor: 'blue' })
+    WITH [a, b, c] AS ps
+    UNWIND ps AS p
+    RETURN DISTINCT p.eyeColor
+    :return:
+    """
+
+
+def insertNode(start, link, end):
+    query = \
+        "CREATE(Symptom)-[:Could_be_mitigated_by]->(Intervention)-[:Causes]->(Symptom)-[:Lasted__for]->(Duration)"
+        "CREATE (Symptom)-[:Occurred_after_intervention]->(Duration)"
+        "CREATE (Intervention)-[:Against]->(Disease)"
 
     session.run(insert_cq)
 
