@@ -304,7 +304,7 @@ class Cell(object):
 
 
 def create_database():
-    from Spreadsheet import Spreadsheet
+    from Activity.FileManager.Spreadsheet import Spreadsheet
     sheet = Spreadsheet()
     query = "CREATE (n:PatientCohorts"
     for i, row in enumerate(sheet):
@@ -335,7 +335,7 @@ def setNext(header1, start, link, header2, end):
                                                                                                     str(end)) + "})")
 
 def convert_to_cells():
-    from Spreadsheet import Spreadsheet
+    from Activity.FileManager.Spreadsheet import Spreadsheet
     sheet = Spreadsheet()
     for i in range(len(sheet)):
         for j in range(len(sheet[i])):

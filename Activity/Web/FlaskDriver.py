@@ -7,10 +7,9 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 from pathlib import Path
-from flask import Flask, render_template, url_for, redirect, request, session
-from Spreadsheet import Spreadsheet
-from Tokenizer import Tokenizer
-import nltk
+from flask import Flask, render_template, redirect, request
+from Activity.FileManager.Spreadsheet import Spreadsheet
+from Activity.NLP.Tokenizer import Tokenizer
 
 # program's author information and licenses
 __author__ = "Mauricio Lomeli"

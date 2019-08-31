@@ -7,7 +7,7 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 from pathlib import Path
-from Cell import Cell
+from Activity.FileManager.Cell import Cell
 from prettytable import PrettyTable
 
 __author__ = "Mauricio Lomeli"

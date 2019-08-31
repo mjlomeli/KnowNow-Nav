@@ -8,7 +8,7 @@ that makes sense on its own, separated from the rest by a newline.
 
 from pathlib import Path
 import sys
-from Cell import convert_to_cells
+from Activity.FileManager.Cell import convert_to_cells
 
 __DATA = Path.cwd() / Path('Data')
 
@@ -41,6 +41,6 @@ if __name__ == '__main__':
     if '-r' in sys.argv:
         __reset()
     if '-t' in sys.argv:
-        testAll()
+        pass
 
     main()

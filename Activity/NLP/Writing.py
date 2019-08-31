@@ -7,8 +7,8 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 from pathlib import Path
-from Cell import Cell
-from Tokenizer import Tokenizer
+from Activity.FileManager.Cell import Cell
+from Activity.NLP.Tokenizer import Tokenizer
 
 PATH = Path.cwd()
 

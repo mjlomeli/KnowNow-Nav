@@ -21,6 +21,6 @@ __status__ = "Prototype"
 # TODO: write your code here
 
 
-
-def testDocument():
-    pass
+class Document:
+    def __init__(self):
+        pass

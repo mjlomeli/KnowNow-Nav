@@ -23,7 +23,7 @@ def createNode(start, link, end):
 
 
 def create_database():
-    from Spreadsheet import Spreadsheet
+    from Activity.FileManager.Spreadsheet import Spreadsheet
     sheet = Spreadsheet()
     query = "CREATE "
     for i, row in enumerate(sheet):

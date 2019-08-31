@@ -8,8 +8,8 @@ that makes sense on its own, separated from the rest by a newline.
 
 import sys
 from pathlib import Path
-from Spreadsheet import Spreadsheet
-from Tokenizer import Tokenizer
+from Activity.FileManager.Spreadsheet import Spreadsheet
+from Activity.NLP.Tokenizer import Tokenizer
 import pickle
 from math import log10, sqrt
 from heapq import nlargest

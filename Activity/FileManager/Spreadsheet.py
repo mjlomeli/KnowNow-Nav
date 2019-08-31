@@ -4,7 +4,7 @@
 Opens a CSV spreadsheet for reading and searching operations.
 Ideas: pickle handling with __call__ && __init__, print formatting,
 """
-from Row import Row
+from Activity.FileManager.Row import Row
 from prettytable import PrettyTable
 from pathlib import Path
 import csv
@@ -21,7 +21,7 @@ __status__ = "Prototype"
 
 # default required values
 PATH = Path.cwd()
-_DEFAULT_SPREADSHEET = PATH / Path("data") / Path("insights.csv")
+_DEFAULT_SPREADSHEET = r"C:/Users/mrtma/Desktop/KnowNow-Nav/data/insights.csv"
 _DEFAULT_TEXT_LENGTH = 30
 
 CATEGORIES = ["Comparing Therapies", "Side Effects", "Right treatment?", "Specific Therapy Inquiries",
@@ -239,7 +239,7 @@ class Spreadsheet:
         return has_all
 
     def __assemble(self, spreadsheet):
-        with open(Path(spreadsheet), 'r', newline="", encoding="utf-8") as f:
+        with open(spreadsheet, 'r', newline="", encoding="utf-8") as f:
             content = csv.DictReader(f)
             self.real_headers = content.fieldnames
             self.__book = {header: index for index, header in enumerate(self.real_headers)}
