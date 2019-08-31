@@ -10,13 +10,55 @@ from pathlib import Path
 
 PATH = Path.cwd()
 
-__author__ = "Mauricio Lomeli"
+__author__ = ["Jennifer Kwon", "Anne Wang", "Mauricio Lomeli"]
 __date__ = "8/17/2019"
 __license__ = "MIT"
-__version__ = "0.0.0.1"
-__maintainer__ = "Mauricio Lomeli"
+__version__ = "0.0.0.2"
+__maintainer__ = ["Jennifer Kwon", "Anne Wang"]
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
+
+def insertStr(data: str):
+    # Todo: insert data into neo4j, if it is successful, return True, else False
+    # Todo: the string can be a Cypher query or just a value.
+    # ex: insertStr("create (Anne)-[:friends_with]->(Jennifer)")
+    # ex: insertStr("Jennifer")
+    # Either of these inputs should work.
+    pass
+
+def insertList(data: list):
+    # Todo: insert data into neo4j, if it is successful, return True, else False
+    # Todo: the list can be a list of Cypher queries, relationships, or just values.
+    # Todo: I've done the relationships detection for you and have rerouted it to a separate function
+    # ex: insertList(["Jennifer", "Anne", "Mauricio"])
+    # ex: insertList(["create (Anne)-[:friends_with]->(Jennifer)", "create (Anne)-[:..."])
+    if all([rel for rel in data if type(rel) == dict]):
+        return all([insertDict(rel) for rel in data])
+    return False
+
+def insertDict(data: dict):
+    # Todo: insert data into neo4j, if it is successful, return True, else False
+    # Todo: the dictionary is a relationship template. We need neo4j to insert these example values
+    # Todo:                         (fatigue)
+    # Todo:                             ^
+    # Todo:                             |
+    # Todo: in this format: (tylenol)-causes->(headaches)
+    # Todo: and:            (tylenol)-relieves->(pain)
+    # ex: {'Tylenol': [('causes', 'headaches'), ('causes', 'fatigue'), ('relieves', 'pain')]}
+    pass
+
+def insert(data):
+    #TODO: Insert dynamic data into Neo4j
+    if isinstance(data, str):
+
+    if isinstance(data, list):
+        pass
+    if isinstance(data, dict):
+        pass
+    if isinstance(data, list):
+
+    pass
+
 
 def createNode(start, link, end):
     return "CREATE ({})-[:{}]->({})".format(start.replace(' ', '_'),link.replace(' ', '_'),end.replace(' ', '_'))
@@ -30,8 +72,6 @@ def create_database():
         query += '(' + str(i) + ':Discussion ' + str({head: content.replace(' ', '_').replace('', 'EMPTY_STRING') for
                                               head, content in zip(sheet.headers, sheet[i])}) + '),'
     return query
-
-
 
 
 def insertNode(session, label: str, label_property: str, specific_text: str):
@@ -52,6 +92,7 @@ def removeNode(session, label: str, label_property: str, specific_text: str):
 
     session.run(cypher_query)
 
+
 def createNewRelation(session, label_from: str, label_from_text: str, label_to: str, label_to_text: str, new_relation: str, relation_text: str):
     '''creates a new relation from one specified node to another specified node with respective label and text'''
 
@@ -60,6 +101,7 @@ def createNewRelation(session, label_from: str, label_from_text: str, label_to: 
                     "MERGE (label_from)-[rel:" + new_relation + "{" + new_relation + ":" +  relation_text + "}]->(label_to)"
 
     session.run(cypher_query)
+
 
 def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str, relation_text: str):
     '''deletes a specified relation that is related to a specified node'''
@@ -90,8 +132,4 @@ def setNext(_SESSION, header1, start, link, header2, end):
     _SESSION.run("CREATE (n:{0}".format(str(start)) + " { " + " {0}: '{1}'".format(str(header1), str(
         start)) + "})-[:" + "{0}]->(m:{1}".format(str(link), str(end)) + " {" + "{0}: '{1}'".format(str(header2),
                                                                                                     str(end)) + "})")
-
-
-# Example problem should work
-setNext(None, '', 'became_friends', 21, 'Anne')
 
