@@ -11,13 +11,19 @@ from neo4j import GraphDatabase, basic_auth
 
 PATH = Path.cwd()
 
-__author__ = ["Jennifer Kwon", "Anne Wang", "Mauricio Lomeli"]
-__date__ = "8/17/2019"
-__license__ = "MIT"
-__version__ = "0.0.0.2"
-__maintainer__ = ["Jennifer Kwon", "Anne Wang"]
-__email__ = "mjlomeli@uci.edu"
-__status__ = "Prototype"
+
+"""
+
+__author__ = ["list of people who contributed with code"]
+__credits__ = ["here you add anyone who contributed without code"]
+__date__ = "date you started the new version"
+__license__ = "MIT" # for now, this stays. you'll learn more about licenses as you advance in your career
+__version__ = "0.0.0.2" # the version increases after every release (only successful releases increase versions)
+__maintainer__ = ["list of people in charge of maintaining this code"]
+__email__ = ["list of maintainers emails"]
+__status__ = "Prototype" # you'll learn more about status of your project as you advance in your career.
+
+"""
 
 
 def insertStr(data: str):
@@ -50,6 +56,9 @@ def insertDict(data: dict):
     #                 (tylenol)-causes->(headaches)
     #                 (tylenol)-relieves->(pain)
     pass
+
+
+
 
 
 def closeDatabase(session):
@@ -113,6 +122,7 @@ def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str
     session.run(cypher_query)
 
 
+# Do not delete or modify
 def insertList(data: list):
     """
     Separates the listing items into their categories of processing.
@@ -130,23 +140,7 @@ def insertList(data: list):
     return False
 
 
-def insertList(data: list):
-    """
-    Separates the listing items into their categories of processing.
-    Example: all string inputs get processed by insertStr function, and all Cell type
-    inputs get processed by insertCell function.
-    :param data: a list
-    :return: True if the insertion is completed without failures, else False
-    """
-    if all([strings for strings in data if type(strings) == str]):
-        return all([insertStr(strings) for strings in data])
-    elif all([cells for cells in data if cells == Cell]):
-        return all([insertCell(cells) for cells in data])
-    elif all([rel for rel in data if type(rel) == dict]):
-        return all([insertDict(rel) for rel in data])
-    return False
-
-
+# Do not delete or modify
 def insert(data):
     """
     Handles the input dynamically. It detects the user's input and creates

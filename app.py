@@ -41,8 +41,6 @@ def home():
     rerouted to the homepage: Homepage.html
     :return:
     """
-
-
     pair = None
 
     return render_template('home.html', pair=pair)
@@ -52,7 +50,7 @@ def home():
 def results():
 
     query = None
-    return render_template('results.html',posts=posts, title='Results', query=query)
+    return render_template('results.html', posts=posts, title='Results', query=query)
 
 
 @app.route("/aboutus")
