@@ -6,24 +6,26 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 import unittest
-from Activity.Neo4j.Neo4jDriver import *
-from pathlib import Path
-
-PATH = Path.cwd()
+from Activity.Neo4j.Neo4jDriver import insertDict, insertCell, insertStr, insertList, insert
 
 __author__ = "Mauricio Lomeli"
 __date__ = "8/30/2019"
-__copyright__ = "Copyright 2019, KnowNow-Nav"
 __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
+__version__ = "0.0.0.2"
+
+
+def testNeo4j():
+    print("Testing Neo4jDriver")
+    unittest.main()
 
 
 class TestNeo4jDriver(unittest.TestCase):
 
     def setUp(self):
         # TODO: write what needs to be instantiated for each test
-        neo4jdriver = Neo4jDriver()
+        neo4jdriver = None
         pass
 
     def test_func(self):
@@ -56,6 +58,9 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
             print()
 
 
+def main():
+    testNeo4j()
+
+
 if __name__ == "__main__":
-    print("Testing Neo4jDriver")
-    unittest.main()
+    main()

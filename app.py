@@ -1,5 +1,4 @@
 from flask import Flask, render_template, redirect, request
-from Activity.FileManager.Spreadsheet import Spreadsheet
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -42,41 +41,17 @@ def home():
     rerouted to the homepage: Homepage.html
     :return:
     """
-    sheet = Spreadsheet()
 
-    # removes duplicates and empty responses
-    query = [item for item in set(sheet[__python_query]) if item != '']
 
-    # TODO: remove this when final, it is only for displaying purposes.
-    query += ['Encouragement'] + ['Specific Conditions'] + ['Stage II BC']
-
-    # returns a list(tuple) of (truncated text, full text)
-    pair = list(zip(sheet.textLength(query, 50), query))
+    pair = None
 
     return render_template('home.html', pair=pair)
 
 
 @app.route("/form")
 def results():
-    # Gets from the HTML
-    if request.method == 'POST':
-        query = request.form(__html_query)
-    else:
-        query = request.args.get(__html_query)
 
-    error = 'There doesn\'t exist a \'' + __html_query + '\' form in ' + "results.html"
-    assert query is not None, error
-
-    sheet = Spreadsheet()
-    posts = sheet.convertToDict(sheet[query])
-
-    if len(posts) > 0:
-        query = [item for item in sheet[__python_query] if item != '']
-        pair = list(zip(sheet.textLength(query, 50), query))
-        return render_template("results.html", posts=posts, title='Results', query=pair)
-    else:
-        return render_template('results.html')
-
+    query = None
     return render_template('results.html',posts=posts, title='Results', query=query)
 
 
