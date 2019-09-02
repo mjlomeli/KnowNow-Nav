@@ -95,7 +95,6 @@ def linkDict(session, dictA, link_message, dictB):
 def closeDatabase(session):
     try:
         session.close()
-
     except:
         print("Could not close database.")
 
@@ -105,9 +104,7 @@ def openDatabase(uri: str, username: str, password: str):
         driver = GraphDatabase.driver(
                 uri, auth=basic_auth(username, password))
         session = driver.session()
-
         return (session, driver)
-
     except:
         print("Could not open database.")
 
