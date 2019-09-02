@@ -37,24 +37,43 @@ class TestNeo4jDriver(unittest.TestCase):
         self.uri = input("Enter your Neo4j URI: ")
         self.username = input("Enter your username: ")
         self.password = getpass.getpass("Enter your Neo4j password: ")
+        self.session = None
         try:
-            self.neo4jdriver = openDatabase(self.uri, self.username, self.password)
+            self.session = openDatabase(self.uri, self.username, self.password)[0]
         except Exception as e:
             self.fail("Failed to open the database: neo4jDriver = openDatabase(uri, username, password)")
+        try:
+            delete_all_relationships(self.session)
+            delete_all_nodes(self.session)
+        except Exception as e:
+            self.fail("Failed to clear the database: ask {} for help.".format(str(__maintainer__)))
 
     def test_escapeChar(self):
         test_list = [None, '', '\n', '\r', '0', '0.0001', '0x1234', '0e-12']
+        title = "Testing Escape Characters"
+        print(title)
+
+        start = 0
+        correct = 0
+        end = len(test_list) * 2
+        printProgressBar(start, end, title, "{}/{}".format(start, end))
 
         for item in test_list:
             try:
+                start += 1
+                printProgressBar(start, end, title, "{}/{}".format(start, end))
                 insertStr(item)
+                correct += 1
             except Exception as e:
                 message = "Failed inserting into insertStr('{}'). Your function must ignore these "
                 message += "without crashing. Possibly not even include them."
                 self.fail(message.format(str(item)))
         for item in test_list:
             try:
+                start += 1
+                printProgressBar(start, end, title, "{}/{}".format(start, end))
                 insertCell(Cell(item, item))
+                correct += 1
             except Exception as e:
                 message = "Failed inserting into insertCell('{}','{}'). Your function must ignore these "
                 message += "without crashing. Possibly not even include them."
@@ -65,6 +84,7 @@ class TestNeo4jDriver(unittest.TestCase):
         correct = 0
         end = 2000
         word_list = words.words()
+
         printProgressBar(start, end, "Testing insertStr", "{}/{}".format(start, end))
         for count in range(end):
             try:
@@ -106,6 +126,37 @@ class TestNeo4jDriver(unittest.TestCase):
         except Exception as e:
             self.fail("Failed to close the database: closeDatabase(neo4jDriver[0])")
 
+
+def delete_all_relationships(session):
+    query = "MATCH (n) DETACH DELETE n;"
+    session.run(query)
+
+
+def delete_all_nodes(session):
+    query = "MATCH (n) DELETE n;"
+    session.run(query)
+
+
+def create_node_frm_lists(session, node_type, headers: list, contents: list):
+    query = "create(n: {} {".format(node_type)
+    for header, content in zip(headers, contents):
+        query += "{}: '{}',".format(header, content)
+    query = query[:-1] + "})"
+    session.run(query)
+
+
+def create_node_frm_dict(session, node_type, dictionary: dict):
+    query = "create(n: {} {".format(node_type)
+    for header, content in dictionary.items():
+        query += "{}: '{}',".format(header, content)
+    query = query[:-1] + "})"
+    session.run(query)
+
+
+def getValues(session):
+    query = 'match (n) return n;'
+    results = session.run(query)
+    return [dict(values) for val in results.values() for values in val]
 
 
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=50, fill='█'):
