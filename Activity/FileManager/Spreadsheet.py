@@ -66,19 +66,19 @@ class Spreadsheet:
         'August 2018' in sheet
         print(sheet)
     """
-    def __init__(self, spreadsheet=_DEFAULT_SPREADSHEET, headers=_NORM_HEADERS):
+    def __init__(self, file=_DEFAULT_SPREADSHEET, norm_headers=_NORM_HEADERS):
         self.smart_sheet = []
-        self.name = spreadsheet
+        self.name = file
         self.real_headers = None
-        self.__norm_headers = headers
+        self.__norm_headers = norm_headers
         self.headers = None
         self.__book = None
         self.__spreadsheet = []
         self.__index = 0
-        if spreadsheet is not None:
-            self.__assemble(spreadsheet)
+        if file is not None:
+            self.__assemble(file)
         if self.__norm_headers is not None:
-            self.__normalize(headers)
+            self.__normalize(norm_headers)
         else:
             self.headers = self.real_headers
         self.testing = False
@@ -161,7 +161,7 @@ class Spreadsheet:
                 return dict(zip(self.headers, item))
         return None
 
-    def textLength(self, text, length=_DEFAULT_TEXT_LENGTH):
+    def trunc_text(self, text, length=_DEFAULT_TEXT_LENGTH):
         if isinstance(text, list):
             return [value[:length] + '...' if len(value) > length else value for value in text]
         elif isinstance(text, str):
@@ -172,7 +172,7 @@ class Spreadsheet:
         else:
             return ''
 
-    def max_results(self, min_value=4):
+    def max_results(self, num_results=4):
         omit = list(set(self['volunteers'] + self['comments'] + self['professor_comments']))
         items = set([x for element in self.__spreadsheet for x in element if x not in omit])
         dict_items = {}
