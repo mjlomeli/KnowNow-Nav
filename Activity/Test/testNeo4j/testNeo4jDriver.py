@@ -37,43 +37,75 @@ class TestNeo4jDriver(unittest.TestCase):
         self.uri = input("Enter your Neo4j URI: ")
         self.username = input("Enter your username: ")
         self.password = getpass.getpass("Enter your Neo4j password: ")
-        printProgressBar(0, 1, "Opening Database")
-        self.neo4jdriver = openDatabase(self.uri, self.username, self.password)
-        printProgressBar(1, 1, "Opening Database")
+        try:
+            self.neo4jdriver = openDatabase(self.uri, self.username, self.password)
+        except Exception as e:
+            self.fail("Failed to open the database: neo4jDriver = openDatabase(uri, username, password)")
+
+    def test_escapeChar(self):
+        test_list = [None, '', '\n', '\r', '0', '0.0001', '0x1234', '0e-12']
+
+        for item in test_list:
+            try:
+                insertStr(item)
+            except Exception as e:
+                message = "Failed inserting into insertStr('{}'). Your function must ignore these "
+                message += "without crashing. Possibly not even include them."
+                self.fail(message.format(str(item)))
+        for item in test_list:
+            try:
+                insertCell(Cell(item, item))
+            except Exception as e:
+                message = "Failed inserting into insertCell('{}','{}'). Your function must ignore these "
+                message += "without crashing. Possibly not even include them."
+                self.fail(message.format(str(item), str(item)))
 
     def test_insertStr(self):
         start = 0
+        correct = 0
         end = 2000
         word_list = words.words()
+        printProgressBar(start, end, "Testing insertStr", "{}/{}".format(start, end))
         for count in range(end):
             try:
+                start += 1
                 from_word_list = random.choice(word_list)
                 insertStr(from_word_list)
-                start += 1
+                correct += 1
+                printProgressBar(start, end, "Testing insertStr", "{}/{}".format(start, end))
             except Exception as e:
-                self.fail("Failed with inserting into insertStr: " + from_word_list)
-
-
+                self.fail("Failed inserting into insertStr('" + str(from_word_list) + "')")
+                printProgressBar(start, end, "Testing insertStr", "{}/{}".format(start, end))
+        print()
+        print("Testing insertStr: {} errors found".format(end-correct))
 
     def test_insertCell(self):
         start = 0
+        correct = 0
         end = 2000
         word_list = words.words()
+        printProgressBar(start, end, "Testing insertCell", "{}/{}".format(start, end))
         for count in range(end):
             try:
+                start += 1
                 header = random.choice(word_list)
                 content = random.choice(word_list)
-                insertStr(from_word_list)
-                start += 1
+                cell = Cell(content, header)
+                insertCell(cell)
+                correct += 1
+                printProgressBar(start, end, "Testing insertCell", "{}/{}".format(start, end))
             except Exception as e:
-                self.fail("Failed with inserting into insertStr: " + from_word_list)
-
-
+                self.fail("Failed inserting into insertCell('{}','{}')".format(content, header))
+                printProgressBar(start, end, "Testing insertCell", "{}/{}".format(start, end))
+        print()
+        print("Testing insertCell: {} errors found".format(end-correct))
 
     def tearDown(self):
-        printProgressBar(0, 1, "Closing Database")
-        closeDatabase(self.neo4jdriver[0])
-        printProgressBar(1, 1, "Closing Database")
+        try:
+            closeDatabase(self.neo4jdriver[0])
+        except Exception as e:
+            self.fail("Failed to close the database: closeDatabase(neo4jDriver[0])")
+
 
 
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=50, fill='█'):

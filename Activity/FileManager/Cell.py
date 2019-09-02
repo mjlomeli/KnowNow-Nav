@@ -55,8 +55,8 @@ class Cell(object):
 
     def __init__(self, content=None, header_name=None, id=None):
         Cell.__cell_total += 1
-        self.content = content
-        self.header = header_name
+        self.content = str(content)
+        self.header = str(header_name)
         self.id = id
         self.__next = {}
         self.__index = 0
