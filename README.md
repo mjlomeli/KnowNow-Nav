@@ -6,6 +6,8 @@ Our goal for this project is to create a prototype website/application search en
 
 **Email** : [mjlomeli@uci.edu](mailto:mjlomeli@uci.edu)
 
+**Repository moved to**: https://github.com/jeffshrager/knownow
+
 Purpose
 
 &quot;Currently, we&#39;re working on the first part of the mission: to create and populate a knowledge base that defines patient cohorts and insights relevant to them by parsing &quot;open&quot; patient discussion forums.&quot; ~ Rebecca Zhuo
