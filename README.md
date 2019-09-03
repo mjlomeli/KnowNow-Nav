@@ -112,7 +112,7 @@ you&#39;ll have the support of your team during these sessions.
 **Advisory Meetings**
 
 It&#39;s ideal to meet with an advisory committee after certain milestones have been completed. These meetings will 
-be held on \[*dates to be completed*\] on weekly basis after \[**milestone name(s)**\] have been completed.
+be held on \[*dates to be completed*\] on weekly basis after \[*milestone name(s)*\] have been completed.
 
 They will be scheduled preferably during the same day we have our team meetings. They are not mandatory but can 
 provide you with a different insight from other professionals. We will schedule all meetings through Calendly or 
@@ -216,7 +216,7 @@ your progress, you&#39;ll have the support of your team during these sessions.
 **Advisory Meetings**
 
 It&#39;s ideal to meet with an advisory committee after certain milestones have been completed. These meetings 
-will be held on a [daily/weekly] basis after [milestone name(s)] have been completed. They will be scheduled 
+will be held on a \[*daily/weekly*\] basis after \[*milestone name(s)*\] have been completed. They will be scheduled 
 preferably during the same day we have our team meetings. They are not mandatory but can provide you with a different 
 insight from other professionals. We will schedule all meetings through Calendly or email with the appropriate advisor:
 
