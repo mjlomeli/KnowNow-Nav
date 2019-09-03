@@ -139,7 +139,7 @@ Smruti Vidwans, or Jeff Shrager on Slack or email.
 #### TimeBudget
 
 Development is currently on a sprint. We have until the start of the Fall courses to deliver our second version. 
-Around, Monday September 30
+Around, Monday September 30th.
 
 
 
