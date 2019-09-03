@@ -22,7 +22,8 @@ Maintainer names come first before any other contributor in Author tag.
 - Documentation is necessary for new recruits. Our program is getting too large for new recruits to make sense of it. We
  will have a very quick study on how to document. Each module will require some documentation by the end of the project.
 
-####Goals
+Goals
+-
 
 ##### Week 5: _Overview of our entire goals_
 
