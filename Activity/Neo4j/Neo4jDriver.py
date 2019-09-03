@@ -30,7 +30,7 @@ def run(session, query: str):
     # Todo: Run a query statement and return the result of running the query.
     # ex: run(session, "create (Anne)-[:friends_with]->(Jennifer)")
     # note, cant test for cypher queries really other than if it has been executed.
-    # return the query result return session.run(query)
+    # return the query result: return session.run(query)
     pass
 
 
@@ -40,6 +40,7 @@ def insertStr(session, data: str):
     # ex: insertStr("Jennifer")
     # by default the label is called name (n: node {name: "Jennifer"})
     # Don't allow duplicates, instead update them.
+    # Return True if the insertion is successful, else False if no insertion is done.
     pass
 
 
@@ -53,6 +54,7 @@ def insertCell(session, data: Cell):
     # great, else just add it as a property. We want only to allow unique nodes, else update the node.
     # result node: (tylenol)
     # Don't allow duplicates, instead update them.
+    # Return True if the insertion is successful, else False if no insertion is done.
     pass
 
 
@@ -63,6 +65,7 @@ def insertDict(session, data: dict):
     # for this dictionary, make the name = query_tag
     # ex: create (n: row {name: 'Treatment', ID: 1, topic: '', date: 'July 2015', query_tag: 'Treatment', ...})
     # Don't allow duplicates, instead update them.
+    # Return True if the insertion is successful, else False if no insertion is done.
     pass
 
 
@@ -70,7 +73,7 @@ def linkStr(strA, link_message, strB):
     # Todo: link existing cells from the database. Both CallA and cellB must have been in the database.
     # the string strA and strB is a value of two nodes in the database
     # Link existing nodes with strA and strB values: strA_node--link_message-->strB_node
-    # Return True if the linking is successful, else False
+    # Return True if the linking is successful, else False if no linking is done.
     pass
 
 
@@ -78,16 +81,18 @@ def linkCells(cellA, link_message, cellB):
     # Todo: link existing cells from the database. Both CallA and cellB must have been in the database.
     # the Cell is an object with the string attributes: Cell.content, Cell.header and an integer Cell.ID
     # Link existing nodes cellA--link_message-->cellB
-    # Return True if the linking is successful, else False
+    # Return True if the linking is successful, else False if no linking is done.
     pass
 
 
 def linkDict(session, dictA, link_message, dictB):
-    # Todo: insert data into neo4j, if it is successful, return True, else False
-    # Return True if the linking is successful, else False
+    # Todo: link existing data from neo4j, if it is successful, return True, else False if no linking was done.
     # the dictionary is a relationship template. We need neo4j to find all nodes with these example values
     # ex: {'Tylenol': [('causes', 'headaches'), ('causes', 'fatigue'), ('relieves', 'pain')]}
-    # result:
+    # Neo4j: Cell('tylenol', 'medicine', 12), Cell('headaches', 'side effects', 12),
+    # Cell('fatigue', 'side effects', 12), Cell('pain', 'intervention', 12)
+    # note: id 12 means they are all in row 12. So must match/link all nodes within the same row.
+    # Neo4j:
     #                          (fatigue)
     #                              ^
     #                              |
