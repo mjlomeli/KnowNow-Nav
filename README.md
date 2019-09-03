@@ -8,10 +8,10 @@ Derek Eijansantos, Franny Chen, Meghna Islam
 [zhuo.rebecca@gmail.com](mailto:zhuo.rebecca@gmail.com), 
 [smruti@gmail.com](mailto:smruti@gmail.com), [mjlomeli@uci.edu](mailto:mjlomeli@uci.edu)
 
-Purpose
-
 Repository has been moved to:
 https://github.com/jeffshrager/knownow
+
+Purpose
 
 Currently we are working on *&quot;a sort of &#39;application oriented&#39; domain model. That is, there are, just as 
 you have now, (diagnosis), symptoms, treatments, cohorts, and so on. There is discussion in the various forums about 
