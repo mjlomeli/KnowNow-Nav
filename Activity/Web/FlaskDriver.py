@@ -12,15 +12,24 @@ from Activity.FileManager.Spreadsheet import Spreadsheet
 from Activity.NLP.Tokenizer import Tokenizer
 
 # program's author information and licenses
-__author__ = "Mauricio Lomeli"
-__credits__ = ["Derek Eijansantos", "Anne Wang", "Jennifer Kwon"]
-__date__ = "8/15/2019"
+__authors__ = ["Mauricio Lomeli", "Derek Eijansantos", "Dhruv Seth"]
+__date__ = "9/3/2019"
 __license__ = "MIT"
-__version__ = "0.0.0.1"
-__maintainer__ = "Mauricio Lomeli"
-__email__ = "mjlomeli@uci.edu"
+__version__ = "0.0.0.2"
+__maintainer__ = ["Derek Eijansantos", "Druv Seth"]
+__email__ = ["Derek & Druv enter your professional emails"]
 __status__ = "Prototype"
 
+"""
+__author__ = ["list of people who contributed with code"]
+__credits__ = ["here you add anyone who contributed without code"]
+__date__ = "date you started the new version"
+__license__ = "MIT" # for now, this stays. you'll learn more about licenses as you advance in your career
+__version__ = "0.0.0.2" # the version increases after every release (only successful releases increase versions)
+__maintainer__ = ["list of people in charge of maintaining this code"]
+__email__ = ["list of maintainers professional emails"]
+__status__ = "Prototype" # you'll learn more about status of your project as you advance in your career. ie top secret
+"""
 
 app = Flask(__name__)
 app.config["DEBUG"] = True

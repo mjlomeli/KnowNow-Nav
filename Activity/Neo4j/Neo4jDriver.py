@@ -1,28 +1,32 @@
 # !/usr/bin/env python
 
 """Neo4jdriver
-If the description is long, the first line should be a short summary of Neo4jDriver.py
-that makes sense on its own, separated from the rest by a newline.
+Executes Neo4j Cypher statements through python. Some common functionality include opening the database
+and closing it.
 """
 
-from pathlib import Path
 from Activity.Neo4j.CellExample import Cell
 from neo4j import GraphDatabase, basic_auth
 
-PATH = Path.cwd()
+__authors__ = ["Mauricio Lomeli", "Anne Wang", "Jennifer Kwon"]
+__credits__ = ["here you add anyone who contributed without code"]
+__date__ = "9/2/2019"
+__license__ = "MIT"
+__version__ = "0.0.0.2"
+__maintainer__ = ["Anne Wang", "Jennifer Kwon"]
+__email__ = ["Anne & Jennifer enter your professional emails"]
+__status__ = "Prototype"
 
 
 """
-
 __author__ = ["list of people who contributed with code"]
 __credits__ = ["here you add anyone who contributed without code"]
 __date__ = "date you started the new version"
 __license__ = "MIT" # for now, this stays. you'll learn more about licenses as you advance in your career
 __version__ = "0.0.0.2" # the version increases after every release (only successful releases increase versions)
 __maintainer__ = ["list of people in charge of maintaining this code"]
-__email__ = ["list of maintainers emails"]
-__status__ = "Prototype" # you'll learn more about status of your project as you advance in your career.
-
+__email__ = ["list of maintainers professional emails"]
+__status__ = "Prototype" # you'll learn more about status of your project as you advance in your career. ie top secret
 """
 
 
