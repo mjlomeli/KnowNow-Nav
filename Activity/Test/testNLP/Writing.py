@@ -6,7 +6,7 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 import unittest
-from Activity.NLP.Writing import Writing
+#from Activity.NLP.Writing import Writing
 from pathlib import Path
 
 PATH = Path.cwd()
@@ -23,7 +23,6 @@ class TestWriting(unittest.TestCase):
 
     def setUp(self):
         # TODO: write what needs to be instantiated for each test
-        writing = Writing()
         pass
 
     def test_func(self):

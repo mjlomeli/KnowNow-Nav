@@ -6,7 +6,7 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 import unittest
-from Activity.NLP.Tokenizer import Tokenizer
+#from Activity.NLP.Tokenizer import Tokenizer
 from pathlib import Path
 
 PATH = Path.cwd()
@@ -23,7 +23,7 @@ class TestTokenizer(unittest.TestCase):
 
     def setUp(self):
         # TODO: write what needs to be instantiated for each test
-        tokenizer = Tokenizer()
+        #tokenizer = Tokenizer()
         pass
 
     def test_func(self):

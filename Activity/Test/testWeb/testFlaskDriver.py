@@ -23,7 +23,6 @@ class TestFlaskDriver(unittest.TestCase):
 
     def setUp(self):
         # TODO: write what needs to be instantiated for each test
-        flaskdriver = FlaskDriver()
         pass
 
     def test_func(self):

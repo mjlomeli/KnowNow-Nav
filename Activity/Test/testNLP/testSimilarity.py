@@ -6,7 +6,7 @@ that makes sense on its own, separated from the rest by a newline.
 """
 
 import unittest
-from Activity.NLP.Similarity import *
+#from Activity.NLP.Similarity import *
 from pathlib import Path
 
 PATH = Path.cwd()
@@ -23,7 +23,6 @@ class TestSimilarity(unittest.TestCase):
 
     def setUp(self):
         # TODO: write what needs to be instantiated for each test
-        similarity = Similarity()
         pass
 
     def test_func(self):
