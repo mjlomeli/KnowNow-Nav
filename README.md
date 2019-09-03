@@ -10,6 +10,9 @@ Derek Eijansantos, Franny Chen, Meghna Islam
 
 Purpose
 
+Repository has been moved to:
+https://github.com/jeffshrager/knownow
+
 Currently we are working on *&quot;a sort of &#39;application oriented&#39; domain model. That is, there are, just as 
 you have now, (diagnosis), symptoms, treatments, cohorts, and so on. There is discussion in the various forums about 
 all of these… The graph (we) want, doesn&#39;t link domain entities to one another the way (we) have it now, but 
