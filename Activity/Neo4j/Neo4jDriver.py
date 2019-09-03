@@ -25,9 +25,12 @@ __status__ = "Prototype" # you'll learn more about status of your project as you
 
 """
 
+
 def run(session, query: str):
+    # Todo: Run a query statement and return the result of running the query.
     # ex: run(session, "create (Anne)-[:friends_with]->(Jennifer)")
     # note, cant test for cypher queries really other than if it has been executed.
+    # return the query result return session.run(query)
     pass
 
 
@@ -42,32 +45,24 @@ def insertStr(session, data: str):
 
 def insertCell(session, data: Cell):
     # Todo: insert data into neo4j, if it is successful, return True, else False
-    # the Cell is an object with the string attributes: Cell.content, Cell.header and an integer Cell.id
-    # create a node with the label as the content and the properties being the header, content, and id
+    # the Cell is an object with the string attributes: Cell.content, Cell.header and an integer Cell.ID
+    # create a node with the label as the content and the properties being the header, content, and ID
     # ex. data.content = 'tylenol'   data.header = 'medication'   data.ID = 12
-    # hint: create (n: cell {name: 'tylenol', id: 12, header: 'medication', content: 'tylenol'})
-    # note: ID is the row number in the spreadsheet if you can override id in creating the node,
+    # hint: create (n: cell {name: 'tylenol', ID: 12, header: 'medication', content: 'tylenol'})
+    # note: ID is the row number in the spreadsheet if you can override ID in creating the node,
     # great, else just add it as a property. We want only to allow unique nodes, else update the node.
     # result node: (tylenol)
     # Don't allow duplicates, instead update them.
     pass
 
 
-
 def insertDict(session, data: dict):
     # Todo: insert data into neo4j, if it is sucessful, return True, else False
     # the dictionary is a relationship template. We need neo4j to insert these example values
-    # ex: {'id': 1, 'topic': '', 'date': 'July 2015', 'query_tag': 'Treatment', 'query': 'Patient had …', …, 'RO': ''}
+    # ex: {'ID': 1, 'topic': '', 'date': 'July 2015', 'query_tag': 'Treatment', 'query': 'Patient had …', …, 'RO': ''}
     # for this dictionary, make the name = query_tag
-    # ex: create (n: row {name: 'Treatment', id: 1, topic: '', date: 'July 2015', query_tag: 'Treatment', ...})
+    # ex: create (n: row {name: 'Treatment', ID: 1, topic: '', date: 'July 2015', query_tag: 'Treatment', ...})
     # Don't allow duplicates, instead update them.
-    pass
-
-
-def linkCells(cellA, link_message, cellB):
-    # Todo: link existing cells from the database. Both CallA and cellB must have been in the database.
-    # the Cell is an object with the string attributes: Cell.content, Cell.header and an integer Cell.id
-    # Link existing nodes cellA--link_message-->cellB
     pass
 
 
@@ -75,6 +70,13 @@ def linkStr(strA, link_message, strB):
     # Todo: link existing cells from the database. Both CallA and cellB must have been in the database.
     # the string strA and strB is a value of two nodes in the database
     # Link existing nodes with strA and strB values: strA_node--link_message-->strB_node
+    pass
+
+
+def linkCells(cellA, link_message, cellB):
+    # Todo: link existing cells from the database. Both CallA and cellB must have been in the database.
+    # the Cell is an object with the string attributes: Cell.content, Cell.header and an integer Cell.ID
+    # Link existing nodes cellA--link_message-->cellB
     pass
 
 

@@ -9,7 +9,7 @@ import unittest
 import getpass
 from nltk.corpus import words
 import random
-from Activity.Neo4j.Neo4jDriver import insertDict, insertCell, insertStr, insertList, insert, openDatabase, closeDatabase
+from Activity.Neo4j.Neo4jDriver import run, insertDict, insertCell, insertStr, insertList, insert, openDatabase, closeDatabase
 
 __author__ = "Mauricio Lomeli"
 __date__ = "8/30/2019"
@@ -48,6 +48,20 @@ class TestNeo4jDriver(unittest.TestCase):
         except Exception as e:
             self.fail("Failed to clear the database: ask {} for help.".format(str(__maintainer__)))
 
+    def test_run(self):
+        query = 'match (n) return n;'
+        result = run(self.session, query)
+        statement = result.summary().statement
+        self.assertEqual(query, statement)
+        test_list = [None, '', '\n', '\r', '0', '0.0001', '0x1234', '0e-12']
+        for item in test_list:
+            try:
+                run(self.session, item)
+            except Exception as e:
+                message = "Failed executing run(session, '{}'). Your function must ignore these "
+                message += "without crashing. Possibly not even including them."
+                self.fail(message.format(str(item)))
+
     def test_escapeChar(self):
         test_list = [None, '', '\n', '\r', '0', '0.0001', '0x1234', '0e-12']
         title = "Testing Escape Characters"
@@ -80,6 +94,7 @@ class TestNeo4jDriver(unittest.TestCase):
                 self.fail(message.format(str(item), str(item)))
 
     def test_insertStr(self):
+        clear(self.session)
         start = 0
         correct = 0
         end = 2000
@@ -91,7 +106,15 @@ class TestNeo4jDriver(unittest.TestCase):
                 start += 1
                 from_word_list = random.choice(word_list)
                 insertStr(from_word_list)
-                correct += 1
+                values = getValues(self.session)
+                exists = ['name' in val and val['name'] == from_word_list for val in values]
+                if any(exists):
+                    if exists.count(True) > 1:
+                        self.fail("Found multiple instances of the same node. The node must be unique.")
+                    else:
+                        correct += 1
+                else:
+                    self.fail("Couldn't find {name: '{}'} as a node in Neo4j.".format(from_word_list))
                 printProgressBar(start, end, "Testing insertStr", "{}/{}".format(start, end))
             except Exception as e:
                 self.fail("Failed inserting into insertStr('" + str(from_word_list) + "')")
@@ -100,6 +123,7 @@ class TestNeo4jDriver(unittest.TestCase):
         print("Testing insertStr: {} errors found".format(end-correct))
 
     def test_insertCell(self):
+        clear(self.session)
         start = 0
         correct = 0
         end = 2000
@@ -112,13 +136,58 @@ class TestNeo4jDriver(unittest.TestCase):
                 content = random.choice(word_list)
                 cell = Cell(content, header)
                 insertCell(cell)
-                correct += 1
-                printProgressBar(start, end, "Testing insertCell", "{}/{}".format(start, end))
+                values = getValues(self.session)
+                exists = ['name' in val and val['name'] == from_word_list for val in values]
+                if any(exists):
+                    if exists.count(True) > 1:
+                        self.fail("Found multiple {name: '{}'} nodes, must be unique.".format(from_word_list))
+                    else:
+                        correct += 1
+                else:
+                    self.fail("Couldn't find {name: '{}'} as a node.".format(from_word_list))
+                printProgressBar(start, end, "Testing insertStr", "{}/{}".format(start, end))
             except Exception as e:
                 self.fail("Failed inserting into insertCell('{}','{}')".format(content, header))
                 printProgressBar(start, end, "Testing insertCell", "{}/{}".format(start, end))
         print()
         print("Testing insertCell: {} errors found".format(end-correct))
+
+    def test_insertDict(self):
+        clear(self.session)
+        start = 0
+        correct = 0
+        end = 2000
+        word_list = words.words()
+        printProgressBar(start, end, "Testing insertDict", "{}/{}".format(start, end))
+        for count in range(end):
+            try:
+                start += 1
+                name = random.choice(word_list)
+                field1 = random.choice(word_list)
+                field2 = random.choice(word_list)
+                field3 = random.choice(word_list)
+                field4 = random.choice(word_list)
+                dictionary = {'name': name, 'field1': field1, 'field2': field2, 'field3': field3, 'field4': field4}
+                insertDict(dictionary)
+                values = getValues(self.session)
+                exists = ['name' in val and val['name'] == from_word_list for val in values]
+                if any(exists):
+                    if exists.count(True) > 1:
+                        self.fail("Found multiple {name: '{}'} nodes, must be unique.".format(from_word_list))
+                    else:
+                        index = exists.index(True)
+                        node = values[index]
+                        if node['name'] == name and node['field1'] == field1 and node['field2'] == field2 and \
+                                node['field3'] == field3 and node['field4'] == field4:
+                            correct += 1
+                else:
+                    self.fail("Couldn't find {name: '{}'} as a node.".format(from_word_list))
+                printProgressBar(start, end, "Testing insertDict", "{}/{}".format(start, end))
+            except Exception as e:
+                self.fail("Failed inserting into insertCell('{}','{}')".format(content, header))
+                printProgressBar(start, end, "Testing insertDict", "{}/{}".format(start, end))
+        print()
+        print("Testing insertDict: {} errors found".format(end-correct))
 
     def tearDown(self):
         try:
@@ -135,6 +204,15 @@ def delete_all_relationships(session):
 def delete_all_nodes(session):
     query = "MATCH (n) DELETE n;"
     session.run(query)
+
+
+def clear(session):
+    """
+    Removes all nodes and relationships.
+    :param session: the Neo4j session
+    """
+    delete_all_relationships(session)
+    delete_all_nodes(session)
 
 
 def create_node_frm_lists(session, node_type, headers: list, contents: list):
