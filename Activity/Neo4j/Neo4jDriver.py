@@ -70,6 +70,7 @@ def linkStr(strA, link_message, strB):
     # Todo: link existing cells from the database. Both CallA and cellB must have been in the database.
     # the string strA and strB is a value of two nodes in the database
     # Link existing nodes with strA and strB values: strA_node--link_message-->strB_node
+    # Return True if the linking is successful, else False
     pass
 
 
@@ -77,11 +78,13 @@ def linkCells(cellA, link_message, cellB):
     # Todo: link existing cells from the database. Both CallA and cellB must have been in the database.
     # the Cell is an object with the string attributes: Cell.content, Cell.header and an integer Cell.ID
     # Link existing nodes cellA--link_message-->cellB
+    # Return True if the linking is successful, else False
     pass
 
 
 def linkDict(session, dictA, link_message, dictB):
     # Todo: insert data into neo4j, if it is successful, return True, else False
+    # Return True if the linking is successful, else False
     # the dictionary is a relationship template. We need neo4j to find all nodes with these example values
     # ex: {'Tylenol': [('causes', 'headaches'), ('causes', 'fatigue'), ('relieves', 'pain')]}
     # result:
@@ -91,7 +94,6 @@ def linkDict(session, dictA, link_message, dictB):
     #                 (tylenol)-causes->(headaches)
     #                 (tylenol)-relieves->(pain)
     pass
-
 
 
 def closeDatabase(session):
