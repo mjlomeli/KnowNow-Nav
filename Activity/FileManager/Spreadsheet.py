@@ -4,7 +4,6 @@
 Opens a CSV spreadsheet for reading and searching operations.
 Ideas: pickle handling with __call__ && __init__, print formatting,
 """
-from Activity.FileManager.Row import Row
 from prettytable import PrettyTable
 from pathlib import Path
 import csv
@@ -14,38 +13,24 @@ __author__ = "Mauricio Lomeli"
 __date__ = "8/22/2019"
 __credits__ = ["Rebecca Zhuo, Smruti Vidwans"]
 __license__ = "MIT"
-__version__ = "0.0.0.1"
+__version__ = "0.0.0.2"
 __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
 # default required values
 PATH = Path.cwd()
-_DEFAULT_SPREADSHEET = r"C:/Users/mrtma/Desktop/KnowNow-Nav/data/insights.csv"
+_DEFAULT_SPREADSHEET = Path.cwd() / Path('data') / Path('insights.csv')
 _DEFAULT_TEXT_LENGTH = 30
 
-CATEGORIES = ["Comparing Therapies", "Side Effects", "Right treatment?", "Specific Therapy Inquiries",
-           "Others' experience", 'Symptoms diagnosis', 'Side effect management', 'Recurrence Queries',
-           'Specific Conditions', 'Data interpretation', 'Referral', 'Lifestyle', 'Positive Affirmations',
-           'Encouragement', 'Inter-Personal Patient Connections', 'Other/ Miscellaneous']
-STAGES = ['Stage 0', 'Stage 1', 'Stage 1A', 'Stage 1B', 'Stage 2', 'Stage 2A',
-          'Stage 2B', 'Stage 3', 'Stage 3A', 'Stage 3B', 'Stage 3C', 'Stage 4']
-
 _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
-                'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
-                'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
-                'Node (N)': 'node', 'Metastasis (M)': 'metastasis', 'Grade': 'grade', 'Recurrence': 'recurrence',
-                'Category Tag': 'category', 'Intervention': 'intervention', 'Associated Side effect': 'side_effects',
-                'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
-                'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
-                'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
-_NODE_HEADER = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Query Tag', 'query': 'Query',
-                'profile': 'Profile', 'cohort': 'Cohort', 'tumor': 'T', 'tumor_count': 'T Count', 'node': 'N',
-                'metastasis': 'M', 'grade': 'Grade', 'recurrence': 'Recurr', 'category': 'Category',
-                'intervention': 'Intervention', 'side_effects': 'Side Effect', 'int_side_effects': 'Int. Side Eff.',
-                'insights': 'Insights', 'volunteers': 'Volunt.', 'url': 'URL', 'HER2': 'HER2', 'HER': 'HER',
-                'BRCA': 'BRCA', 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
-
+                 'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
+                 'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
+                 'Node (N)': 'node', 'Metastasis (M)': 'metastasis', 'Grade': 'grade', 'Recurrence': 'recurrence',
+                 'Category Tag': 'category', 'Intervention': 'intervention', 'Associated Side effect': 'side_effects',
+                 'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
+                 'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
+                 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
 
 
 class Spreadsheet:
@@ -66,23 +51,37 @@ class Spreadsheet:
         'August 2018' in sheet
         print(sheet)
     """
+
     def __init__(self, file=_DEFAULT_SPREADSHEET, norm_headers=_NORM_HEADERS):
-        self.smart_sheet = []
-        self.name = file
-        self.real_headers = None
-        self.__norm_headers = norm_headers
-        self.headers = None
-        self.__book = None
-        self.__spreadsheet = []
+        self.name = Path(file).name
+        self.headers = []
+        self.norm_headers = []
+        self.__norm_to_real = {}  # converts norm_headers into headers
+        self.__spreadsheet = []  # rows of csv file
         self.__index = 0
-        if file is not None:
-            self.__assemble(file)
-        if self.__norm_headers is not None:
-            self.__normalize(norm_headers)
-        else:
-            self.headers = self.real_headers
-        self.testing = False
-        self.smart_sheet = [Row(self.headers, row) for row in self.__spreadsheet]
+        self.__assemble(file, norm_headers)
+
+    def __assemble(self, file, norm_headers):
+        if file is not None and Path(file).exists():
+            with open(file, 'r', newline="", encoding="utf-8") as f:
+                content = csv.DictReader(f)
+                self.headers = content.fieldnames
+                self.__spreadsheet = [list(element.values()) for element in content]
+
+        message = "Norm headers do not match with the orgininal headers"
+        if isinstance(norm_headers, dict):
+            if all([real in self.headers for real in list(norm_headers.keys())]):
+                self.norm_headers = list(norm_headers.values())
+                self.__norm_to_real = {norm: real for real, norm in norm_headers.items()}
+            elif all([real in self.headers for real in list(norm_headers.values())]):
+                self.norm_headers = list(norm_headers.keys())
+                self.__norm_to_real = norm_headers
+            else:
+                assert False, message
+        elif isinstance(norm_headers, list):
+            self.norm_headers = norm_headers
+            assert len(norm_headers) == len(self.headers), message
+            self.__norm_to_real = dict(zip(norm_headers, self.headers))
 
     def keys(self):
         return self.headers
@@ -107,7 +106,7 @@ class Spreadsheet:
                 return False
             elif isinstance(item[0], str):
                 items_non_headers = [e for e in item if e not in self.headers and e not in self.real_headers]
-                result = dict(zip(items_non_headers, [False]*len(items_non_headers)))
+                result = dict(zip(items_non_headers, [False] * len(items_non_headers)))
                 for rows in self.__spreadsheet:
                     for element in items_non_headers:
                         if element in rows:
@@ -136,16 +135,26 @@ class Spreadsheet:
         else:
             return False
 
-    def __at(self, item):
-        #TODO: get the index of an item
-        #TODO: if entire row matches, get the row index
-        #TODO: if only one field matches, get the row,column tuple
-        #TODO: if part of the field matches, get the sliced ([:,1] or [2,4])
-        #TODO: to return slice, return s = slice(2, 4) or return (s.start, s.stop)
+    def at(self, item):
+        if isinstance(item, list):
+            if len(item) == len(self.headers) and item in self.__spreadsheet:
+                return self.__spreadsheet.index(item)
+        elif isinstance(item, str):
+            if item in self.headers:
+                return self.headers.index(item)
+            elif item in self.norm_headers:
+                return self.norm_headers.index(item)
+            else:
+                for i, row in enumerate(self.__spreadsheet):
+                    if item in row:
+                        return i, row.index(item)
         return None
 
     def getColumn(self, fieldname):
-        return [item[self.__book[fieldname]] for item in self.__spreadsheet]
+        if fieldname in self.norm_headers:
+            return [item[self.__norm_to_real[fieldname]] for item in self.__spreadsheet]
+        elif fieldname in self.headers:
+            return [item[fieldname] for item in self.__spreadsheet]
 
     def find(self, value):
         return [rows for rows in self.__spreadsheet if value in rows]
@@ -155,10 +164,16 @@ class Spreadsheet:
             columns = [self[col] for col in self.headers]
             return dict(zip(self.headers, columns))
         elif isinstance(item, list) and len(item) > 0:
-            if isinstance(item[0], list) and len(item[0]) > 0:
-                return [dict(zip(self.headers, value)) for value in item]
-            elif not isinstance(item[0], list):
+            message = "Some items do not match the same length as the headers."
+            if isinstance(item[0], list) and len(item[0]) == len(self.headers):
+                if all([len(self.headers) == len(content) for content in item]):
+                    return [dict(zip(self.headers, value)) for value in item]
+                else:
+                    assert False, message
+            elif not isinstance(item[0], list) and len(item) == len(self.headers):
                 return dict(zip(self.headers, item))
+            else:
+                assert False, message
         return None
 
     def trunc_text(self, text, length=_DEFAULT_TEXT_LENGTH):
@@ -172,18 +187,21 @@ class Spreadsheet:
         else:
             return ''
 
-    def max_results(self, num_results=4):
-        omit = list(set(self['volunteers'] + self['comments'] + self['professor_comments']))
-        items = set([x for element in self.__spreadsheet for x in element if x not in omit])
+    def most_common(self, num_results=4):
+        items = set([x for element in self.__spreadsheet for x in element])
         dict_items = {}
         for element in items:
-            length = len(self.find([element]))
-            if length > min_value:
+            if element != '' and element != None:
+                length = len(self.find(element))
                 if length not in dict_items:
                     dict_items[length] = [element]
                 else:
                     dict_items[length].append(element)
-        return dict_items
+        count_list = list(dict_items.keys())
+        count_list.sort()
+        maximums_list = count_list[::-1][:num_results]
+        results = [res for count in maximums_list for res in dict_items[count]]
+        return results[:num_results]
 
     def __like(self, string, compare):
         if len(string) > len(compare):
@@ -238,29 +256,6 @@ class Spreadsheet:
                 return False
         return has_all
 
-    def __assemble(self, spreadsheet):
-        with open(spreadsheet, 'r', newline="", encoding="utf-8") as f:
-            content = csv.DictReader(f)
-            self.real_headers = content.fieldnames
-            self.__book = {header: index for index, header in enumerate(self.real_headers)}
-            self.__spreadsheet = [list(element.values()) for element in content]
-
-    def __normalize(self, headers):
-        if headers is None:
-            if self.real_headers == list(self.__norm_headers.values()):
-                self.headers = list(self.__norm_headers.keys())
-        else:
-            if isinstance(headers, list):
-                if len(headers) == len(self.real_headers):
-                    self.headers = headers
-            elif isinstance(headers, dict):
-                if list(headers.keys()) == self.real_headers:
-                    self.headers = list(headers.values())
-
-        if self.headers is None:
-            self.headers = self.real_headers
-        self.__book = {head: index for index, head in enumerate(self.headers)}
-
     def __replace(self, arr, list_of_values):
         for i in range(len(arr)):
             for item in list_of_values:
@@ -274,8 +269,8 @@ class Spreadsheet:
         if isinstance(item, str):
             if self.headers is not None and item in self.headers:
                 return self.getColumn(item)
-            elif item in self.real_headers:
-                return self.getColumn(self.__norm_headers[item])
+            elif item in self.norm_headers:
+                return self.getColumn(self.__norm_to_real[item])
             else:
                 return self.find(item)
         elif isinstance(item, tuple):
@@ -298,7 +293,6 @@ class Spreadsheet:
         if isinstance(key, tuple):
             self.__spreadsheet[key[0]][key[1]] = value
 
-
     def __next__(self):
         if self.__index >= len(self.__spreadsheet):
             raise StopIteration
@@ -315,15 +309,15 @@ class Spreadsheet:
                     self.__spreadsheet.append(temp)
 
     def __format__(self, format_spec):
-        #TODO: "Sheet has at columns topic: {a}".format('column')"
+        # TODO: "Sheet has at columns topic: {a}".format('column')"
         pass
 
     def __str__(self):
-        table = PrettyTable(['index'] + self.real_headers)
-        for head in self.real_headers:
+        table = PrettyTable(self.headers)
+        for head in self.headers:
             table.align[head] = 'l'
-        for i, content in enumerate(self.__spreadsheet):
-            table.add_row([str(i)] + self.textLength(content))
+        for content in self.__spreadsheet:
+            table.add_row(self.trunc_text(content))
         return str(table)
 
 

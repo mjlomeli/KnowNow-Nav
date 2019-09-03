@@ -51,6 +51,10 @@ Spreadsheet.**find**(_x_)
 
 * Returns every row in which _x_ is found in.
 
+Spreadsheet.**at**(_x_)
+
+* If _x_ is in a the spreadsheet, then a tuple of its position is returned (row, column). 
+
 Spreadsheet.**convertToDict**(_list_)
 
 * Converts a list of the rows in the Spreadsheet into a list of dictionaries with the keys being the associated headers 
@@ -61,7 +65,7 @@ Spreadsheet.**trunc\_text**(_text, length=30_)
 * Returns a truncated _text_ with the maximum length being of size _length_. The optional argument length will default 
 to the length 30 if not specified.
 
-Spreadsheet.**max\_results**(_num\_results=4_)
+Spreadsheet.**most\_common**(_num\_results=4_)
 
 * Returns the maximum results in the Spreadsheet. The optional argument limits it to the top 4 maximum results
 
@@ -121,3 +125,18 @@ Converting a list of rows into their dictionary pairing with the headers.
 \[{'id': '1',  'topic': '',  'date': 'July 2015',  'query_tag': 'Treatment',  'query': 'Patient had …', …, 'RO': ''}, 
 …, {'id': '99',  'topic': '', …,  'volunteers': 'Kriti Bhardwaj, Amira Elfergani', 'url': 'https://community.’, 
 'HER2': '',  'HER': '',  'BRCA': '',  'ER': '',  'HR': ''}, …\]  
+
+Getting the 5 most common content.
+> **\>>>** sheet.**most_common**(5)  
+\['ER+', 'HER2-', 'Smruti Vidwans', 'PR+', 'Specific Conditions'\]  
+
+Printing the table through the console.
+> **\>>>** sheet = Spreadsheet('insights.csv')  
+> **\>>>** **print**(sheet)  
+
+| id  | Topic | Date Discussion (Month/Year) | ... |
+| --- | --- | --- | --- |
+| 0  | Diagnosed in 30s | July 2015   | ... |
+| 1 | Diagnosed in 20s | August 2016  | 
+| 2 | Other Topics | June 2017  | ... |
+| ... | ... | ...  | ... | ...   | ... |
