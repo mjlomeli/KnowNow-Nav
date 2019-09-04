@@ -13,7 +13,7 @@ __date__ = "9/2/2019"
 __license__ = "MIT"
 __version__ = "0.0.0.2"
 __maintainer__ = ["Anne Wang", "Jennifer Kwon"]
-__email__ = ["Anne & Jennifer enter your professional emails"]
+__email__ = ["annew3@uci.edu", "Jennifer enter your professional emails"]
 __status__ = "Prototype"
 
 
