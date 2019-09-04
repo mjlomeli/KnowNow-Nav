@@ -33,8 +33,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-84">
-              <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="12" />
+            <state relative-caret-position="358">
+              <caret line="80" column="40" selection-start-line="80" selection-start-column="40" selection-end-line="80" selection-end-column="40" />
               <folding>
                 <element signature="e#2375#3233#0" />
                 <element signature="e#1799#2111#0" />
@@ -349,14 +349,7 @@
       <workItem from="1567546223973" duration="336000" />
       <workItem from="1567551199648" duration="24000" />
       <workItem from="1567579553254" duration="190000" />
-      <workItem from="1567579800198" duration="5404000" />
-    </task>
-    <task id="LOCAL-00007" summary="Reconstruction of the index is finished">
-      <created>1566913377419</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1566913377419</updated>
+      <workItem from="1567579800198" duration="5803000" />
     </task>
     <task id="LOCAL-00008" summary="Reconstruction of the index is finished">
       <created>1566913412441</created>
@@ -694,11 +687,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567499374759</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Cell revision">
+      <created>1567585231228</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1567585231229</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="161614000" />
+    <option name="totallyTimeSpent" value="162013000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -822,7 +822,8 @@
     <MESSAGE value="Todo's written for Neo4j" />
     <MESSAGE value="Modifying comments and authors" />
     <MESSAGE value="Created README" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created README" />
+    <MESSAGE value="Cell revision" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cell revision" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/KnowNow_Nav$KnowNow_Nav.coverage" NAME="KnowNow-Nav Coverage Results" MODIFIED="1566989906313" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -1091,8 +1092,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-84">
-          <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="12" />
+        <state relative-caret-position="358">
+          <caret line="80" column="40" selection-start-line="80" selection-start-column="40" selection-end-line="80" selection-end-column="40" />
           <folding>
             <element signature="e#2375#3233#0" />
             <element signature="e#1799#2111#0" />

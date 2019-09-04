@@ -71,9 +71,14 @@ class Cell(object):
     def remove(self, cell):
         if isinstance(cell, Cell):
             if self.hasNext(cell):
+                empties = []
                 for key, value in self.__next.items():
                     if cell in value:
                         self.__next[key].remove(cell)
+                        if len(self.__next[key]) == 0:
+                            empties.append(key)
+                for key in empties:
+                    self.__next.pop(key)
         elif isinstance(cell, dict):
             if 'content' in cell and 'header' in cell and 'id' in cell:
                 self.remove(Cell(cell['content'], cell['header'], cell['id']))
