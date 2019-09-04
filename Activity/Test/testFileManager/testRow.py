@@ -55,7 +55,20 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
         if iteration == total:
             print()
 
+def main():
+    print("Testing Row")
+    import subprocess as sub
+    import os
+    if os.name == 'nt':
+        sub.run(['python', '-m', 'unittest', 'Activity/Test/testFileManager/testRow.py'])
+    elif os.name == 'posix':
+        sub.run(['python3', '-m', 'unittest', 'Activity/Test/testFileManager/testRow.py'])
+    elif os.name == 'darwin':
+        sub.run(['python3', '-m', 'unittest', 'Activity/Test/testFileManager/testRow.py'])
+    else:
+        message = "Tell " + str(__maintainer__) + " the test functions can't find your OS system type"
+        raise (NotImplementedError, message)
+
 
 if __name__ == "__main__":
-    print("Testing Row")
-    unittest.main()
+    main()

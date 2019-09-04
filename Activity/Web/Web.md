@@ -1,4 +1,3 @@
-#
 # 1. Web
 Place here a description of what your module does. A module is everything in your Web folder.
 
@@ -22,6 +21,7 @@ Here, write a brief description of what this section is about (you will be showi
 You want to avoid the obvious ones, but include how to start it and any cool tricks you want people to know about 
 using your program. Remember to include how to import your program, constructing it if you have to. olop0[]]]
 
-> \>>> from Activity.Web.FlaskDriver import func  
-> \>>> func = func(a, b, c)  
-  
+```
+>>> from Activity.Web.FlaskDriver import func  
+>>> func = func(a, b, c)  
+```  

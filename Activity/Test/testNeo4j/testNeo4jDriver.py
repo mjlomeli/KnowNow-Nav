@@ -259,7 +259,18 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
 
 
 def main():
-    testNeo4j()
+    print("Testing Neo4j")
+    import subprocess as sub
+    import os
+    if os.name == 'nt':
+        sub.run(['python', '-m', 'unittest', 'Activity/Test/testNeo4j/testNeo4jDriver.py'])
+    elif os.name == 'posix':
+        sub.run(['python3', '-m', 'unittest', 'Activity/Test/testNeo4j/testSpreadsheet.py'])
+    elif os.name == 'darwin':
+        sub.run(['python3', '-m', 'unittest', 'Activity/Test/testNeo4j/testSpreadsheet.py'])
+    else:
+        message = "Tell " + str(__maintainer__) + " the test functions can't find your OS system type"
+        raise (NotImplementedError, message)
 
 
 if __name__ == "__main__":

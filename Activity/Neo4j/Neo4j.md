@@ -22,6 +22,7 @@ Here, write a brief description of what this section is about (you will be showi
 You want to avoid the obvious ones, but include how to start it and any cool tricks you want people to know about 
 using your program. Remember to include how to import your program and constructing it if you have to.
 
-> \>>> from Activity.Neo4j.Neo4jDriver import \*  
-> \>>> db = openDB('http://...', 'neo4j', 'password')  
-  
+```
+>>> from Activity.Neo4j.Neo4jDriver import \*  
+>>> db = openDB('http://...', 'neo4j', 'password')  
+```  

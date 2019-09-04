@@ -26,4 +26,4 @@ and any cool tricks you want people to know about using your program. Remember t
 import your program and constructing it if you have to.
 
 > \>>> from Activity.NLP.NLPfile import func  
-> \>>> func = func(a, b, c)  
+> \>>> func = func(a, b, c)
