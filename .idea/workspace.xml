@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="KnowNow-Nav" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Project Template" />
+        <option value="Python Script" />
+        <option value="Python Unittest Template" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>self.id</find>
+      <find>insertNode(Cell.__session,</find>
+      <find>cell_global</find>
+      <find>__cell_total</find>
+      <find>_Cell__cell_total</find>
+      <find>\+ 1</find>
+      <find>__link_name</find>
+      <find>split</find>
+      <find>_splitting</find>
+      <find>add</find>
+      <find>self.header</find>
+      <find>row</find>
+      <find>sl</find>
+      <find>find</find>
+      <find>next</find>
+      <find>__openDB</find>
+      <find>session</find>
+      <find>__</find>
+      <find>assemble</find>
+      <find>set</find>
+      <find>text_length</find>
+      <find>&amp;#39;</find>
+      <find>id</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>__cell_global</replace>
+      <replace>_session</replace>
+      <replace>_</replace>
+      <replace>ID</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Week-6" />
+      </map>
+    </option>
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Document.py" />
+        <option value="$PROJECT_DIR$/TestCases.py" />
+        <option value="$PROJECT_DIR$/Breaker.py" />
+        <option value="$PROJECT_DIR$/Writing.py" />
+        <option value="$PROJECT_DIR$/Similarity.py" />
+        <option value="$PROJECT_DIR$/Neo4jDriver.py" />
+        <option value="$PROJECT_DIR$/frontend/app.py" />
+        <option value="$PROJECT_DIR$/Cell.py" />
+        <option value="$PROJECT_DIR$/Spreadsheet.py" />
+        <option value="$PROJECT_DIR$/FlaskDriver.py" />
+        <option value="$PROJECT_DIR$/Activity/__init__.py" />
+        <option value="$PROJECT_DIR$/KnowNow.py" />
+        <option value="$PROJECT_DIR$/Activity/Testing/testSpreadsheet.py" />
+        <option value="$PROJECT_DIR$/Activity/Testing/testRow.py" />
+        <option value="$PROJECT_DIR$/Activity/Testing/testCell.py" />
+        <option value="$PROJECT_DIR$/Activity/Testing/testNLP/testTokenizer.py" />
+        <option value="$PROJECT_DIR$/Activity/Testing/testNLP/Writing.py" />
+        <option value="$PROJECT_DIR$/Activity/Testing/testNLP/testDocument.py" />
+        <option value="$PROJECT_DIR$/Activity/NLP/Document.py" />
+        <option value="$PROJECT_DIR$/Activity/Testing/testWeb/testFlaskDriver.py" />
+        <option value="$PROJECT_DIR$/Activity/Testing/testNeo4j/testNeo4jDriver.py" />
+        <option value="$PROJECT_DIR$/Activity/Testing/testNLP/testSimilarity.py" />
+        <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" />
+        <option value="$PROJECT_DIR$/Row.py" />
+        <option value="$PROJECT_DIR$/Activity/Web/Web.md" />
+        <option value="$PROJECT_DIR$/Activity/Neo4j/Neo4j.md" />
+        <option value="$PROJECT_DIR$/Activity/FileManager/FileManager.md" />
+        <option value="$PROJECT_DIR$/Activity/Test/Test.md" />
+        <option value="$PROJECT_DIR$/Activity/FileManager/Cell.py" />
+        <option value="$PROJECT_DIR$/Activity/Test/testNeo4j/testNeo4jDriver.py" />
+        <option value="$PROJECT_DIR$/Activity/Neo4j/Neo4jDriver.py" />
+        <option value="$PROJECT_DIR$/Activity/Web/FlaskDriver.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Activity/NLP/__init__.py" />
+        <option value="$PROJECT_DIR$/Activity/NLP/NLP.md" />
+        <option value="$PROJECT_DIR$/Activity/Test/testNLP/testTokenizer.py" />
+        <option value="$PROJECT_DIR$/Activity/Test/testNLP/testSimilarity.py" />
+        <option value="$PROJECT_DIR$/Activity/Test/testNLP/testDocument.py" />
+        <option value="$PROJECT_DIR$/Activity/Test/testNLP/Writing.py" />
+        <option value="$PROJECT_DIR$/Activity/Test/testWeb/testFlaskDriver.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="433" />
+    <option name="y" value="17" />
+    <option name="width" value="974" />
+    <option name="height" value="1047" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
+              <item name="Activity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
+              <item name="Activity" type="462c0819:PsiDirectoryNode" />
+              <item name="NLP" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings>
+        <option name="useSoftWraps" value="true" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mrtma\Desktop\KnowNow-Nav\Activity\Web" />
+      <recent name="C:\Users\mrtma\Desktop\KnowNow-Nav" />
+      <recent name="C:\Users\mrtma\Desktop\KnowNow-Nav\Activity\FileManager" />
+      <recent name="C:\Users\mrtma\Desktop\KnowNow-Nav\Activity\Testing\testFileManager" />
+      <recent name="C:\Users\mrtma\Desktop\KnowNow-Nav\Activity\NLP" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Flask server.Flask (../app.py)">
+    <configuration name="Neo4jDriver" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="KnowNow-Nav" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\mrtma\Desktop\KnowNow-Nav\Activity\Neo4j\Neo4jDriver.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python">
+      <module name="KnowNow-Nav" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\mrtma\Desktop\KnowNow-Nav\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\mrtma\Desktop\KnowNow-Nav\Activity\FileManager\Cell.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Flask (../app.py)" type="Python.FlaskServer" nameIsGenerated="true">
+      <option name="flaskDebug" value="true" />
+      <module name="KnowNow-Nav" />
+      <option name="target" value="$PROJECT_DIR$/Activity/Web/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Activity/Web/templates" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2">
+        <option name="LaunchBrowser.Before.Run" url="http://127.0.0.1:5000/" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Flask server.Flask (../app.py)" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.Neo4jDriver" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Neo4jDriver" />
+        <item itemvalue="Python.Neo4jDriver" />
+        <item itemvalue="Python.Neo4jDriver" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="" />
+      <created>1566882418143</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1566882418143</updated>
+      <workItem from="1566882424645" duration="43602000" />
+      <workItem from="1566956961828" duration="978000" />
+      <workItem from="1566957972892" duration="57280000" />
+      <workItem from="1567207991683" duration="148000" />
+      <workItem from="1567222617294" duration="1971000" />
+      <workItem from="1567290077017" duration="7068000" />
+      <workItem from="1567371186416" duration="42374000" />
+      <workItem from="1567498007750" duration="2239000" />
+      <workItem from="1567546223973" duration="336000" />
+      <workItem from="1567551199648" duration="24000" />
+    </task>
+    <task id="LOCAL-00007" summary="Reconstruction of the index is finished">
+      <created>1566913377419</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1566913377419</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Reconstruction of the index is finished">
+      <created>1566913412441</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1566913412441</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Reconstruction of the index is finished">
+      <created>1566915287845</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1566915287845</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Reconstruction of the index is finished">
+      <created>1566915358407</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1566915358408</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Reconstruction of the index is finished">
+      <created>1566916654911</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1566916654911</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Finishing row">
+      <created>1566921303648</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1566921303648</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Finishing row">
+      <created>1566924002416</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1566924002416</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Finishing row">
+      <created>1566925970624</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1566925970624</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Finishing row">
+      <created>1566925984336</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1566925984336</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Finishing row">
+      <created>1566926016541</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1566926016541</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Finishing row">
+      <created>1566962571426</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1566962571426</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Finishing row">
+      <created>1566962791802</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1566962791802</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Finishing row">
+      <created>1566965579291</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1566965579291</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Finishing row">
+      <created>1566966641163</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1566966641163</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Finishing row">
+      <created>1566970946959</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1566970946959</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Finishing row">
+      <created>1566971910378</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1566971910378</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Finishing row">
+      <created>1566974101822</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1566974101822</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Finishing row">
+      <created>1566974338860</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1566974338860</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Merged With Frontend">
+      <created>1566990609580</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1566990609580</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Merged With Frontend">
+      <created>1566996404127</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1566996404127</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Merged With Frontend">
+      <created>1567000937945</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1567000937946</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Merged With Frontend">
+      <created>1567019151352</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1567019151352</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Merged With Frontend">
+      <created>1567019180407</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1567019180407</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Merged With Frontend">
+      <created>1567019467506</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1567019467506</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Merged With Frontend">
+      <created>1567021576243</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1567021576243</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Merged With Frontend">
+      <created>1567021903229</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1567021903229</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Setting up roles.">
+      <created>1567290140861</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1567290140861</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Setting up roles.">
+      <created>1567292832911</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1567292832911</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Setting up roles.">
+      <created>1567316637093</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1567316637093</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Merge branch 'Week-6' of https://github.com/mjlomeli/KnowNow-Nav into Week-6&#10;&#10;# Conflicts:&#10;#&#9;Activity/Neo4j/Neo4jDriver.py">
+      <created>1567317607079</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1567317607079</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Merge branch 'Week-6' of https://github.com/mjlomeli/KnowNow-Nav into Week-6&#10;&#10;# Conflicts:&#10;#&#9;Activity/Neo4j/Neo4jDriver.py">
+      <created>1567371695980</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1567371695980</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Uploading notes">
+      <created>1567388168989</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1567388168989</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Markdown file uploaded">
+      <created>1567392885229</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1567392885229</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Markdown file uploaded">
+      <created>1567405490927</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1567405490927</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Markdown file uploaded">
+      <created>1567456853489</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1567456853489</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Todo's written for Neo4j">
+      <created>1567466233550</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1567466233550</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Todo's written for Neo4j">
+      <created>1567466312046</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1567466312046</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Todo's written for Neo4j">
+      <created>1567477391089</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1567477391089</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Todo's written for Neo4j">
+      <created>1567477505213</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1567477505213</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Todo's written for Neo4j">
+      <created>1567478207554</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1567478207554</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Modifying comments and authors">
+      <created>1567478844491</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1567478844491</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Created README">
+      <created>1567497814076</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1567497814076</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Created README">
+      <created>1567498385550</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1567498385550</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Created README">
+      <created>1567498764356</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1567498764356</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Created README">
+      <created>1567498862813</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1567498862813</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Created README">
+      <created>1567498937369</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1567498937369</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Created README">
+      <created>1567499025298</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1567499025298</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Created README">
+      <created>1567499249150</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1567499249150</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Created README">
+      <created>1567499374759</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1567499374759</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="156020000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="79" y="4" width="974" height="1047" extended-state="0" />
+    <layout>
+      <window_info id="Favorites" order="0" sideWeight="0.5007236" side_tool="true" weight="0.1130064" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.39059082" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" order="0" />
+      <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
+      <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.4978678" weight="0.36511377" />
+      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5021322" side_tool="true" weight="0.36511377" />
+      <window_info anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" weight="0.2654388" />
+      <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.35102925" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.3997833" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="12" weight="0.13217768" />
+      <window_info anchor="bottom" id="Messages" order="13" />
+      <window_info anchor="right" id="R Graphics" order="0" />
+      <window_info anchor="right" id="R Packages" order="1" weight="0.32995737" />
+      <window_info anchor="right" id="SciView" order="2" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="3" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
+      <window_info anchor="right" id="Database" order="5" weight="0.06396589" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Favorites" order="0" sideWeight="0.5007236" side_tool="true" weight="0.1130064" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.14498934" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" order="0" />
+      <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
+      <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.4978678" weight="0.36511377" />
+      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5021322" side_tool="true" weight="0.36511377" />
+      <window_info anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" weight="0.2654388" />
+      <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.35102925" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.3997833" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="12" weight="0.13217768" />
+      <window_info anchor="bottom" id="Messages" order="13" />
+      <window_info anchor="right" id="R Graphics" order="0" />
+      <window_info anchor="right" id="R Packages" order="1" weight="0.32995737" />
+      <window_info anchor="right" id="SciView" order="2" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="3" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
+      <window_info anchor="right" id="Database" order="5" weight="0.06396589" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="untracked files" />
+    <MESSAGE value="Finished cells. Hardly any errors." />
+    <MESSAGE value="Reconstruction of the index is finished" />
+    <MESSAGE value="Finishing row" />
+    <MESSAGE value="Merged With Frontend" />
+    <MESSAGE value="Setting up roles." />
+    <MESSAGE value="Merge branch 'Week-6' of https://github.com/mjlomeli/KnowNow-Nav into Week-6&#10;&#10;# Conflicts:&#10;#&#9;Activity/Neo4j/Neo4jDriver.py" />
+    <MESSAGE value="Uploading notes" />
+    <MESSAGE value="Markdown file uploaded" />
+    <MESSAGE value="Todo's written for Neo4j" />
+    <MESSAGE value="Modifying comments and authors" />
+    <MESSAGE value="Created README" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created README" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/KnowNow_Nav$KnowNow_Nav.coverage" NAME="KnowNow-Nav Coverage Results" MODIFIED="1566989906313" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/KnowNow_Nav$Flask___________app_py_.coverage" NAME="Flask (../../../app.py) Coverage Results" MODIFIED="1567456846770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Activity/Web/templates" />
+    <SUITE FILE_PATH="coverage/KnowNow_Nav$Neo4jDriver.coverage" NAME="Neo4jDriver Coverage Results" MODIFIED="1566997582368" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/KnowNow_Nav$main.coverage" NAME="main Coverage Results" MODIFIED="1566984892749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/KnowNow_Nav$Flask.coverage" NAME="Flask (../app.py) Coverage Results" MODIFIED="1567024248434" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/templates" />
+    <SUITE FILE_PATH="coverage/KnowNow_Nav$Flask_____app_py_.coverage" NAME="Flask (../app.py) Coverage Results" MODIFIED="1567317690776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/templates" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/testSpreadsheet.py" />
+    <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/testRow.py" />
+    <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/testCell.py" />
+    <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/Activity/Testing/testNeo4j/testNeo4jDriver.py" />
+    <entry file="file://$PROJECT_DIR$/Activity/Web/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Neo4j/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Row.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="28" selection-start-line="28" selection-end-line="38" selection-end-column="1" />
+          <folding>
+            <element signature="e#183#207#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/AlternateHomePage.mht" />
+    <entry file="file://$PROJECT_DIR$/Activity/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/templates/layout.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="521">
+          <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/templates/results.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="39" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/templates/knownow_art-01.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/templates/Homepage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="46" selection-start-line="24" selection-start-column="46" selection-end-line="24" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/templates/home.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/static/knownow_coralblack-01.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/static/knownowimg.JPG">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/static/knownow_art_coralblack-01.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/static/ad3.JPG">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/static/ad2.JPG">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/static/ad1.JPG">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Similarity.py" />
+    <entry file="file://$PROJECT_DIR$/Neo4jDriver.py" />
+    <entry file="file://$PROJECT_DIR$/KnowNow.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Spreadsheet.py" />
+    <entry file="file://$PROJECT_DIR$/Row.py" />
+    <entry file="file://$PROJECT_DIR$/FlaskDriver.py" />
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/NLP/Similarity.py" />
+    <entry file="file://$PROJECT_DIR$/Activity/Neo4j/Neo4j.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="34">
+            <caret line="2" column="95" lean-forward="true" selection-start-line="2" selection-start-column="95" selection-end-line="2" selection-end-column="95" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/Web.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="442">
+            <caret line="26" column="2" lean-forward="true" selection-end-line="26" selection-end-column="2" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/Test.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="748">
+            <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="60" column="24" lean-forward="true" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="176">
+            <caret line="51" column="42" lean-forward="true" selection-start-line="51" selection-start-column="42" selection-end-line="51" selection-end-column="42" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Neo4j/CellExample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="20" lean-forward="true" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Neo4j/Neo4jDriver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#198#241#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/NLP/NLP.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="476">
+            <caret line="28" column="29" lean-forward="true" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/NLP/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="1139">
+            <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/FlaskDriver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#199#223#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/testNeo4j/testNeo4jDriver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3307">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+          <folding>
+            <element signature="e#193#208#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/testFileManager/testRow.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/testFileManager/testSpreadsheet.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/testFileManager/testCell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-170" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/testNLP/testDocument.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="65" selection-start-line="24" selection-start-column="65" selection-end-line="24" selection-end-column="65" />
+          <folding>
+            <element signature="e#190#205#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/testNLP/Writing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="65" selection-start-line="24" selection-start-column="65" selection-end-line="24" selection-end-column="65" />
+          <folding>
+            <element signature="e#189#204#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/testWeb/testFlaskDriver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="24" column="65" selection-start-line="24" selection-start-column="65" selection-end-line="24" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/testNLP/testSimilarity.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="24" column="65" selection-start-line="24" selection-start-column="65" selection-end-line="24" selection-end-column="65" />
+          <folding>
+            <element signature="e#192#207#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/testNLP/testTokenizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
+          <folding>
+            <element signature="e#191#206#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
