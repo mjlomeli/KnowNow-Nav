@@ -94,7 +94,7 @@ class Cell(object):
         :return: boolean
         """
         if isinstance(item, str):
-            return item in self.content
+            return item == self.content or item == self.header or item == str(self.id)
         elif isinstance(item, dict):
             if item['content'] != self.content:
                 return False
@@ -159,7 +159,7 @@ class Cell(object):
         Gets the next iteration index
         :return: the next item
         """
-        if self.__index >= len(self):
+        if self.__index >= len(self.__list_values()):
             raise StopIteration
         temp = list(self.__list_values())[self.__index]
         self.__index += 1
@@ -171,7 +171,7 @@ class Cell(object):
         Like a linked list length.
         :return: int
         """
-        return len(self.__list_values()) + 1
+        return len(self.__list_values())
 
     def __getitem__(self, item):
         """
@@ -184,10 +184,18 @@ class Cell(object):
         elif isinstance(item, str):
             if item in self.__next:
                 return self.__next[item]
+            else:
+                return [cell for cell in self.__list_values() if item in cell]
         elif isinstance(item, Cell):
             for cell in self.__list_values():
                 if item == cell:
                     return cell
+        elif isinstance(item, tuple):
+            result = []
+            for cell in self.__list_values():
+                if all([val in cell for val in item]):
+                    result.append(cell)
+            return result
 
     def __setitem__(self, key, value):
         """

@@ -33,19 +33,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="80" column="40" selection-start-line="80" selection-start-column="40" selection-end-line="80" selection-end-column="40" />
+            <state relative-caret-position="312">
+              <caret line="194" column="45" selection-start-line="194" selection-start-column="45" selection-end-line="194" selection-end-column="45" />
               <folding>
                 <element signature="e#2375#3233#0" />
                 <element signature="e#1799#2111#0" />
                 <element signature="e#3511#3677#0" />
+                <element signature="e#2377#2837#0" />
                 <element signature="e#2383#2790#0" />
+                <element signature="e#5793#6318#0" />
                 <element signature="e#6348#6491#0" />
                 <element signature="e#6523#6669#0" />
                 <element signature="e#6703#6814#0" />
                 <element signature="e#6848#7104#0" />
                 <element signature="e#7137#7322#0" />
-                <element signature="e#7365#7850#0" />
                 <element signature="e#7899#8114#0" />
                 <element signature="e#8161#8395#0" />
                 <element signature="e#8711#9141#0" />
@@ -349,14 +350,7 @@
       <workItem from="1567546223973" duration="336000" />
       <workItem from="1567551199648" duration="24000" />
       <workItem from="1567579553254" duration="190000" />
-      <workItem from="1567579800198" duration="5803000" />
-    </task>
-    <task id="LOCAL-00008" summary="Reconstruction of the index is finished">
-      <created>1566913412441</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1566913412441</updated>
+      <workItem from="1567579800198" duration="7967000" />
     </task>
     <task id="LOCAL-00009" summary="Reconstruction of the index is finished">
       <created>1566915287845</created>
@@ -694,11 +688,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567585231229</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Cell revision">
+      <created>1567585623756</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1567585623756</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162013000" />
+    <option name="totallyTimeSpent" value="164177000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1092,19 +1093,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="80" column="40" selection-start-line="80" selection-start-column="40" selection-end-line="80" selection-end-column="40" />
+        <state relative-caret-position="312">
+          <caret line="194" column="45" selection-start-line="194" selection-start-column="45" selection-end-line="194" selection-end-column="45" />
           <folding>
             <element signature="e#2375#3233#0" />
             <element signature="e#1799#2111#0" />
             <element signature="e#3511#3677#0" />
+            <element signature="e#2377#2837#0" />
             <element signature="e#2383#2790#0" />
+            <element signature="e#5793#6318#0" />
             <element signature="e#6348#6491#0" />
             <element signature="e#6523#6669#0" />
             <element signature="e#6703#6814#0" />
             <element signature="e#6848#7104#0" />
             <element signature="e#7137#7322#0" />
-            <element signature="e#7365#7850#0" />
             <element signature="e#7899#8114#0" />
             <element signature="e#8161#8395#0" />
             <element signature="e#8711#9141#0" />
