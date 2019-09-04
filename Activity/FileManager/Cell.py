@@ -223,8 +223,24 @@ class Cell(object):
             if other.id != self.id:
                 return False
             return True
-        else:
-            return False
+        elif isinstance(other, dict):
+            if 'content' in other and 'header' in other and 'id' in other:
+                if other['content'] != self.content:
+                    return False
+                if other['header'] != self.header:
+                    return False
+                if other['id'] != self.id:
+                    return False
+                return True
+        elif isinstance(other, list):
+            if len(other) == 3:
+                if other[0] != self.content:
+                    return False
+                if other[1] != self.header:
+                    return False
+                if other[2] != self.id:
+                    return False
+        return False
 
     def __ne__(self, other):
         if isinstance(other, str):
@@ -266,7 +282,7 @@ def testCell():
     # test add
     a = Cell("hello", "where")
     b = Cell("there", "is")
-    c = a + b
+    c = Cell("Something", "Else")
     print('c.content: ' + c.content)
     print('c.header: ' + c.header)
 
@@ -286,7 +302,6 @@ def testCell():
 
     # logical
     print(a == b)
-    print(c == (a + b))
     print(a != b)
 
     c['new_link'] = Cell('new link')
