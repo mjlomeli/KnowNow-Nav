@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="" />
+    <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Activity/FileManager/Cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/FileManager/Cell.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +29,47 @@
     <favorites_list name="KnowNow-Nav" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-84">
+              <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="12" />
+              <folding>
+                <element signature="e#2375#3233#0" />
+                <element signature="e#1799#2111#0" />
+                <element signature="e#3511#3677#0" />
+                <element signature="e#2383#2790#0" />
+                <element signature="e#6348#6491#0" />
+                <element signature="e#6523#6669#0" />
+                <element signature="e#6703#6814#0" />
+                <element signature="e#6848#7104#0" />
+                <element signature="e#7137#7322#0" />
+                <element signature="e#7365#7850#0" />
+                <element signature="e#7899#8114#0" />
+                <element signature="e#8161#8395#0" />
+                <element signature="e#8711#9141#0" />
+                <element signature="e#9180#9558#0" />
+                <element signature="e#9597#9742#0" />
+                <element signature="e#8123#8237#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Activity/FileManager/Row.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-21">
+              <caret line="28" selection-start-line="28" selection-end-line="38" selection-end-column="1" />
+              <folding>
+                <element signature="e#183#207#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -111,7 +154,6 @@
         <option value="$PROJECT_DIR$/Activity/Neo4j/Neo4j.md" />
         <option value="$PROJECT_DIR$/Activity/FileManager/FileManager.md" />
         <option value="$PROJECT_DIR$/Activity/Test/Test.md" />
-        <option value="$PROJECT_DIR$/Activity/FileManager/Cell.py" />
         <option value="$PROJECT_DIR$/Activity/Test/testNeo4j/testNeo4jDriver.py" />
         <option value="$PROJECT_DIR$/Activity/Neo4j/Neo4jDriver.py" />
         <option value="$PROJECT_DIR$/Activity/Web/FlaskDriver.py" />
@@ -123,14 +165,15 @@
         <option value="$PROJECT_DIR$/Activity/Test/testNLP/testDocument.py" />
         <option value="$PROJECT_DIR$/Activity/Test/testNLP/Writing.py" />
         <option value="$PROJECT_DIR$/Activity/Test/testWeb/testFlaskDriver.py" />
+        <option value="$PROJECT_DIR$/Activity/FileManager/Cell.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="433" />
-    <option name="y" value="17" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
+    <option name="x" value="431" />
+    <option name="y" value="15" />
+    <option name="width" value="975" />
+    <option name="height" value="1049" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -140,7 +183,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -157,12 +199,13 @@
               <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
               <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
               <item name="Activity" type="462c0819:PsiDirectoryNode" />
-              <item name="NLP" type="462c0819:PsiDirectoryNode" />
+              <item name="FileManager" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -305,6 +348,8 @@
       <workItem from="1567498007750" duration="2239000" />
       <workItem from="1567546223973" duration="336000" />
       <workItem from="1567551199648" duration="24000" />
+      <workItem from="1567579553254" duration="190000" />
+      <workItem from="1567579800198" duration="5404000" />
     </task>
     <task id="LOCAL-00007" summary="Reconstruction of the index is finished">
       <created>1566913377419</created>
@@ -653,7 +698,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="156020000" />
+    <option name="totallyTimeSpent" value="161614000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -665,16 +710,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="79" y="4" width="974" height="1047" extended-state="0" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.5007236" side_tool="true" weight="0.1130064" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.39059082" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.10455764" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
-      <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.4978678" weight="0.36511377" />
+      <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.4978678" weight="0.16973126" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5021322" side_tool="true" weight="0.36511377" />
-      <window_info anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" weight="0.2654388" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" visible="true" weight="0.3182461" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.32936078" />
@@ -684,6 +729,7 @@
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.13217768" />
       <window_info anchor="bottom" id="Messages" order="13" />
+      <window_info anchor="bottom" id="Graph Database Console" order="14" />
       <window_info anchor="right" id="R Graphics" order="0" />
       <window_info anchor="right" id="R Packages" order="1" weight="0.32995737" />
       <window_info anchor="right" id="SciView" order="2" />
@@ -691,6 +737,7 @@
       <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
       <window_info anchor="right" id="Database" order="5" weight="0.06396589" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
+      <window_info anchor="right" id="Graph Database" order="7" />
     </layout>
     <layout-to-restore>
       <window_info id="Favorites" order="0" sideWeight="0.5007236" side_tool="true" weight="0.1130064" />
@@ -797,16 +844,6 @@
     <entry file="file://$PROJECT_DIR$/Activity/Neo4j/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Row.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="28" selection-start-line="28" selection-end-line="38" selection-end-column="1" />
-          <folding>
-            <element signature="e#183#207#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Activity/FileManager/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -861,9 +898,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Similarity.py" />
     <entry file="file://$PROJECT_DIR$/Neo4jDriver.py" />
-    <entry file="file://$PROJECT_DIR$/KnowNow.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/KnowNow.py" />
     <entry file="file://$PROJECT_DIR$/Spreadsheet.py" />
     <entry file="file://$PROJECT_DIR$/Row.py" />
     <entry file="file://$PROJECT_DIR$/FlaskDriver.py" />
@@ -900,23 +935,6 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="748">
             <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="60" column="24" lean-forward="true" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="176">
-            <caret line="51" column="42" lean-forward="true" selection-start-line="51" selection-start-column="42" selection-end-line="51" selection-end-column="42" />
           </first_editor>
           <second_editor />
         </state>
@@ -1047,6 +1065,51 @@
           <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
           <folding>
             <element signature="e#191#206#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="176">
+            <caret line="51" column="42" selection-start-line="51" selection-start-column="42" selection-end-line="51" selection-end-column="42" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Row.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-21">
+          <caret line="28" selection-start-line="28" selection-end-line="38" selection-end-column="1" />
+          <folding>
+            <element signature="e#183#207#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-84">
+          <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="12" />
+          <folding>
+            <element signature="e#2375#3233#0" />
+            <element signature="e#1799#2111#0" />
+            <element signature="e#3511#3677#0" />
+            <element signature="e#2383#2790#0" />
+            <element signature="e#6348#6491#0" />
+            <element signature="e#6523#6669#0" />
+            <element signature="e#6703#6814#0" />
+            <element signature="e#6848#7104#0" />
+            <element signature="e#7137#7322#0" />
+            <element signature="e#7365#7850#0" />
+            <element signature="e#7899#8114#0" />
+            <element signature="e#8161#8395#0" />
+            <element signature="e#8711#9141#0" />
+            <element signature="e#9180#9558#0" />
+            <element signature="e#9597#9742#0" />
+            <element signature="e#8123#8237#0" />
           </folding>
         </state>
       </provider>

@@ -6,10 +6,6 @@ If the description is long, the first line should be a short summary of Cell.py
 that makes sense on its own, separated from the rest by a newline.
 """
 
-from neo4j import GraphDatabase, basic_auth
-from pathlib import Path
-
-
 __author__ = "Mauricio Lomeli"
 __date__ = "8/17/2019"
 __license__ = "MIT"
@@ -18,34 +14,6 @@ __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
-_TESTING = True
-_RUNNING_NEO4J = False
-_STRING_LIMIT = 15
-_ROW_LENGTH = 28
-_PICKLE = Path().cwd() / Path('data') / Path('index.pickle')
-_DRIVER = GraphDatabase.driver('bolt://localhost:7687', auth=basic_auth('neo4j', 'knownow'))
-_SESSION = _DRIVER.session()
-
-_need_logic_linking = {
-    'Associated Side effect': [('mitigated by', 'Intervention mitigating side effect')],
-    'Intervention': [('causes', 'Associated Side effect')],
-    'Intervention mitigating side effect': []
-}
-_need_linking = {
-    'Intervention': [('causes', 'Associated Side effect'), ('fight against', 'Patient Cohort (Definition)')],
-    'Associated Side effect': [('mitigated by', 'Intervention mitigating side effect')]
-    # 'Associated Side effect': [('lasted for', 'Duration')],
-    # 'Associated Side effect': [('occurred after intervention', 'Duration')]}
-}
-
-
-_NORM_NODE_HEAD = {'id': 'ID', 'topic': 'Topic', 'date': 'Date', 'query_tag': 'Query Tag', 'query': 'Query',
-                'profile': 'Profile', 'cohort': 'Cohort', 'tumor': 'T', 'tumor_count': 'T Count', 'node': 'N',
-                'metastasis': 'M', 'grade': 'Grade', 'recurrence': 'Recurr', 'category': 'Category',
-                'intervention': 'Intervention', 'side_effects': 'Side Effect', 'int_side_effects': 'Int. Side Eff.',
-                'insights': 'Insights', 'volunteers': 'Volunt.', 'url': 'URL', 'HER2': 'HER2', 'HER': 'HER',
-                'BRCA': 'BRCA', 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
-
 
 class Cell(object):
     """
@@ -53,11 +21,11 @@ class Cell(object):
     """
     __cell_total = 0
 
-    def __init__(self, content=None, header_name=None, id=None):
+    def __init__(self, content=None, header=None, id=None):
         Cell.__cell_total += 1
-        self.content = str(content)
-        self.header = str(header_name)
-        self.id = id
+        self.content = None if content is None else str(content)
+        self.header = None if header is None else str(header)
+        self.id = None if id is None else id
         self.__next = {}
         self.__index = 0
 
@@ -70,24 +38,27 @@ class Cell(object):
         if isinstance(next_cell, Cell):
             if link_name not in self.__next:
                 self.__next[link_name] = [next_cell]
-                self.insert_N4j(link_name, next_cell)
+                #self.insert_N4j(link_name, next_cell)
             else:
                 if link_name in self.__next and next_cell not in self.__next[link_name]:
                     self.__next[link_name].append(next_cell)
-                    self.insert_N4j(link_name, next_cell)
+                    #self.insert_N4j(link_name, next_cell)
         elif isinstance(next_cell, list):
             for item in next_cell:
                 self.setNext(item, link_name)
-                self.insert_N4j(self, link_name, next_cell)
+                #self.insert_N4j(self, link_name, next_cell)
         else:
             raise TypeError('Can only set next to a Cell or list of Cells')
 
-    def insert_N4j(self, link_name, next_cell):
-        if _RUNNING_NEO4J:
-            setNext(self.header, self.content, link_name, next_cell.header, next_cell.content)
-
-    def hasNext(self, cell):
-        return cell in self.__list_values()
+    def hasNext(self, cell=None):
+        if cell is None:
+            return len(self.__list_values()) > 0
+        elif isinstance(cell, Cell):
+            return cell in self.__list_values()
+        elif isinstance(cell, dict):
+            return all([val in self for val in cell.values()])
+        elif isinstance(cell, list):
+            return all([val in self for val in cell])
 
     def getNext(self):
         """
@@ -97,54 +68,18 @@ class Cell(object):
         """
         return self.__list_values()
 
-    def getLast(self):
-        """
-        Returns the end of every path if it exists.
-        :return: a list of all cells the have a None as their next
-        """
-        if self.__next is None or len(self.__next) == 0:
-            return [self]
-        else:
-            Cell.__cell_global = []
-            temp = self.__getLastHelper(self.__list_values())
-            Cell.__cell_global = []
-            return temp
-
-    def __getLastHelper(self, current):
-        """
-        Helper function for getLast() function.
-        :param current: the current node
-        :return: List of ended nodes.
-        """
-        if current is None or len(current) == 0:
-            return []
-        else:
-            result = []
-            for cell in current:
-                if cell not in Cell.__cell_global:
-                    Cell.__cell_global.append(cell)
-                    if len(cell.getNext()) == 0:
-                        result += [self]
-                    else:
-                        result += self.__getLastHelper(cell)
-            return result
-
-    def __add__(self, other):
-        """
-        Concatenates a string and a cell's text
-        :param other: the other param
-        :return: string concatenation
-        """
-        header = ''
-        if isinstance(other, str):
-            content = '' if other is None else other
-        elif isinstance(other, Cell):
-            content = '' if other.content is None else other.content
-            header = '' if other.header is None else other.header
-        else:
-            raise TypeError('Can only add TF among Writing, Cell, and str.')
-
-        return Cell(self.content + content, self.header + header)
+    def remove(self, cell):
+        if isinstance(cell, Cell):
+            if self.hasNext(cell):
+                for key, value in self.__next.items():
+                    if cell in value:
+                        self.__next[key].remove(cell)
+        elif isinstance(cell, dict):
+            if 'content' in cell and 'header' in cell and 'id' in cell:
+                self.remove(Cell(cell['content'], cell['header'], cell['id']))
+        elif isinstance(cell, list):
+            if len(cell) == 3:
+                return self.remove(Cell(cell[0], cell[1], cell[2]))
 
     def __contains__(self, item):
         """
@@ -155,8 +90,24 @@ class Cell(object):
         """
         if isinstance(item, str):
             return item in self.content
+        elif isinstance(item, dict):
+            if item['content'] != self.content:
+                return False
+            if item['header'] != self.header:
+                return False
+            if item['id'] != self.id:
+                return False
+            return True
+        elif isinstance(item, list):
+            if self.content not in item:
+                return False
+            if self.header not in item:
+                return False
+            if self.id not in item:
+                return False
+            return True
         elif isinstance(item, Cell):
-            return self == item or self.id == item.id
+            return self.content == item.content and self.header == item.header and self.id == item.id
 
     def __str__(self):
         """
@@ -164,13 +115,16 @@ class Cell(object):
         :return: string
         """
         result = ''
-        for link, cells in self.__next.items():
-            for next_cell in cells:
-                link = '' if link is None else link
-                result += '\033[95m(' + str(self.content)[:_STRING_LIMIT] + ')\033[0m'
-                result += '\033[93m-' + link + '->\033[0m'
-                result += '\033[95m(' + str(next_cell.content)[:_STRING_LIMIT] + ')\033[0m'
-                result += '\n'
+        if len(self.__next) == 0:
+            result += '\033[95m(' + str(self.content)[:10] + ')\033[0m'
+        else:
+            for link, cells in self.__next.items():
+                for next_cell in cells:
+                    link = '' if link is None else link
+                    result += '\033[95m(' + str(self.content)[:10] + ')\033[0m'
+                    result += '\033[93m-' + link + '->\033[0m'
+                    result += '\033[95m(' + str(next_cell.content)[:10] + ')\033[0m'
+                    result += '\n'
         return result
 
     def keys(self):
@@ -240,17 +194,9 @@ class Cell(object):
         self.setNext(value, key)
 
     def __get__(self, obj, objtype):
-        if _TESTING:
-            test_msg = '\033[94m' + 'Retrieving: ' + self.content
-            test_msg += ' from Cell({}{}{})'.format(self.content, self.header, self.id) + '\033[0m'
-            print(test_msg)
         return self.content
 
     def __set__(self, obj, val):
-        if _TESTING:
-            test_msg = '\033[94m' + 'Updating: {}'.format(self.id)
-            test_msg += ' from Cell({}{}{})'.format(self.content, self.header, self.id) + '\033[0m'
-            print(test_msg)
         self.content = val
 
     def __eq__(self, other):
@@ -293,79 +239,9 @@ class Cell(object):
         :return:
         """
         Cell.__cell_total -= 1
-        if Cell.__cell_total < 1 and _RUNNING_NEO4J:
-            _SESSION.close()
-        else:
-            if _RUNNING_NEO4J:
-                query = "MATCH (n:{} {{}: {}})".format(self.header.replace('', "EMPTY STRING"),
-                                                       self.content.replace('', "EMPTY STRING"))
-                _SESSION.run(query)
 
 
-
-def create_database():
-    from Activity.FileManager.Spreadsheet import Spreadsheet
-    sheet = Spreadsheet()
-    query = "CREATE (n:PatientCohorts"
-    for i, row in enumerate(sheet):
-        query += "({}: Discussion ".format(i) + str({{}: content for head, content in zip(sheet.headers, row)}) + '),'
-    return query[:-1] + ")"
-
-
-def setNext(header1, start, link, header2, end):
-    header1 = 'Number_' + str(header1) if isinstance(header1, int) else header1
-    header2 = 'Number_' + str(header2) if isinstance(header2, int) else header2
-    link = 'Number_' + str(link) if isinstance(link, int) else link
-    start = 'Number_' + str(start) if isinstance(start, int) else start
-    end = 'Number_' + str(end) if isinstance(end, int) else end
-
-    header1 = 'Number_' + str(int(header1)) if isinstance(header1, float) else header1
-    header2 = 'Number_' + str(int(header2)) if isinstance(header2, float) else header2
-    link = 'Number_' + str(int(link)) if isinstance(link, float) else link
-    start = 'Number_' + str(int(start)) if isinstance(start, float) else start
-    end = 'Number_' + str(int(end)) if isinstance(end, float) else end
-
-    header1 = None if header1 == '' else header1
-    header2 = None if header2 == '' else header2
-    link = None if link == '' else link
-    start = None if start == '' else start
-    end = None if end == '' else end
-    _SESSION.run("CREATE (n:{0}".format(str(start)) + " { " + " {0}: '{1}'".format(str(header1), str(
-        start)) + "})-[:" + "{0}]->(m:{1}".format(str(link), str(end)) + " {" + "{0}: '{1}'".format(str(header2),
-                                                                                                    str(end)) + "})")
-
-def convert_to_cells():
-    from Activity.FileManager.Spreadsheet import Spreadsheet
-    sheet = Spreadsheet()
-    for i in range(len(sheet)):
-        for j in range(len(sheet[i])):
-            sheet[i][j] = Cell(sheet[i][j], sheet.headers[j])
-
-    for i in range(len(sheet)):
-        for j in range(len(sheet[i])):
-            if sheet.real_headers[j] in _need_linking:
-                needed = _need_linking[sheet.real_headers[j]]
-                header1 = sheet.headers[j]
-                start = sheet[i][j]
-                for linking in needed:
-                    try:
-                        link = linking[0]
-                        header2_index = sheet.real_headers.index(linking[1])
-                        end = sheet[i][header2_index]
-                        setNext(header1, start, link, sheet.headers[header2_index], end)
-                    except Exception as e:
-                        pass
-                for linking in _need_logic_linking[sheet.real_headers[j]]:
-                    try:
-                        link = linking[0]
-                        header2 = linking[1]
-                        end = sheet[i][sheet.real_headers.index(header2)]
-                        setNext(header1, start, link, header2, end)
-                    except Exception as e:
-                        pass
-
-
-def TestCell():
+def testCell():
     header = ['calpurnia', 'sunny', 'egypt', 'capital']
     content = ['something', 'goes', 'in', 'here']
 
@@ -384,16 +260,13 @@ def TestCell():
     # test linking
     c.setNext(a)
     a.setNext(b)
+    a.setNext(b)
     print(c.values())
     d = c.getNext()
     for item in d:
         print(item.id)
         print(item.content)
         print(item.header)
-
-    # test tokenizer
-    tokens = a.getTokens()
-    tf = b.getTF()
 
     # keys
     print(c.keys())
@@ -406,6 +279,11 @@ def TestCell():
     c['new_link'] = Cell('new link')
     for item in c['new_link']:
         print(item.content)
+
+    print('print(c)')
+    print(c)
+    print('print(a)')
+    print(a)
 
 
 if __name__ == '__main__':
