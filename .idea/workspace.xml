@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Activity/Web/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Activity/FileManager/FileManager.md" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/FileManager/FileManager.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,15 +29,27 @@
     <favorites_list name="KnowNow-Nav" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Activity/Web/FlaskDriver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="121" selection-start-line="121" selection-end-line="121" />
+            <state relative-caret-position="1203">
+              <caret line="96" column="7" lean-forward="true" selection-start-line="96" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
               <folding>
                 <element signature="e#199#234#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="592">
+                <caret line="171" selection-start-line="171" selection-end-line="171" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -137,9 +150,9 @@
         <option value="$PROJECT_DIR$/Activity/Test/testWeb/testFlaskDriver.py" />
         <option value="$PROJECT_DIR$/Activity/FileManager/Cell.py" />
         <option value="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" />
-        <option value="$PROJECT_DIR$/Activity/FileManager/FileManager.md" />
         <option value="$PROJECT_DIR$/Activity/Web/app.py" />
         <option value="$PROJECT_DIR$/Activity/Web/FlaskDriver.py" />
+        <option value="$PROJECT_DIR$/Activity/FileManager/FileManager.md" />
       </list>
     </option>
   </component>
@@ -156,6 +169,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -174,17 +188,10 @@
               <item name="Activity" type="462c0819:PsiDirectoryNode" />
               <item name="FileManager" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
-              <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
-              <item name="Activity" type="462c0819:PsiDirectoryNode" />
-              <item name="Web" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -332,14 +339,8 @@
       <workItem from="1567551199648" duration="24000" />
       <workItem from="1567579553254" duration="190000" />
       <workItem from="1567579800198" duration="9170000" />
-      <workItem from="1567647451309" duration="5853000" />
-    </task>
-    <task id="LOCAL-00015" summary="Finishing row">
-      <created>1566925984336</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1566925984336</updated>
+      <workItem from="1567647451309" duration="6105000" />
+      <workItem from="1567665057818" duration="1358000" />
     </task>
     <task id="LOCAL-00016" summary="Finishing row">
       <created>1566926016541</created>
@@ -677,11 +678,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567663604459</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Connected Frontend with backend">
+      <created>1567664943744</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1567664943744</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="171233000" />
+    <option name="totallyTimeSpent" value="172843000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -694,19 +702,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.5007236" side_tool="true" weight="0.1130064" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.10589813" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.107238606" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
       <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.4978678" weight="0.16973126" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5021322" side_tool="true" weight="0.36511377" />
-      <window_info anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" visible="true" weight="0.31541726" />
+      <window_info anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" weight="0.31541726" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="8" weight="0.35102925" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.35077792" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -1071,28 +1080,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/Web/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="121" selection-start-line="121" selection-end-line="121" />
-          <folding>
-            <element signature="e#199#234#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/app.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Web/static/knownow_art-01.svg">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="298">
-            <caret line="139" column="3" lean-forward="true" selection-start-line="139" selection-start-column="3" selection-end-line="139" selection-end-column="3" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Web/Web.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -1106,11 +1096,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Web/FlaskDriver.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="121" selection-start-line="121" selection-end-line="121" />
+        <state relative-caret-position="1203">
+          <caret line="96" column="7" lean-forward="true" selection-start-line="96" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
           <folding>
             <element signature="e#199#234#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="592">
+            <caret line="171" selection-start-line="171" selection-end-line="171" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

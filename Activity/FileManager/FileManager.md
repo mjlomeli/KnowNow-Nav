@@ -165,3 +165,10 @@ Printing the table through the console.
 | 1 | Diagnosed in 20s | August 2016  | 
 | 2 | Other Topics | June 2017  | ... |
 | ... | ... | ...  | ... | ...   | ... |
+
+##3.1.2 Ideas for new recruits
+- [ ] Save a spreadsheet into a pickle file after opening. Make Spreadsheet update the pickle file automatically 
+and load from the pickle file instead of parsing the csv file all over again. Note: must check that the csv file is 
+current, else parse the new file (recommend checking size change or date of revision information lookup).
+
+- [ ] Find a way to automatically download every spreadsheet from the Google drive. 
