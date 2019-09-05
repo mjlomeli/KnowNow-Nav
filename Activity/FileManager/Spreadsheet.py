@@ -22,13 +22,13 @@ _DEFAULT_SPREADSHEET = Path.cwd() / Path('data') / Path('insights.csv')
 _DEFAULT_TEXT_LENGTH = 30
 
 _NORM_HEADERS = {'id': 'id', 'Topic': 'topic', 'Date Discussion (Month/Year)': 'date', 'Query Tag': 'query_tag',
-                'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
-                'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
-                'Node (N)': 'node', 'Metastasis (M)': 'metastasis', 'Grade': 'grade', 'Recurrence': 'recurrence',
-                'Category Tag': 'category', 'Intervention': 'intervention', 'Associated Side effect': 'side_effects',
-                'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
-                'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
-                'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
+                 'Patient Query/inquiry': 'query', 'Specific Patient Profile': 'profile',
+                 'Patient Cohort (Definition)': 'cohort', 'Tumor (T)': 'tumor', 'Tumor Count': 'tumor_count',
+                 'Node (N)': 'node', 'Metastasis (M)': 'metastasis', 'Grade': 'grade', 'Recurrence': 'recurrence',
+                 'Category Tag': 'category', 'Intervention': 'intervention', 'Associated Side effect': 'side_effects',
+                 'Intervention mitigating side effect': 'int_side_effects', 'Patient Insight': 'insights',
+                 'Volunteers': 'volunteers', 'Discussion URL': 'url', 'HER2': 'HER2', 'HER': 'HER', 'BRCA': 'BRCA',
+                 'ER': 'ER', 'HR': 'HR', 'PR': 'PR', 'RP': 'RP', 'RO': 'RO'}
 
 
 class Spreadsheet:
@@ -49,6 +49,7 @@ class Spreadsheet:
         'August 2018' in sheet
         print(sheet)
     """
+
     def __init__(self, file=_DEFAULT_SPREADSHEET, norm_headers=_NORM_HEADERS):
         self.name = Path(file).name
         self.headers = []
@@ -64,7 +65,7 @@ class Spreadsheet:
                 content = csv.DictReader(f)
                 self.headers = content.fieldnames
                 self.__spreadsheet = [list(element.values()) for element in content]
-        
+
         message = "Norm headers do not match with the orgininal headers"
         if isinstance(norm_headers, dict):
             if all([real in self.headers for real in list(norm_headers.keys())]):
@@ -78,7 +79,7 @@ class Spreadsheet:
         elif isinstance(norm_headers, list):
             self.norm_headers = norm_headers
             assert len(norm_headers) == len(self.headers), message
-            self.__norm_to_real = dict(zip(norm_headers, self.headers))            
+            self.__norm_to_real = dict(zip(norm_headers, self.headers))
 
     def keys(self):
         return self.headers
@@ -103,7 +104,7 @@ class Spreadsheet:
                 return False
             elif isinstance(item[0], str):
                 items_non_headers = [e for e in item if e not in self.headers and e not in self.norm_headers]
-                result = dict(zip(items_non_headers, [False]*len(items_non_headers)))
+                result = dict(zip(items_non_headers, [False] * len(items_non_headers)))
                 for rows in self.__spreadsheet:
                     for element in items_non_headers:
                         if element in rows:
@@ -159,24 +160,19 @@ class Spreadsheet:
         return [rows for rows in self.__spreadsheet if value in rows]
 
     def convertToDict(self, item=None, norm=True):
+        headers = self.norm_headers if norm else self.headers
         if item is None:
-            columns = [self[col] for col in self.headers]
-            return dict(zip(self.headers, columns))
+            columns = [self[col] for col in headers]
+            return dict(zip(headers, columns))
         elif isinstance(item, list) and len(item) > 0:
             message = "Some items do not match the same length as the headers."
-            if isinstance(item[0], list) and len(item[0]) == len(self.headers):
-                if all([len(self.headers) == len(content) for content in item]):
-                    if norm:
-                        [dict(zip(self.norm_headers, value)) for value in item]
-                    else:
-                        return [dict(zip(self.headers, value)) for value in item]
+            if isinstance(item[0], list) and len(item[0]) == len(headers):
+                if all([len(headers) == len(content) for content in item]):
+                    return [dict(zip(headers, value)) for value in item]
                 else:
                     assert False, message
-            elif not isinstance(item[0], list) and len(item) == len(self.headers):
-                if norm:
-                    return dict(zip(self.norm_headers, item))
-                else:
-                    return dict(zip(self.headers, item))
+            elif not isinstance(item[0], list) and len(item) == len(headers):
+                return dict(zip(headers, item))
             else:
                 assert False, message
         return None
@@ -314,7 +310,7 @@ class Spreadsheet:
                     self.__spreadsheet.append(temp)
 
     def __format__(self, format_spec):
-        #TODO: "Sheet has at columns topic: {a}".format('column')"
+        # TODO: "Sheet has at columns topic: {a}".format('column')"
         pass
 
     def __str__(self):
