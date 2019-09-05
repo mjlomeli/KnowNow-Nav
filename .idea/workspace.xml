@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Activity/Web/static/knownow_art-01.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Activity/FileManager/FileManager.md" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/FileManager/FileManager.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Activity/Web/FlaskDriver.py" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/Web/FlaskDriver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Activity/Web/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/Web/app.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,8 +36,8 @@
         <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="332">
-                <caret line="144" column="42" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
+              <first_editor relative-caret-position="264">
+                <caret line="137" selection-end-line="167" />
               </first_editor>
               <second_editor />
             </state>
@@ -43,10 +45,39 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Activity/Web/app.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="402">
+              <caret line="121" selection-start-line="121" selection-end-line="121" />
+              <folding>
+                <element signature="e#199#234#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Activity/Web/FlaskDriver.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="402">
+              <caret line="121" selection-start-line="121" selection-end-line="121" />
+              <folding>
+                <element signature="e#199#234#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Activity/Web/static/knownow_art-01.svg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Activity/Web/templates/Homepage.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="167">
-              <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+              <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -55,16 +86,16 @@
         <entry file="file://$PROJECT_DIR$/Activity/Web/templates/ResultsPage.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
-              <caret line="103" column="17" lean-forward="true" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
+              <caret line="103" column="17" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3615">
-              <caret line="363" column="21" selection-start-line="363" selection-start-column="21" selection-end-line="363" selection-end-column="21" />
+            <state relative-caret-position="215">
+              <caret line="163" column="8" lean-forward="true" selection-start-line="163" selection-start-column="8" selection-end-line="163" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -155,7 +186,6 @@
         <option value="$PROJECT_DIR$/Activity/Test/Test.md" />
         <option value="$PROJECT_DIR$/Activity/Test/testNeo4j/testNeo4jDriver.py" />
         <option value="$PROJECT_DIR$/Activity/Neo4j/Neo4jDriver.py" />
-        <option value="$PROJECT_DIR$/Activity/Web/FlaskDriver.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Activity/NLP/__init__.py" />
         <option value="$PROJECT_DIR$/Activity/NLP/NLP.md" />
@@ -167,14 +197,15 @@
         <option value="$PROJECT_DIR$/Activity/FileManager/Cell.py" />
         <option value="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" />
         <option value="$PROJECT_DIR$/Activity/FileManager/FileManager.md" />
+        <option value="$PROJECT_DIR$/Activity/Web/app.py" />
+        <option value="$PROJECT_DIR$/Activity/Web/FlaskDriver.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2" />
-    <option name="y" value="12" />
-    <option name="width" value="975" />
-    <option name="height" value="1050" />
+    <option name="x" value="-10" />
+    <option name="width" value="980" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -213,6 +244,13 @@
               <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
               <item name="Activity" type="462c0819:PsiDirectoryNode" />
               <item name="Web" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
+              <item name="Activity" type="462c0819:PsiDirectoryNode" />
+              <item name="Web" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -226,7 +264,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../knownow-Jeff" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Activity/Web/static" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -364,14 +402,7 @@
       <workItem from="1567551199648" duration="24000" />
       <workItem from="1567579553254" duration="190000" />
       <workItem from="1567579800198" duration="9170000" />
-      <workItem from="1567647451309" duration="3487000" />
-    </task>
-    <task id="LOCAL-00013" summary="Finishing row">
-      <created>1566924002416</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1566924002416</updated>
+      <workItem from="1567647451309" duration="4685000" />
     </task>
     <task id="LOCAL-00014" summary="Finishing row">
       <created>1566925970624</created>
@@ -709,11 +740,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567657098543</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Revised norm headers">
+      <created>1567657520296</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1567657520296</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168867000" />
+    <option name="totallyTimeSpent" value="170065000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -729,13 +767,13 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.5007236" side_tool="true" weight="0.1130064" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.10589813" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.10589813" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
       <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.4978678" weight="0.16973126" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5021322" side_tool="true" weight="0.36511377" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" visible="true" weight="0.31541726" />
+      <window_info anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" visible="true" weight="0.31541726" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.32936078" />
@@ -851,7 +889,6 @@
     <SUITE FILE_PATH="coverage/KnowNow_Nav$Flask_____app_py_.coverage" NAME="Flask (../app.py) Coverage Results" MODIFIED="1567317690776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/templates" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/testRow.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/testCell.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/__init__.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Testing/testNeo4j/testNeo4jDriver.py" />
@@ -987,23 +1024,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/Web/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/Web/FlaskDriver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#199#223#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Test/testNeo4j/testNeo4jDriver.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3307">
@@ -1112,33 +1132,56 @@
     <entry file="file://$PROJECT_DIR$/Activity/Web/templates/Homepage.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="167">
-          <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Web/templates/ResultsPage.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
-          <caret line="103" column="17" lean-forward="true" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
+          <caret line="103" column="17" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="163" column="8" lean-forward="true" selection-start-line="163" selection-start-column="8" selection-end-line="163" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="332">
-            <caret line="144" column="42" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
+          <first_editor relative-caret-position="264">
+            <caret line="137" selection-end-line="167" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
+    <entry file="file://$PROJECT_DIR$/Activity/Web/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3615">
-          <caret line="363" column="21" selection-start-line="363" selection-start-column="21" selection-end-line="363" selection-end-column="21" />
+        <state relative-caret-position="402">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
+          <folding>
+            <element signature="e#199#234#0" expanded="true" />
+          </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/FlaskDriver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
+          <folding>
+            <element signature="e#199#234#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/static/knownow_art-01.svg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
   </component>
 </project>
