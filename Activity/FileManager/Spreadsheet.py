@@ -158,7 +158,7 @@ class Spreadsheet:
     def find(self, value):
         return [rows for rows in self.__spreadsheet if value in rows]
 
-    def convertToDict(self, item=None):
+    def convertToDict(self, item=None, norm=True):
         if item is None:
             columns = [self[col] for col in self.headers]
             return dict(zip(self.headers, columns))
@@ -166,11 +166,17 @@ class Spreadsheet:
             message = "Some items do not match the same length as the headers."
             if isinstance(item[0], list) and len(item[0]) == len(self.headers):
                 if all([len(self.headers) == len(content) for content in item]):
-                    return [dict(zip(self.headers, value)) for value in item]
+                    if norm:
+                        [dict(zip(self.norm_headers, value)) for value in item]
+                    else:
+                        return [dict(zip(self.headers, value)) for value in item]
                 else:
                     assert False, message
             elif not isinstance(item[0], list) and len(item) == len(self.headers):
-                return dict(zip(self.headers, item))
+                if norm:
+                    return dict(zip(self.norm_headers, item))
+                else:
+                    return dict(zip(self.headers, item))
             else:
                 assert False, message
         return None

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="">
+    <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="Cell revision">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Activity/FileManager/Cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/FileManager/Cell.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,43 +29,42 @@
     <favorites_list name="KnowNow-Nav" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="194" column="45" selection-start-line="194" selection-start-column="45" selection-end-line="194" selection-end-column="45" />
-              <folding>
-                <element signature="e#2375#3233#0" />
-                <element signature="e#1799#2111#0" />
-                <element signature="e#3511#3677#0" />
-                <element signature="e#2377#2837#0" />
-                <element signature="e#2383#2790#0" />
-                <element signature="e#5793#6318#0" />
-                <element signature="e#6348#6491#0" />
-                <element signature="e#6523#6669#0" />
-                <element signature="e#6703#6814#0" />
-                <element signature="e#6848#7104#0" />
-                <element signature="e#7137#7322#0" />
-                <element signature="e#7899#8114#0" />
-                <element signature="e#8161#8395#0" />
-                <element signature="e#8711#9141#0" />
-                <element signature="e#9180#9558#0" />
-                <element signature="e#9597#9742#0" />
-                <element signature="e#8123#8237#0" />
-              </folding>
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="295">
+                <caret line="58" selection-end-line="155" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Activity/FileManager/Row.py">
+        <entry file="file://$PROJECT_DIR$/Activity/Web/templates/Homepage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-21">
-              <caret line="28" selection-start-line="28" selection-end-line="38" selection-end-column="1" />
-              <folding>
-                <element signature="e#183#207#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="167">
+              <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Activity/Web/templates/ResultsPage.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="103" column="17" lean-forward="true" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="177" column="21" lean-forward="true" selection-end-line="367" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -149,7 +148,6 @@
         <option value="$PROJECT_DIR$/Activity/Testing/testNeo4j/testNeo4jDriver.py" />
         <option value="$PROJECT_DIR$/Activity/Testing/testNLP/testSimilarity.py" />
         <option value="$PROJECT_DIR$/app.py" />
-        <option value="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" />
         <option value="$PROJECT_DIR$/Row.py" />
         <option value="$PROJECT_DIR$/Activity/Web/Web.md" />
         <option value="$PROJECT_DIR$/Activity/Neo4j/Neo4j.md" />
@@ -167,14 +165,15 @@
         <option value="$PROJECT_DIR$/Activity/Test/testNLP/Writing.py" />
         <option value="$PROJECT_DIR$/Activity/Test/testWeb/testFlaskDriver.py" />
         <option value="$PROJECT_DIR$/Activity/FileManager/Cell.py" />
+        <option value="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="431" />
-    <option name="y" value="15" />
+    <option name="x" value="2" />
+    <option name="y" value="12" />
     <option name="width" value="975" />
-    <option name="height" value="1049" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -202,6 +201,19 @@
               <item name="Activity" type="462c0819:PsiDirectoryNode" />
               <item name="FileManager" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
+              <item name="Activity" type="462c0819:PsiDirectoryNode" />
+              <item name="Web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
+              <item name="Activity" type="462c0819:PsiDirectoryNode" />
+              <item name="Web" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -213,7 +225,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../knownow-Jeff" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -350,21 +362,8 @@
       <workItem from="1567546223973" duration="336000" />
       <workItem from="1567551199648" duration="24000" />
       <workItem from="1567579553254" duration="190000" />
-      <workItem from="1567579800198" duration="7967000" />
-    </task>
-    <task id="LOCAL-00009" summary="Reconstruction of the index is finished">
-      <created>1566915287845</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1566915287845</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Reconstruction of the index is finished">
-      <created>1566915358407</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1566915358408</updated>
+      <workItem from="1567579800198" duration="9170000" />
+      <workItem from="1567647451309" duration="2822000" />
     </task>
     <task id="LOCAL-00011" summary="Reconstruction of the index is finished">
       <created>1566916654911</created>
@@ -695,11 +694,25 @@
       <option name="project" value="LOCAL" />
       <updated>1567585623756</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Cell revision">
+      <created>1567587790099</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1567587790099</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Cell revision">
+      <created>1567588428435</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1567588428435</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="164177000" />
+    <option name="totallyTimeSpent" value="168202000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -712,15 +725,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.5007236" side_tool="true" weight="0.1130064" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.10455764" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.10589813" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
       <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.4978678" weight="0.16973126" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5021322" side_tool="true" weight="0.36511377" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" visible="true" weight="0.3182461" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" visible="true" weight="0.31541726" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.32936078" />
@@ -835,7 +849,6 @@
     <SUITE FILE_PATH="coverage/KnowNow_Nav$Flask_____app_py_.coverage" NAME="Flask (../app.py) Coverage Results" MODIFIED="1567317690776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/templates" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/testSpreadsheet.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/testRow.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/testCell.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/__init__.py" />
@@ -870,13 +883,6 @@
     <entry file="file://$PROJECT_DIR$/Activity/Web/templates/knownow_art-01.svg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/Web/templates/Homepage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="46" selection-start-line="24" selection-start-column="46" selection-end-line="24" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Web/templates/home.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -904,13 +910,6 @@
     <entry file="file://$PROJECT_DIR$/Spreadsheet.py" />
     <entry file="file://$PROJECT_DIR$/Row.py" />
     <entry file="file://$PROJECT_DIR$/FlaskDriver.py" />
-    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Activity/NLP/Similarity.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Neo4j/Neo4j.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -1071,13 +1070,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="176">
-            <caret line="51" column="42" selection-start-line="51" selection-start-column="42" selection-end-line="51" selection-end-column="42" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="433">
+          <caret line="303" column="17" selection-start-line="303" selection-start-column="17" selection-end-line="303" selection-end-column="17" />
+          <folding>
+            <element signature="e#2375#3233#0" />
+            <element signature="e#1799#2111#0" />
+            <element signature="e#3511#3677#0" />
+            <element signature="e#2377#2837#0" />
+            <element signature="e#2383#2790#0" />
+            <element signature="e#5793#6318#0" />
+            <element signature="e#6348#6491#0" />
+            <element signature="e#6523#6669#0" />
+            <element signature="e#6703#6814#0" />
+            <element signature="e#6848#7104#0" />
+            <element signature="e#7137#7322#0" />
+            <element signature="e#5857#6668#0" />
+            <element signature="e#7899#8114#0" />
+            <element signature="e#8161#8395#0" />
+            <element signature="e#8438#8672#0" />
+            <element signature="e#8711#9141#0" />
+            <element signature="e#9180#9558#0" />
+            <element signature="e#9597#9742#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1091,29 +1107,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Cell.py">
+    <entry file="file://$PROJECT_DIR$/Activity/Web/templates/Homepage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="194" column="45" selection-start-line="194" selection-start-column="45" selection-end-line="194" selection-end-column="45" />
-          <folding>
-            <element signature="e#2375#3233#0" />
-            <element signature="e#1799#2111#0" />
-            <element signature="e#3511#3677#0" />
-            <element signature="e#2377#2837#0" />
-            <element signature="e#2383#2790#0" />
-            <element signature="e#5793#6318#0" />
-            <element signature="e#6348#6491#0" />
-            <element signature="e#6523#6669#0" />
-            <element signature="e#6703#6814#0" />
-            <element signature="e#6848#7104#0" />
-            <element signature="e#7137#7322#0" />
-            <element signature="e#7899#8114#0" />
-            <element signature="e#8161#8395#0" />
-            <element signature="e#8711#9141#0" />
-            <element signature="e#9180#9558#0" />
-            <element signature="e#9597#9742#0" />
-            <element signature="e#8123#8237#0" />
-          </folding>
+        <state relative-caret-position="167">
+          <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="295">
+            <caret line="58" selection-end-line="155" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Web/templates/ResultsPage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="103" column="17" lean-forward="true" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="177" column="21" lean-forward="true" selection-end-line="367" selection-end-column="21" />
         </state>
       </provider>
     </entry>
