@@ -166,9 +166,25 @@ Printing the table through the console.
 | 2 | Other Topics | June 2017  | ... |
 | ... | ... | ...  | ... | ...   | ... |
 
-##3.1.2 Ideas for new recruits
-- [ ] Save a spreadsheet into a pickle file after opening. Make Spreadsheet update the pickle file automatically 
-and load from the pickle file instead of parsing the csv file all over again. Note: must check that the csv file is 
-current, else parse the new file (recommend checking size change or date of revision information lookup).
 
-- [ ] Find a way to automatically download every spreadsheet from the Google drive. 
+##3.1.2 Ideas for improvements (new recruits)
+
+- [ ] After opening a spreadsheet, save it into a pickle file in the Data folder. If the spreadsheet attempts to open 
+the same csv file, make the spreadsheet open the pickle file instead without reading the whole csv file. If the csv file 
+is different from the previously loaded file, open the csv file and update the pickle file.
+
+- [ ] Find a way to automatically download the 'Insights', 'Reconciled Insights', and 'Tags' spreadsheet from the 
+Google drive. After the download, log the last time it was downloaded and the size of the file conveniently.
+
+- [ ] Parse the 'Tags' spreadsheet and organize it. Make it accessible and easy to navigate. Ask a lead for more 
+information. 
+
+- [ ] Research every Markdown documentation we have. Revise it, make it more concise, and grammatically correct. 
+Improve the style and improve the current examples if possible. You may add additional examples, but they must be added
+after the examples which have already existed. 
+
+- [ ] Find a bug in the Spreadsheet and fix it. The lead can point out a few.
+
+- [ ] In the Testing branch. Create 5 test cases for each function: find(), at(), index overloading string, 
+convertToDict(), and getColumn()
+
