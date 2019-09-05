@@ -159,7 +159,7 @@ class Spreadsheet:
     def find(self, value):
         return [rows for rows in self.__spreadsheet if value in rows]
 
-    def convertToDict(self, item=None, norm=True):
+    def convertToDict(self, item=None, norm=False):
         headers = self.norm_headers if norm else self.headers
         if item is None:
             columns = [self[col] for col in headers]

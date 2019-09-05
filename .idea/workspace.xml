@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Activity/FileManager/FileManager.md" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/FileManager/FileManager.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/Activity/Web/FlaskDriver.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1203">
-              <caret line="96" column="7" lean-forward="true" selection-start-line="96" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
+              <caret line="96" column="7" selection-start-line="96" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
               <folding>
                 <element signature="e#199#234#0" expanded="true" />
               </folding>
@@ -42,12 +41,33 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="592">
-                <caret line="171" selection-start-line="171" selection-end-line="171" />
+              <first_editor relative-caret-position="269">
+                <caret line="174" selection-end-line="190" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Activity/Test/testFileManager/testSpreadsheet.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="29" column="22" lean-forward="true" selection-end-line="227" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="2088">
+                <caret line="137" selection-start-line="137" selection-end-line="137" />
               </first_editor>
               <second_editor />
             </state>
@@ -188,6 +208,19 @@
               <item name="Activity" type="462c0819:PsiDirectoryNode" />
               <item name="FileManager" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
+              <item name="Activity" type="462c0819:PsiDirectoryNode" />
+              <item name="Test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
+              <item name="Activity" type="462c0819:PsiDirectoryNode" />
+              <item name="Test" type="462c0819:PsiDirectoryNode" />
+              <item name="testFileManager" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -198,7 +231,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Activity/Web/FlaskDriver.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../knownow-Jeff" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -340,21 +373,7 @@
       <workItem from="1567579553254" duration="190000" />
       <workItem from="1567579800198" duration="9170000" />
       <workItem from="1567647451309" duration="6105000" />
-      <workItem from="1567665057818" duration="1358000" />
-    </task>
-    <task id="LOCAL-00016" summary="Finishing row">
-      <created>1566926016541</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1566926016541</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Finishing row">
-      <created>1566962571426</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1566962571426</updated>
+      <workItem from="1567665057818" duration="7485000" />
     </task>
     <task id="LOCAL-00018" summary="Finishing row">
       <created>1566962791802</created>
@@ -685,11 +704,25 @@
       <option name="project" value="LOCAL" />
       <updated>1567664943744</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="Connected Frontend with backend">
+      <created>1567666427630</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1567666427630</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Ideas for improvement documentation">
+      <created>1567674065754</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1567674065754</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="172843000" />
+    <option name="totallyTimeSpent" value="178970000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -817,7 +850,8 @@
     <MESSAGE value="Cell revision" />
     <MESSAGE value="Revised norm headers" />
     <MESSAGE value="Connected Frontend with backend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Connected Frontend with backend" />
+    <MESSAGE value="Ideas for improvement documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ideas for improvement documentation" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/KnowNow_Nav$KnowNow_Nav.coverage" NAME="KnowNow-Nav Coverage Results" MODIFIED="1566989906313" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -944,16 +978,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="1139">
-            <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Test/testNeo4j/testNeo4jDriver.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3307">
@@ -965,9 +989,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Test/testFileManager/testRow.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/Test/testFileManager/testSpreadsheet.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Test/testFileManager/testCell.py">
@@ -1097,20 +1118,37 @@
     <entry file="file://$PROJECT_DIR$/Activity/Web/FlaskDriver.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1203">
-          <caret line="96" column="7" lean-forward="true" selection-start-line="96" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
+          <caret line="96" column="7" selection-start-line="96" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
           <folding>
             <element signature="e#199#234#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="2088">
+            <caret line="137" selection-start-line="137" selection-end-line="137" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="592">
-            <caret line="171" selection-start-line="171" selection-end-line="171" />
+          <first_editor relative-caret-position="269">
+            <caret line="174" selection-end-line="190" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/Test/testFileManager/testSpreadsheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="29" column="22" lean-forward="true" selection-end-line="227" />
         </state>
       </provider>
     </entry>
