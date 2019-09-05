@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="Cell revision">
+    <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Activity/FileManager/FileManager.md" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/FileManager/FileManager.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,8 +34,8 @@
         <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="295">
-                <caret line="58" selection-end-line="155" />
+              <first_editor relative-caret-position="332">
+                <caret line="144" column="42" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
               </first_editor>
               <second_editor />
             </state>
@@ -63,8 +63,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="177" column="21" lean-forward="true" selection-end-line="367" selection-end-column="21" />
+            <state relative-caret-position="3615">
+              <caret line="363" column="21" selection-start-line="363" selection-start-column="21" selection-end-line="363" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -105,6 +105,7 @@
       <find>text_length</find>
       <find>&amp;#39;</find>
       <find>id</find>
+      <find>ToD</find>
     </findStrings>
     <replaceStrings>
       <replace>__cell_global</replace>
@@ -151,7 +152,6 @@
         <option value="$PROJECT_DIR$/Row.py" />
         <option value="$PROJECT_DIR$/Activity/Web/Web.md" />
         <option value="$PROJECT_DIR$/Activity/Neo4j/Neo4j.md" />
-        <option value="$PROJECT_DIR$/Activity/FileManager/FileManager.md" />
         <option value="$PROJECT_DIR$/Activity/Test/Test.md" />
         <option value="$PROJECT_DIR$/Activity/Test/testNeo4j/testNeo4jDriver.py" />
         <option value="$PROJECT_DIR$/Activity/Neo4j/Neo4jDriver.py" />
@@ -166,6 +166,7 @@
         <option value="$PROJECT_DIR$/Activity/Test/testWeb/testFlaskDriver.py" />
         <option value="$PROJECT_DIR$/Activity/FileManager/Cell.py" />
         <option value="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" />
+        <option value="$PROJECT_DIR$/Activity/FileManager/FileManager.md" />
       </list>
     </option>
   </component>
@@ -363,21 +364,7 @@
       <workItem from="1567551199648" duration="24000" />
       <workItem from="1567579553254" duration="190000" />
       <workItem from="1567579800198" duration="9170000" />
-      <workItem from="1567647451309" duration="2822000" />
-    </task>
-    <task id="LOCAL-00011" summary="Reconstruction of the index is finished">
-      <created>1566916654911</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1566916654911</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Finishing row">
-      <created>1566921303648</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1566921303648</updated>
+      <workItem from="1567647451309" duration="3487000" />
     </task>
     <task id="LOCAL-00013" summary="Finishing row">
       <created>1566924002416</created>
@@ -708,11 +695,25 @@
       <option name="project" value="LOCAL" />
       <updated>1567588428435</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="Revised norm headers">
+      <created>1567656645429</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1567656645430</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Revised norm headers">
+      <created>1567657098543</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1567657098543</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168202000" />
+    <option name="totallyTimeSpent" value="168867000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -838,7 +839,8 @@
     <MESSAGE value="Modifying comments and authors" />
     <MESSAGE value="Created README" />
     <MESSAGE value="Cell revision" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cell revision" />
+    <MESSAGE value="Revised norm headers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revised norm headers" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/KnowNow_Nav$KnowNow_Nav.coverage" NAME="KnowNow-Nav Coverage Results" MODIFIED="1566989906313" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -1114,16 +1116,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="295">
-            <caret line="58" selection-end-line="155" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Web/templates/ResultsPage.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -1131,10 +1123,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="332">
+            <caret line="144" column="42" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="177" column="21" lean-forward="true" selection-end-line="367" selection-end-column="21" />
+        <state relative-caret-position="3615">
+          <caret line="363" column="21" selection-start-line="363" selection-start-column="21" selection-end-line="363" selection-end-column="21" />
         </state>
       </provider>
     </entry>

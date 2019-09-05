@@ -131,6 +131,18 @@ Converting a list of rows into their dictionary pairing with the headers.
 'https://community.’, '',  '', '', '', ''], …]
 
 >>> sheet.convertToDict(results)  
+[{'id': '1',  'Topic': '',  'Date Discussion (Month/Year)': 'July 2015',  'Query Tag': 'Treatment',  'query': 'Patient had …', …, 'RO': ''}, 
+…, {'id': '99',  'Topic': '', …,  'Volunteers': 'Kriti Bhardwaj, Amira Elfergani', 'Discussion URL': 'https://community.’, 
+'HER2': '',  'HER': '',  'BRCA': '',  'ER': '',  'HR': ''}, …]
+```
+
+Converting a list of rows into their dictionary pairing with the normalized headers (keys have changed).
+```
+>>> results = sheet['Treatment']  
+[[1', 'July 2015', 'Treatment', 'Patient had …', …\], …, ['99',  …,  'Kriti Bhardwaj, Amira Elfergani',
+'https://community.’, '',  '', '', '', ''], …]
+
+>>> sheet.convertToDict(results, norm=True)  
 [{'id': '1',  'topic': '',  'date': 'July 2015',  'query_tag': 'Treatment',  'query': 'Patient had …', …, 'RO': ''}, 
 …, {'id': '99',  'topic': '', …,  'volunteers': 'Kriti Bhardwaj, Amira Elfergani', 'url': 'https://community.’, 
 'HER2': '',  'HER': '',  'BRCA': '',  'ER': '',  'HR': ''}, …]
