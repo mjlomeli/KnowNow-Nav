@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Activity/NLP/Tokenizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/NLP/Tokenizer.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,46 +31,20 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Activity/Web/FlaskDriver.py">
+        <entry file="file://$PROJECT_DIR$/Activity/NLP/Similarity.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1203">
-              <caret line="96" column="7" selection-start-line="96" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
-              <folding>
-                <element signature="e#199#234#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="269">
-                <caret line="174" selection-end-line="190" />
-              </first_editor>
-              <second_editor />
-            </state>
+            <state relative-caret-position="-7" />
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Activity/Test/testFileManager/testSpreadsheet.py">
+        <entry file="file://$PROJECT_DIR$/Activity/NLP/Tokenizer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="29" column="22" lean-forward="true" selection-end-line="227" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="2088">
-                <caret line="137" selection-start-line="137" selection-end-line="137" />
-              </first_editor>
-              <second_editor />
+            <state relative-caret-position="1715">
+              <caret line="86" selection-start-line="86" selection-end-line="86" />
+              <folding>
+                <element signature="e#195#219#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -94,7 +69,6 @@
       <find>_Cell__cell_total</find>
       <find>\+ 1</find>
       <find>__link_name</find>
-      <find>split</find>
       <find>_splitting</find>
       <find>add</find>
       <find>self.header</find>
@@ -111,6 +85,8 @@
       <find>&amp;#39;</find>
       <find>id</find>
       <find>ToD</find>
+      <find>raw_text</find>
+      <find>split</find>
     </findStrings>
     <replaceStrings>
       <replace>__cell_global</replace>
@@ -169,10 +145,11 @@
         <option value="$PROJECT_DIR$/Activity/Test/testNLP/Writing.py" />
         <option value="$PROJECT_DIR$/Activity/Test/testWeb/testFlaskDriver.py" />
         <option value="$PROJECT_DIR$/Activity/FileManager/Cell.py" />
-        <option value="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" />
         <option value="$PROJECT_DIR$/Activity/Web/app.py" />
         <option value="$PROJECT_DIR$/Activity/Web/FlaskDriver.py" />
         <option value="$PROJECT_DIR$/Activity/FileManager/FileManager.md" />
+        <option value="$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py" />
+        <option value="$PROJECT_DIR$/Activity/NLP/Tokenizer.py" />
       </list>
     </option>
   </component>
@@ -212,6 +189,12 @@
               <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
               <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
               <item name="Activity" type="462c0819:PsiDirectoryNode" />
+              <item name="NLP" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KnowNow-Nav" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KnowNow-Nav" type="462c0819:PsiDirectoryNode" />
+              <item name="Activity" type="462c0819:PsiDirectoryNode" />
               <item name="Test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -241,7 +224,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -373,14 +356,8 @@
       <workItem from="1567579553254" duration="190000" />
       <workItem from="1567579800198" duration="9170000" />
       <workItem from="1567647451309" duration="6105000" />
-      <workItem from="1567665057818" duration="7485000" />
-    </task>
-    <task id="LOCAL-00018" summary="Finishing row">
-      <created>1566962791802</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1566962791802</updated>
+      <workItem from="1567665057818" duration="7678000" />
+      <workItem from="1567703508222" duration="1816000" />
     </task>
     <task id="LOCAL-00019" summary="Finishing row">
       <created>1566965579291</created>
@@ -718,11 +695,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567674065754</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="convertToDict: changed norm=True to norm=False">
+      <created>1567674810481</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1567674810481</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="178970000" />
+    <option name="totallyTimeSpent" value="180979000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -738,13 +722,13 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.5007236" side_tool="true" weight="0.1130064" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.107238606" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4992764" visible="true" weight="0.10857909" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
       <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.4978678" weight="0.16973126" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5021322" side_tool="true" weight="0.36511377" />
-      <window_info anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" weight="0.31541726" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="4" sideWeight="0.49840087" visible="true" weight="0.31541726" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.32936078" />
@@ -851,7 +835,8 @@
     <MESSAGE value="Revised norm headers" />
     <MESSAGE value="Connected Frontend with backend" />
     <MESSAGE value="Ideas for improvement documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ideas for improvement documentation" />
+    <MESSAGE value="convertToDict: changed norm=True to norm=False" />
+    <option name="LAST_COMMIT_MESSAGE" value="convertToDict: changed norm=True to norm=False" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/KnowNow_Nav$KnowNow_Nav.coverage" NAME="KnowNow-Nav Coverage Results" MODIFIED="1566989906313" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -863,7 +848,6 @@
     <SUITE FILE_PATH="coverage/KnowNow_Nav$Flask_____app_py_.coverage" NAME="Flask (../app.py) Coverage Results" MODIFIED="1567317690776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/templates" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/testCell.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Testing/testFileManager/__init__.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Testing/testNeo4j/testNeo4jDriver.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Web/__init__.py">
@@ -923,7 +907,6 @@
     <entry file="file://$PROJECT_DIR$/Spreadsheet.py" />
     <entry file="file://$PROJECT_DIR$/Row.py" />
     <entry file="file://$PROJECT_DIR$/FlaskDriver.py" />
-    <entry file="file://$PROJECT_DIR$/Activity/NLP/Similarity.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Neo4j/Neo4j.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1094,13 +1077,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="163" column="8" lean-forward="true" selection-start-line="163" selection-start-column="8" selection-end-line="163" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Web/app.py" />
     <entry file="file://$PROJECT_DIR$/Activity/Web/static/knownow_art-01.svg">
       <provider selected="true" editor-type-id="images" />
@@ -1117,7 +1093,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Activity/Web/FlaskDriver.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1203">
+        <state relative-caret-position="1598">
           <caret line="96" column="7" selection-start-line="96" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
           <folding>
             <element signature="e#199#234#0" expanded="true" />
@@ -1125,20 +1101,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="2088">
-            <caret line="137" selection-start-line="137" selection-end-line="137" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Activity/FileManager/FileManager.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="269">
+          <first_editor relative-caret-position="2958">
             <caret line="174" selection-end-line="190" />
           </first_editor>
           <second_editor />
@@ -1148,7 +1114,39 @@
     <entry file="file://$PROJECT_DIR$/Activity/Test/testFileManager/testSpreadsheet.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
-          <caret line="29" column="22" lean-forward="true" selection-end-line="227" />
+          <caret line="29" column="22" selection-end-line="227" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="2329">
+            <caret line="137" selection-start-line="137" selection-end-line="137" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/FileManager/Spreadsheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2754">
+          <caret line="164" column="44" lean-forward="true" selection-start-line="164" selection-start-column="44" selection-end-line="164" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/NLP/Similarity.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Activity/NLP/Tokenizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1715">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
+          <folding>
+            <element signature="e#195#219#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
