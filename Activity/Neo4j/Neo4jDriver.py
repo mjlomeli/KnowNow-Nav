@@ -142,9 +142,9 @@ def createNewRelation(session, label_from: str, label_from_text: str, label_to: 
     session.run(cypher_query)
 
 
-def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str, relation_text: str):
+def deleteRelation(session, label: str, prop: str, prop_text: str, relation: str):
     '''deletes a specified relation that is related to a specified node'''
-    cypher_query = "MATCH (n: " + label + "{" + prop + ":" + prop_text + "})-[" + relation + ":" + relation_text + ''']->()
+    cypher_query = "MATCH (n: " + label + "{" + prop + ":" + prop_text + "})-[" +  relation + ''']->()
                     DELETE ''' + relation
 
     session.run(cypher_query)
