@@ -270,17 +270,17 @@ def testIndex():
     print("]\n\n")
     print()
 
-    print("Now call the create_index(tf_list)")
+    print("Now create your index: idx = create_index(tf_list)")
     print("This output is now your index.")
     print()
     idx = create_index(tf)
     print(idx)
 
-
     print()
     print()
 
     print("Lets see how much weight each post has:")
+    print("Get the top 4: cosine_score('antony', idx,4)")
     print(cosine_score('antony', idx, 4))
 
 
