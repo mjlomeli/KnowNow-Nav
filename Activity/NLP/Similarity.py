@@ -24,8 +24,8 @@ __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
 _data = Path.cwd() / Path('data') / Path('scores.pickle')
-__idf__weighting = False  # must set to True to run original program
-_TESTING__weighting = True
+__IDF_WEIGHTING = False  # must set to True to run original program
+__TESTING_WEIGHTING = False
 _corpus = Spreadsheet()  # must add your file/items here like your corpus
 _index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
          'brutus': {0: 4, 1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
@@ -64,7 +64,7 @@ def query(query_list, index=file()):
 def __prob__idf(term, index=_index):
     df_t = sum([1 for x in list(index[term].values()) if x > 0])
     corp_size = len(list(_index.values())[0]) if len(_index) > 0 else 0
-    if _TESTING__weighting:
+    if __TESTING_WEIGHTING:
         corp_size = 37
     diff = corp_size - df_t
     return log10(diff / df_t) if diff > 0 else 0
@@ -82,7 +82,7 @@ def __idf(term, index=_index, ):
     if isinstance(term, str):
         if term in index:
             n = len(list(index.values())[0]) if len(index) > 0 else 0
-            if _TESTING__weighting:
+            if __TESTING_WEIGHTING:
                 n = 37
             df_t = sum([1 for x in list(index[term].values()) if x > 0])
             return log10(n / df_t) if df_t > 0 else 0
@@ -94,14 +94,14 @@ def __idf(term, index=_index, ):
 
 def __weighting(term, row, index=_index):
     if isinstance(term, str):
-        if __idf__weighting:
+        if __IDF_WEIGHTING:
             return __score(term, row, index) * __idf(term, index)
         else:
             return __score(term, row, index)
     elif isinstance(term, list):
         score = 0
         for word in term:
-            if __idf__weighting:
+            if __IDF_WEIGHTING:
                 score += __score(word, row, index) * __idf(word, index)
             else:
                 score += __score(word, row, index)
@@ -112,8 +112,8 @@ def __weighting(term, row, index=_index):
 
 def __length_norm(term, row, index=_index):
     if term in index and row in index[term]:
-        d_term = __weighting(term, row, index) if __idf__weighting else __score(term, row, index)
-        if __idf__weighting:
+        d_term = __weighting(term, row, index) if __IDF_WEIGHTING else __score(term, row, index)
+        if __IDF_WEIGHTING:
             d_norm = sqrt(sum([__weighting(words, row, index) ** 2 for words in index.keys()]))
         else:
             d_norm = sqrt(sum([__score(words, row, index) ** 2 for words in index.keys()]))
@@ -137,7 +137,7 @@ def cosine_score(query, index=_index, max_results=_max_postings_size):
     if isinstance(query, str):
         query = [query]
     corp_size = len(list(_index.values())[0]) if len(_index) > 0 else 0
-    if _TESTING__weighting:
+    if __TESTING_WEIGHTING:
         corp_size = 37
     scores = [0] * corp_size
     length = len(index[list(index.keys())[0]])
@@ -329,7 +329,7 @@ def testIndex():
 
 
 def testSimilarity():
-    if __idf__weighting:
+    if __IDF_WEIGHTING:
         index = {'antony':      {0: 157,    1: 73,  2: 0, 3: 0, 4: 0, 5: 0},
                  'brutus':      {0: 4,      1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
                  'caesar':      {0: 232,    1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
@@ -349,7 +349,7 @@ def testSimilarity():
         result = __weighting(['brutus', 'caesar'], 0, index)
         assert abs(result - 4.67) < 0.01, '__weighting([brutus,caesar],0, index) must be about 4.67, result=' + str(result)
         print('\033[1m\033[92m' + '100% passed' + '\033[0m')
-        print('\033[90m' + 'To run cosine similarity test, set __idf__weighting = False' + '\033[0m')
+        print('\033[90m' + 'To run cosine similarity test, set __IDF_WEIGHTING = False' + '\033[0m')
         print('\033[90m' + 'Then rerun this test.' + '\033[0m')
     else:
         index = {
@@ -375,7 +375,7 @@ def testSimilarity():
         assert abs(result - 0.69) < 0.01, '__length_norm(1,2) must be about 0.69, result=' + str(result)
 
         print('\033[1m\033[92m' + '100% passed' + '\033[0m')
-        print('\033[90m' + 'To run tf-idf weighting similarity test, set __idf__weighting = True' + '\033[0m')
+        print('\033[90m' + 'To run tf-idf weighting similarity test, set __IDF_WEIGHTING = True' + '\033[0m')
         print('\033[90m' + 'Then rerun this test.' + '\033[0m')
 
 
