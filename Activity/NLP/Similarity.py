@@ -6,11 +6,7 @@ If the description is long, the first line should be a short summary of Similari
 that makes sense on its own, separated from the rest by a newline.
 """
 
-import sys
-from pathlib import Path
-from Activity.FileManager.Spreadsheet import Spreadsheet
 from Activity.NLP.Tokenizer import tokenize
-import pickle
 from math import log10, sqrt
 from heapq import nlargest
 
@@ -23,10 +19,9 @@ __maintainer__ = "Mauricio Lomeli"
 __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
-_data = Path.cwd() / Path('data') / Path('scores.pickle')
 __IDF_WEIGHTING = False  # must set to True to run original program
 __TESTING_WEIGHTING = False
-_corpus = Spreadsheet()  # must add your file/items here like your corpus
+_max_postings_size = 15  # choose maximum number of results for cosine
 _index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
          'brutus': {0: 4, 1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
          'caesar': {0: 232, 1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
@@ -34,31 +29,6 @@ _index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
          'cleopatra': {0: 57, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
          'mercy': {0: 2, 1: 0, 2: 3, 3: 5, 4: 5, 5: 1},
          'worser': {0: 2, 1: 0, 2: 1, 3: 1, 4: 1, 5: 0}}
-_max_postings_size = 15  # choose maximum number of results for cosine
-
-"""
-def file():
-    if not _data.exists():
-        _index = _process_index()
-        with open(_data, 'wb') as w:
-            pickle.dump(_index, w)
-        return _index
-    else:
-        with open(_data, 'rb') as f:
-            _index = pickle.load(f)
-            return _index
-
-
-def query(query_list, index=file()):
-    query_list = _tokenizer.keep_stop_words(query_list)
-    result = {
-        'index': cosine_score(query_list, index['index']),
-        'category': cosine_score(query_list, index['category']),
-        'cohort': cosine_score(query_list, index['cohort']),
-        'query_tag': cosine_score(query_list, index['query_tag'])
-    }
-    return result
-"""
 
 
 def __prob__idf(term, index=_index):
@@ -143,9 +113,10 @@ def cosine_score(query, index=_index, max_results=_max_postings_size):
     length = len(index[list(index.keys())[0]])
     doc_word_count = [sum([index[item][i] for item in index.keys() if index[item][i] > 0]) for i in range(length)]
     for term in query:
-        w_q = __weight_query(term, query, index)
-        for i in range(length):
-            scores[i] += __weighting(term, i, index) * w_q
+        if term in index:
+            w_q = __weight_query(term, query, index)
+            for i in range(length):
+                scores[i] += __weighting(term, i, index) * w_q
     for i in range(length):
         scores[i] = scores[i] / doc_word_count[i]
     return nlargest(max_results, list(zip(scores, [i for i in range(length)])))
@@ -242,21 +213,6 @@ def create_index(tf):
         else:
             merged = __merge_indexes(tf[0], tf[1])
             return __merge_indexes(merged, create_index(tf[2:]))
-
-
-def _process_index():
-    """
-    Your corpus must be iterable to use this function.
-    Also, it should allow to convert itself into a dictionary.
-    The keys will be the special tags which have additional weight.
-    :return: dict, index holding term frequency
-    """
-    CATEGORIES = ["Comparing Therapies", "Side Effects", "Right treatment?", "Specific Therapy Inquiries",
-                  "Others' experience", 'Symptoms diagnosis', 'Side effect management', 'Recurrence Queries',
-                  'Specific Conditions', 'Data interpretation', 'Referral', 'Lifestyle', 'Positive Affirmations',
-                  'Encouragement', 'Inter-Personal Patient Connections', 'Other/ Miscellaneous']
-
-    return None
 
 
 def main():
@@ -379,8 +335,3 @@ def testSimilarity():
         print('\033[90m' + 'Then rerun this test.' + '\033[0m')
 
 
-if __name__ == '__main__':
-    if '-t' in sys.argv:
-        testSimilarity()
-    else:
-        main()
