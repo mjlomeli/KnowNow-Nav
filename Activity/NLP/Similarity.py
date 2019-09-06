@@ -24,10 +24,16 @@ __email__ = "mjlomeli@uci.edu"
 __status__ = "Prototype"
 
 _data = Path.cwd() / Path('data') / Path('scores.pickle')
-_IDF_WEIGHTING = True  # must set to True to run original program
+_IDF_WEIGHTING = False  # must set to True to run original program
+_TESTING_WEIGHTING = True
 _corpus = Spreadsheet()  # must add your file/items here like your corpus
-_corp_size = len(_corpus)  # must change value
-_index = {}
+_index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
+         'brutus': {0: 4, 1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
+         'caesar': {0: 232, 1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
+         'calpurnia': {0: 0, 1: 10, 2: 0, 3: 0, 4: 0, 5: 0},
+         'cleopatra': {0: 57, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+         'mercy': {0: 2, 1: 0, 2: 3, 3: 5, 4: 5, 5: 1},
+         'worser': {0: 2, 1: 0, 2: 1, 3: 1, 4: 1, 5: 0}}
 _max_postings_size = 15  # choose maximum number of results for cosine
 
 """
@@ -57,7 +63,10 @@ def query(query_list, index=file()):
 
 def _prob_idf(term, index=_index):
     df_t = sum([1 for x in list(index[term].values()) if x > 0])
-    diff = _corp_size - df_t
+    corp_size = len(list(_index.values())[0]) if len(_index) > 0 else 0
+    if _TESTING_WEIGHTING:
+        corp_size = 37
+    diff = corp_size - df_t
     return log10(diff / df_t) if diff > 0 else 0
 
 
@@ -82,10 +91,12 @@ def _score(term, row, index=_index):
 """
 
 
-def _idf(term, index=_index):
+def _idf(term, index=_index, ):
     if isinstance(term, str):
         if term in index:
-            n = _corp_size
+            n = len(list(index.values())[0]) if len(index) > 0 else 0
+            if _TESTING_WEIGHTING:
+                n = 37
             df_t = sum([1 for x in list(index[term].values()) if x > 0])
             return log10(n / df_t) if df_t > 0 else 0
         else:
@@ -138,7 +149,10 @@ def cosine_score(query, index=_index, max_results=_max_postings_size):
     """
     if isinstance(query, str):
         query = [query]
-    scores = [0] * _corp_size
+    corp_size = len(list(_index.values())[0]) if len(_index) > 0 else 0
+    if _TESTING_WEIGHTING:
+        corp_size = 37
+    scores = [0] * corp_size
     length = len(index[list(index.keys())[0]])
     doc_word_count = [sum([index[item][i] for item in index.keys() if index[item][i] > 0]) for i in range(length)]
     for term in query:
@@ -147,7 +161,7 @@ def cosine_score(query, index=_index, max_results=_max_postings_size):
             scores[i] += _weighting(term, i, index) * w_q
     for i in range(length):
         scores[i] = scores[i] / doc_word_count[i]
-    return nlargest(_max_postings_size, list(zip(scores, [i for i in range(length)])))
+    return nlargest(max_results, list(zip(scores, [i for i in range(length)])))
 
 
 def _weight_query(term, query, index=_index):
@@ -164,17 +178,6 @@ def _weight_query(term, query, index=_index):
             q_index[tok] = {0: tf[tok]}
 
     return _weighting(term, 0, q_index)
-
-
-def __combine_tf(tf: list):
-    combined = {}
-    for item in tf:
-        for term, freq in item.items():
-            if term in combined:
-                combined[term] += freq
-            else:
-                combined[term] = freq
-    return combined
 
 
 def __increment_index(index, val):
@@ -327,7 +330,15 @@ def testIndex():
     print("Now call the create_index(tf_list)")
     print("This output is now your index.")
     print()
-    print(create_index(tf))
+    idx = create_index(tf)
+    print(idx)
+
+
+    print()
+    print()
+
+    print("Lets see how much weight each post has:")
+    print(cosine_score('antony', idx, 4))
 
 
 def testSimilarity():
@@ -341,15 +352,15 @@ def testSimilarity():
                  'worser':      {0: 2,      1: 0,   2: 1, 3: 1, 4: 1, 5: 0}}
 
         result = _weighting('antony', 0, index)
-        assert abs(result - 4.05) < 0.01, '_weighting(antony,0) must be about 4.05, result=' + str(result)
+        assert abs(result - 4.05) < 0.01, '_weighting(antony,0, index) must be about 4.05, result=' + str(result)
         result = _weighting('brutus', 0, index)
-        assert abs(result - 1.75) < 0.01, '_weighting(brutus,0) must be about 1.75, result=' + str(result)
+        assert abs(result - 1.75) < 0.01, '_weighting(brutus,0, index) must be about 1.75, result=' + str(result)
         result = _weighting('caesar', 0, index)
-        assert abs(result - 2.93) < 0.01, '_weighting(caesar,0) must be about 2.93, result=' + str(result)
+        assert abs(result - 2.93) < 0.01, '_weighting(caesar,0, index) must be about 2.93, result=' + str(result)
         result = _score(['brutus', 'caesar'], 0, index)
-        assert abs(result - 4.67) < 0.01, '_score([brutus,caesar],0) must be about 4.67, result=' + str(result)
+        assert abs(result - 4.67) < 0.01, '_score([brutus,caesar],0, index) must be about 4.67, result=' + str(result)
         result = _weighting(['brutus', 'caesar'], 0, index)
-        assert abs(result - 4.67) < 0.01, '_weighting([brutus,caesar],0) must be about 4.67, result=' + str(result)
+        assert abs(result - 4.67) < 0.01, '_weighting([brutus,caesar],0, index) must be about 4.67, result=' + str(result)
         print('\033[1m\033[92m' + '100% passed' + '\033[0m')
         print('\033[90m' + 'To run cosine similarity test, set _IDF_WEIGHTING = False' + '\033[0m')
         print('\033[90m' + 'Then rerun this test.' + '\033[0m')
