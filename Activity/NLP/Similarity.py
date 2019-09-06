@@ -9,7 +9,7 @@ that makes sense on its own, separated from the rest by a newline.
 import sys
 from pathlib import Path
 from Activity.FileManager.Spreadsheet import Spreadsheet
-from Activity.NLP.Tokenizer import Tokenizer
+from Activity.NLP.Tokenizer import tokenize
 import pickle
 from math import log10, sqrt
 from heapq import nlargest
@@ -27,7 +27,6 @@ _data = Path.cwd() / Path('data') / Path('scores.pickle')
 _IDF_WEIGHTING = True  # must set to True to run original program
 _corpus = Spreadsheet()  # must add your file/items here like your corpus
 _corp_size = len(_corpus)  # must change value
-_tokenizer = Tokenizer()
 _index = {}
 _max_postings_size = 15  # choose maximum number of results for cosine
 
@@ -54,6 +53,7 @@ def query(query_list, index=file()):
     }
     return result
 """
+
 
 def _prob_idf(term, index=_index):
     df_t = sum([1 for x in list(index[term].values()) if x > 0])
@@ -154,20 +154,19 @@ def _weight_query(term, query, index=_index):
     if isinstance(query, str):
         query = [query]
     q_index = {}
-    _tokenizer.open(query)
-    q_tf = _tokenizer.tf
-
-    tokens = _tokenizer.tokens
+    tokenizer = tokenize(query)
+    tf = tokenizer['tf']
+    tokens = tokenizer['tokens']
     for tok in tokens:
         if tok in q_index:
-            q_index[tok][0] = q_tf[tok]
+            q_index[tok][0] = tf[tok]
         else:
-            q_index[tok] = {0: q_tf[tok]}
+            q_index[tok] = {0: tf[tok]}
 
     return _weighting(term, 0, q_index)
 
 
-def combine_tf(tf: list):
+def __combine_tf(tf: list):
     combined = {}
     for item in tf:
         for term, freq in item.items():
@@ -178,7 +177,7 @@ def combine_tf(tf: list):
     return combined
 
 
-def _increment_index(index, val):
+def __increment_index(index, val):
     i = {}
     for key, values in index.items():
         for key1, val2 in values.items():
@@ -189,7 +188,7 @@ def _increment_index(index, val):
     return i
 
 
-def _reconstruct_index(new_start, index, keys):
+def __reconstruct_index(new_start, index, keys):
     new_index = {}
     length = 0
     if len(index) > 0:
@@ -215,7 +214,7 @@ def _reconstruct_index(new_start, index, keys):
     return new_index
 
 
-def _convert_index(tf):
+def __convert_index(tf):
     if tf is None or len(tf) == 0:
         return {}
     if len(tf.values()) > 1 and isinstance(list(tf.values())[0], dict):
@@ -224,19 +223,35 @@ def _convert_index(tf):
         return {key: {0: value} for key, value in tf.items()}
 
 
-def _merge_indexes(index1, index2):
-    index1 = _convert_index(index1)
-    index2 = _convert_index(index2)
+def __merge_indexes(index1, index2):
+    if len(index1) == 0 and len(index2) > 0:
+        return index2
+    if len(index2) == 0 and len(index1) > 0:
+        return index1
+    index1 = __convert_index(index1)
+    index2 = __convert_index(index2)
     start = min(list(index1.values())[0]) if len(index1) > 0 else 0
     end = max(list(index1.values())[0]) + 1 if len(index1) > 0 else 0
     if index1.keys() != index2.keys() or end == 0 and len(index2) == 0:
         keys = set(index1.keys()).union(index2.keys())
-        index1 = _reconstruct_index(start, index1, keys)
-        index2 = _reconstruct_index(end, index2, keys)
+        index1 = __reconstruct_index(start, index1, keys)
+        index2 = __reconstruct_index(end, index2, keys)
     for key in index1.keys():
         index1[key].update(index2[key])
     return index1
 
+
+def create_index(tf):
+    if isinstance(tf, dict):
+        return tf
+    elif isinstance(tf, list):
+        if len(tf) <= 0:
+            return {}
+        if len(tf) > 0 and len(tf) < 2:
+            return tf[0]
+        else:
+            merged = __merge_indexes(tf[0], tf[1])
+            return __merge_indexes(merged, create_index(tf[2:]))
 
 
 def _process_index():
@@ -258,15 +273,25 @@ def main():
     pass
 
 
+def testIndex():
+    doc_0 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(157, 4, 232, 0, 57, 2, 2)))
+    doc_1 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(73, 157, 227, 10, 0, 0, 0)))
+    doc_2 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 0, 0, 0, 0,3, 1)))
+    doc_3 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 1, 2, 0, 0,5, 1)))
+    doc_4 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 0, 1, 0, 0, 5, 1)))
+    doc_5 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 0, 1, 0, 0, 1, 0)))
+    return doc_0, doc_1, doc_2, doc_3, doc_4, doc_5
+
+
 def testSimilarity():
     if _IDF_WEIGHTING:
-        index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
-                 'brutus': {0: 4, 1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
-                 'caesar': {0: 232, 1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
-                 'calpurnia': {0: 0, 1: 10, 2: 0, 3: 0, 4: 0, 5: 0},
-                 'cleopatra': {0: 57, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
-                 'mercy': {0: 2, 1: 0, 2: 3, 3: 5, 4: 5, 5: 1},
-                 'worser': {0: 2, 1: 0, 2: 1, 3: 1, 4: 1, 5: 0}}
+        index = {'antony':      {0: 157,    1: 73,  2: 0, 3: 0, 4: 0, 5: 0},
+                 'brutus':      {0: 4,      1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
+                 'caesar':      {0: 232,    1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
+                 'calpurnia':   {0: 0,      1: 10,  2: 0, 3: 0, 4: 0, 5: 0},
+                 'cleopatra':   {0: 57,     1: 0,   2: 0, 3: 0, 4: 0, 5: 0},
+                 'mercy':       {0: 2,      1: 0,   2: 3, 3: 5, 4: 5, 5: 1},
+                 'worser':      {0: 2,      1: 0,   2: 1, 3: 1, 4: 1, 5: 0}}
 
         result = _weighting('antony', 0, index)
         assert abs(result - 4.05) < 0.01, '_weighting(antony,0) must be about 4.05, result=' + str(result)

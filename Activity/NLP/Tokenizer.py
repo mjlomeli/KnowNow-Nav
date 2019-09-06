@@ -6,12 +6,9 @@ If the description is long, the first line should be a short summary of tokenize
 that makes sense on its own, separated from the rest by a newline.
 """
 
-from pathlib import Path
 import re
 import nltk
 import string
-
-PATH = Path.cwd()
 
 __author__ = "Mauricio Lomeli"
 __date__ = "8/22/2019"
@@ -36,8 +33,7 @@ def tokenize(content):
     tags = []
     if content is not None:
         if isinstance(content, dict):
-            elements = list(' '.join(content.keys())) + list(' '.join(content.values()))
-            tags = [tag for tag in __tags_list]
+            elements = list(content.keys()) + list(content.values())
         elif isinstance(content, list):
             elements = content
         elif isinstance(content, str):
