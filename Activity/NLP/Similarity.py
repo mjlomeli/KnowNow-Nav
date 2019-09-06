@@ -273,14 +273,61 @@ def main():
     pass
 
 
-def testIndex():
+def get_docs():
     doc_0 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(157, 4, 232, 0, 57, 2, 2)))
     doc_1 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(73, 157, 227, 10, 0, 0, 0)))
     doc_2 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 0, 0, 0, 0,3, 1)))
     doc_3 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 1, 2, 0, 0,5, 1)))
     doc_4 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 0, 1, 0, 0, 5, 1)))
     doc_5 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 0, 1, 0, 0, 1, 0)))
-    return doc_0, doc_1, doc_2, doc_3, doc_4, doc_5
+
+    return [doc_0, doc_1, doc_2, doc_3, doc_4, doc_5]
+
+
+def testIndex():
+    post_0 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(157, 4, 232, 0, 57, 2, 2)))
+    post_1 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(73, 157, 227, 10, 0, 0, 0)))
+    post_2 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 0, 0, 0, 0,3, 1)))
+    post_3 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 1, 2, 0, 0,5, 1)))
+    post_4 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 0, 1, 0, 0, 5, 1)))
+    post_5 = ' '.join(eval("(['antony'] * {}) + (['brutus'] * {}) + (['caesar'] * {}) + (['calpurnia'] * {}) + (['cleopatra'] * {}) + (['mercy'] * {}) + (['worser'] * {})".format(0, 0, 1, 0, 0, 1, 0)))
+
+    print("post_0:" + post_0[:20] + '...')
+    print("post_1:" + post_1[:20] + '...')
+    print("post_2:" + post_2[:20] + '...')
+    print("post_3:" + post_3[:20] + '...')
+    print("post_4:" + post_4[:20] + '...')
+    print("post_5:" + post_5[:20] + '...')
+
+    print("call the tokenizer on each one:")
+    print("tok0 = tokenize(post_0)['tf']")
+    print("tok1 = tokenize(post_1)['tf']")
+    print("tok2 = tokenize(post_2)['tf']")
+    print("tok3 = tokenize(post_3)['tf']")
+    print("tok4 = tokenize(post_4)['tf']")
+    print("tok5 = tokenize(post_5)['tf']")
+    print()
+
+    posts = [post_0, post_1, post_2, post_3, post_4, post_5]
+    tf = []
+    for post in posts:
+        tf.append(tokenize(post)['tf'])
+
+    print("\nmake all tf's into a list:")
+    print("[")
+    print("\t" + str(tf[0]))
+    print("\t" + str(tf[1]))
+    print("\t" + str(tf[2]))
+    print("\t" + str(tf[3]))
+    print("\t" + str(tf[4]))
+    print("\t" + str(tf[5]))
+    print("]\n\n")
+    print()
+
+    print("Now call the create_index(tf_list)")
+    print("This output is now your index.")
+    print()
+    print(create_index(tf))
 
 
 def testSimilarity():
