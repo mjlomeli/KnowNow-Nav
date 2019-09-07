@@ -8,7 +8,7 @@ that makes sense on its own, separated from the rest by a newline.
 
 import sys
 from pathlib import Path
-from Activity.FileManager.Spreadsheet import Spreadsheet
+# from Activity.FileManager.Spreadsheet import Spreadsheet
 from Activity.NLP.Tokenizer import tokenize
 import pickle
 from math import log10, sqrt
@@ -26,7 +26,7 @@ __status__ = "Prototype"
 _data = Path.cwd() / Path('data') / Path('scores.pickle')
 __IDF_WEIGHTING = False  # must set to True to run original program
 __TESTING_WEIGHTING = False
-_corpus = Spreadsheet()  # must add your file/items here like your corpus
+# _corpus = Spreadsheet()  # must add your file/items here like your corpus
 _index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
          'brutus': {0: 4, 1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
          'caesar': {0: 232, 1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
