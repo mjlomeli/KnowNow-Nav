@@ -9,6 +9,8 @@ that makes sense on its own, separated from the rest by a newline.
 from Activity.NLP.Tokenizer import tokenize
 from math import log10, sqrt
 from heapq import nlargest
+from nltk.corpus import words as dictionary
+from nltk.corpus import wordnet
 
 __author__ = "Mauricio Lomeli"
 __credits__ = ['Prof. Mustafa Ibrahim']
@@ -22,6 +24,7 @@ __status__ = "Prototype"
 __IDF_WEIGHTING = False  # must set to True to run original program
 __TESTING_WEIGHTING = False
 _max_postings_size = 15  # choose maximum number of results for cosine
+__dictionary = set(dictionary.words())
 _index = {'antony': {0: 157, 1: 73, 2: 0, 3: 0, 4: 0, 5: 0},
          'brutus': {0: 4, 1: 157, 2: 0, 3: 1, 4: 0, 5: 0},
          'caesar': {0: 232, 1: 227, 2: 0, 3: 2, 4: 1, 5: 1},
@@ -97,7 +100,7 @@ def __cosine(row1, row2, index=_index):
     return sum([__length_norm(word, row1, index) * __length_norm(word, row2, index) for word in index.keys()])
 
 
-def cosine_score(query, index=_index, max_results=_max_postings_size):
+def cosine_score(query, index=_index, max_results=_max_postings_size, iteration=0):
     """
     Optimized cosines efficiently with unweighted query terms
     :param query: a list of the query
@@ -119,7 +122,30 @@ def cosine_score(query, index=_index, max_results=_max_postings_size):
                 scores[i] += __weighting(term, i, index) * w_q
     for i in range(length):
         scores[i] = scores[i] / doc_word_count[i]
-    return nlargest(max_results, list(zip(scores, [i for i in range(length)])))
+    largest = nlargest(max_results, list(zip(scores, [i for i in range(length)])))
+    non_empty = [value for value in largest if value[0] > 0]
+    if len(non_empty) < max_results and iteration < 5:
+        non_empty += __dictionary_definitions(query, max_results-len(non_empty), index, iteration)
+        print(iteration)
+    elif len(non_empty) < max_results:
+        non_empty += [item for item in largest if item not in non_empty]
+    return non_empty
+
+
+def __dictionary_definitions(query, max_results=_max_postings_size, index=_index, iteration=0):
+    words = tokenize([word for word in query if word in __dictionary])['tokens']
+    print(query)
+    print(words)
+    definitions = []
+    for word in list(words):
+        try:
+            defin = wordnet.synsets(word)
+            if len(defin) > 0:
+                definitions.append(defin[0].definition())
+        except Exception:
+            pass
+    new_query = ' '.join(definitions).split(' ')
+    return cosine_score(new_query, index, max_results, iteration+1)
 
 
 def __weight_query(term, query, index=_index):
