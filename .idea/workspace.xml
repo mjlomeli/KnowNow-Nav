@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3dc40bd9-127a-468d-9326-48742bef5a25" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Activity/NLP/Similarity.py" beforeDir="false" afterPath="$PROJECT_DIR$/Activity/NLP/Similarity.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -201,21 +200,7 @@
       <workItem from="1567710971554" duration="109000" />
       <workItem from="1567735094465" duration="11338000" />
       <workItem from="1567793388415" duration="5676000" />
-      <workItem from="1567831239145" duration="5037000" />
-    </task>
-    <task id="LOCAL-00022" summary="Finishing row">
-      <created>1566971910378</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1566971910378</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Finishing row">
-      <created>1566974101822</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1566974101822</updated>
+      <workItem from="1567831239145" duration="5371000" />
     </task>
     <task id="LOCAL-00024" summary="Finishing row">
       <created>1566974338860</created>
@@ -546,7 +531,21 @@
       <option name="project" value="LOCAL" />
       <updated>1567798710203</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Improved the NLP to include a dictionary and definition comparison if 0 results were found.">
+      <created>1567846678558</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1567846678559</updated>
+    </task>
+    <task id="LOCAL-00072" summary="Improved the NLP to include a dictionary and definition comparison if 0 results were found.">
+      <created>1567846759768</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1567846759768</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TodoView">
@@ -608,7 +607,8 @@
     <MESSAGE value="convertToDict: changed norm=True to norm=False" />
     <MESSAGE value="NLP: Narrowed tokenizer to just one function." />
     <MESSAGE value="Finished NLP create index" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished NLP create index" />
+    <MESSAGE value="Improved the NLP to include a dictionary and definition comparison if 0 results were found." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved the NLP to include a dictionary and definition comparison if 0 results were found." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/KnowNow_Nav$Flask___________app_py_.coverage" NAME="Flask (../../../app.py) Coverage Results" MODIFIED="1567456846770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Activity/Web/templates" />

@@ -133,8 +133,6 @@ def cosine_score(query, index=_index, max_results=_max_postings_size, iteration=
 
 def __dictionary_definitions(query, max_results=_max_postings_size, index=_index, iteration=0):
     words = tokenize([word for word in query if word in __dictionary])['tokens']
-    print(query)
-    print(words)
     definitions = []
     for word in list(words):
         try:
