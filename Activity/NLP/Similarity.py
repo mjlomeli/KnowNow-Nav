@@ -124,9 +124,8 @@ def cosine_score(query, index=_index, max_results=_max_postings_size, iteration=
         scores[i] = scores[i] / doc_word_count[i]
     largest = nlargest(max_results, list(zip(scores, [i for i in range(length)])))
     non_empty = [value for value in largest if value[0] > 0]
-    if len(non_empty) < max_results and iteration < 5:
+    if len(non_empty) < max_results and iteration < 4:
         non_empty += __dictionary_definitions(query, max_results-len(non_empty), index, iteration)
-        print(iteration)
     elif len(non_empty) < max_results:
         non_empty += [item for item in largest if item not in non_empty]
     return non_empty
